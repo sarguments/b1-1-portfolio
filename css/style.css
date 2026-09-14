@@ -102,6 +102,19 @@ article:hover {
   transform: none;
 }
 
+/* 저장소 목록: 카드 격자를 그대로 쓴다. 링크는 밑줄 없이 굵게.
+   hidden 속성은 CSS 없이도 숨긴다. */
+#repos-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+#repos-list a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: bold;
+}
+
 body {
   /* var(--bg)는 "저장소에서 --bg 값을 꺼내 쓴다"는 뜻이다.
      라이트면 흰색, 다크 조건이 참이면 어두운 색이 같은 자리로 들어온다. */
