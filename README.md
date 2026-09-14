@@ -26,7 +26,8 @@
 
 - HTML: 시맨틱 5구역(`header`·`nav`·`main`·`section`·`article`·`footer`), 앵커 5개, `label for=id`, `alt` 한 줄
 - CSS: `:root` 변수+다크 토큰, Flex 내비, Grid 카드, `min-width: 768px`·`1024px`, 햄버거, `hover`+`transition`+`box-shadow`
-- JavaScript: `defer`+`DOMContentLoaded`, 상태→렌더 3흐름(테마·메뉴·위로), `IntersectionObserver` 등장, `fetch`+`async/await`+`try/catch` 4상태, `localStorage` 저장/복원, `<head>` 선주입 FOUC 방지
+- JavaScript: `defer`+`DOMContentLoaded`, STATE 중앙 상태+적용 함수, 상태→렌더 5흐름(테마·메뉴·위로·목록·폼), `IntersectionObserver` 등장, `fetch`+`async/await`+`try/catch` 4상태, 언어 필터(`filter`), `localStorage` 저장/복원, `<head>` 선주입 FOUC 방지
+- 선택 이유: 내비는 가로 한 줄 정렬이라 1차원 Flex(`space-between`), 카드 격자는 행·열 2차원이라 Grid(`auto-fit minmax`)를 쓴다. 바꾸면 코드가 복잡해진다.
 - 기준값: 스크롤탑 300px·내비 변경 60px·등장 임계값 0.2 (바꾸면 여기 명시)
 
 ## 배포

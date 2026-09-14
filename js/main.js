@@ -11,30 +11,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeButton = document.querySelector('#theme-toggle');
   const root = document.documentElement;
 
-  // 클릭 1번 = 읽기 → 뒤집기 → 붙이기+저장+글자 바꾸기.
-  themeButton.addEventListener('click', () => {
-    // 읽기: 선주입이 붙여놓은 현재값. 첫 클릭부터 정확하다.
-    const current = root.getAttribute('data-theme');
-    // 뒤집기: dark면 light, 아니면 dark. ? : 는 한 줄 분기다.
-    const next = current === 'dark' ? 'light' : 'dark';
+  // 중앙 상태: 화면을 결정하는 값을 한 곳에 모은다.
+  // 이벤트는 이 값을 바꾸고, 적용 함수가 화면을 갱신한다.
+  const STATE = {
+    theme: root.getAttribute('data-theme') || 'light',
+    menuOpen: false,
+    repos: [],
+    reposFilter: '전체',
+  };
 
-    // 붙이기: 화면 전체가 새 변수값으로 바뀐다.
-    root.setAttribute('data-theme', next);
-    // 저장하기: 키는 선주입이 읽는 키와 같아야 복원이 된다.
-    localStorage.setItem('user-theme', next);
-    // 글자 바꾸기: 다음 동작이 아니라 현재 상태를 보여준다.
-    themeButton.textContent = next === 'dark' ? '라이트 모드' : '다크 모드';
+  // 적용: 테마 상태값을 화면에 반영한다.
+  function applyTheme() {
+    root.setAttribute('data-theme', STATE.theme);
+    localStorage.setItem('user-theme', STATE.theme);
+    themeButton.textContent = STATE.theme === 'dark' ? '라이트 모드' : '다크 모드';
+  }
+
+  // 클릭 1번 = 상태 뒤집기 → 적용. 읽기→뒤집기→붙이기+저장+글자 순서다.
+  themeButton.addEventListener('click', () => {
+    STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
+    applyTheme();
   });
+  applyTheme();
 
   // 집기: 메뉴 버튼 1개 + 여닫을 nav 1개.
   const menuButton = document.querySelector('#menu-button');
   const nav = document.querySelector('nav');
 
-  // 클릭 1번 = active 표시 붙였다 뗐다 + 글자 바꾸기.
-  // toggle은 붙었는지(true/false)를 돌려준다.
+  // 적용: 메뉴 상태값을 화면에 반영한다.
+  function applyMenu() {
+    nav.classList.toggle('active', STATE.menuOpen);
+    menuButton.textContent = STATE.menuOpen ? '닫기' : '메뉴';
+  }
+
+  // 클릭 1번 = 상태 뒤집기 → 적용.
   menuButton.addEventListener('click', () => {
-    const opened = nav.classList.toggle('active');
-    menuButton.textContent = opened ? '닫기' : '메뉴';
+    STATE.menuOpen = !STATE.menuOpen;
+    applyMenu();
   });
 
   // 1. 집기: 위로 버튼 1개
@@ -129,15 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const reposRetry = document.querySelector('#repos-retry');
   const reposURL = 'https://api.github.com/users/sarguments/repos';
 
-  // 목록 그리기: 성공 응답을 카드로 바꾼다. 비어 있으면 빈 결과 안내다.
+  // 목록 그리기: 저장 후 필터로 고르고 카드로 바꾼다.
+  // 비어 있으면 빈 결과 안내다.
   function renderRepos(repos) {
+    STATE.repos = repos;
+    const shown = repos.filter((repo) => STATE.reposFilter === '전체' || (repo.language || '기타') === STATE.reposFilter);
     reposList.innerHTML = '';
-    if (repos.length === 0) {
+    if (shown.length === 0) {
       reposStatus.textContent = '표시할 프로젝트가 없습니다.';
       return;
     }
     reposStatus.textContent = '';
-    repos
+    shown
       .map((repo) => {
         // 구조분해: 객체에서 값을 꺼내 변수에 담는다.
         const { name, html_url: url, description } = repo;
@@ -147,6 +163,24 @@ document.addEventListener('DOMContentLoaded', () => {
       .forEach((html) => {
         reposList.insertAdjacentHTML('beforeend', html);
       });
+  }
+
+  // 필터 그리기: 전체 + 저장소에 있는 언어만 버튼으로 만든다.
+  // 누르면 필터 상태를 바꾸고 목록을 다시 그린다.
+  function renderFilters(repos) {
+    const filters = document.querySelector('#repos-filters');
+    filters.innerHTML = '';
+    const langs = ['전체', ...new Set(repos.map((repo) => repo.language || '기타'))];
+    langs.forEach((lang) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = lang;
+      btn.addEventListener('click', () => {
+        STATE.reposFilter = lang;
+        renderRepos(STATE.repos);
+      });
+      filters.appendChild(btn);
+    });
   }
 
   // 불러오기: 로딩 표시 후 fetch, ok 검사, 상태별 분기다.
@@ -162,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(`로드 실패 (HTTP ${res.status})`);
       }
       renderRepos(await res.json());
+      renderFilters(STATE.repos);
     } catch (err) {
       // 망 단절이면 err로 바로 온다. 404·403은 위에서 만든 메시지다.
       reposStatus.textContent = err.message;
