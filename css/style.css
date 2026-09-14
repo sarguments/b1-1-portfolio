@@ -26,8 +26,9 @@ nav {
 }
 
 /* 메뉴 열림 상태: 모바일에서 버튼으로 여는 메뉴.
-   JS가 nav에 open 표시를 붙였다 떼면 이 규칙이 보였다 안 보였다 한다.
+   JS가 nav에 active 표시를 붙였다 떼면 이 규칙이 보였다 안 보였다 한다.
    768px 이상에서는 항상 펼쳐져서 이 규칙이 필요 없다. */
+nav.active {
 nav.open {
   display: block;
 }
