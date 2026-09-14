@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 전부 맞으면 성공 문구를 확정하고 입력칸을 비운다.
     if (valid) {
-      form.querySelector('p:last-child').textContent = '메시지를 받았습니다.';
+      document.querySelector('#form-result').textContent = '메시지를 받았습니다.';
       form.reset();
     }
   });
