@@ -115,6 +115,18 @@ article:hover {
   font-weight: bold;
 }
 
+/* 부드러운 스크롤: 앵커 이동이 미끄러지듯 간다. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 네비게이션 스크롤 상태: 60px 이상 내리면 JS가 scrolled 표시를 붙인다.
+   배경색이 바뀌어 읽기가 쉬워진다. */
+nav.scrolled {
+  background: var(--bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 body {
   /* var(--bg)는 "저장소에서 --bg 값을 꺼내 쓴다"는 뜻이다.
      라이트면 흰색, 다크 조건이 참이면 어두운 색이 같은 자리로 들어온다. */

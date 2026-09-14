@@ -27,16 +27,18 @@
 - HTML: 시맨틱 5구역(`header`·`nav`·`main`·`section`·`article`·`footer`), 앵커 5개, `label for=id`, `alt` 한 줄
 - CSS: `:root` 변수+다크 토큰, Flex 내비, Grid 카드, `min-width: 768px`·`1024px`, 햄버거, `hover`+`transition`+`box-shadow`
 - JavaScript: `defer`+`DOMContentLoaded`, 상태→렌더 3흐름(테마·메뉴·위로), `IntersectionObserver` 등장, `fetch`+`async/await`+`try/catch` 4상태, `localStorage` 저장/복원, `<head>` 선주입 FOUC 방지
-- 기준값: 스크롤탑 300px·등장 임계값 0.2 (바꾸면 여기 명시)
+- 기준값: 스크롤탑 300px·내비 변경 60px·등장 임계값 0.2 (바꾸면 여기 명시)
 
 ## 배포
 
-- 배포 URL: (Pages 설정 후 기재)
+- 배포 URL: https://sarguments.github.io/b1-1-portfolio/
 - 저장소: https://github.com/sarguments/b1-1-portfolio
 
 ## 스크린샷
 
-- 데스크톱·모바일·다크모드 3종 (배포 후 `images/`에 추가)
+- 데스크톱: `images/desktop.png`
+- 모바일: `images/mobile.png`
+- 다크모드: `images/dark.png`
 
 ## 현재 상태
 
