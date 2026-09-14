@@ -1,5 +1,6 @@
-/* 색·글자·간격은 곳곳에 직접 쓰지 않고 변수로 모아 둔다.
-   나중에 테마를 바꿀 때 이 블록만 고치면 전체에 반영된다. */
+/* 변수 저장소. :root는 문서 전체(html)를 가리키는 선택자라서
+   여기에 둔 변수는 파일 어디서든 var(--이름)으로 꺼내 쓸 수 있다.
+   색·글자·간격을 곳곳에 직접 쓰지 않고 모아 두는 이유다. */
 :root {
   /* 페이지 배경. 라이트 모드 기본값 */
   --bg: #ffffff;
@@ -7,8 +8,72 @@
   --text: #111111;
 }
 
+/* 다크모드 조건 블록. 대괄호는 "속성 선택자"다.
+   data-theme 속성값이 dark인 요소(나중에 html에 붙인다)에만 적용된다.
+   :root의 변수와 이름이 같아야 덮어쓰기가 되어 화면 전체가 한 번에 바뀐다.
+   쓰는 쪽(body)은 고칠 필요가 없다. */
+[data-theme="dark"] {
+  /* 페이지 배경. 다크 모드 값 */
+  --bg: #121212;
+  --text: #f1f3f5;
+}
+
+/* 내비게이션: 가로 한 줄 정렬이라 1차원 Flex가 정답이다.
+   space-between은 첫 항목은 좌측 끝, 끝 항목은 우측 끝에 붙인다.
+   기본(모바일)에서는 메뉴를 숨기고 햄버거 버튼을 보인다. */
+nav {
+  display: none;
+}
+
+/* 768px부터: 메뉴를 펼치고 햄버거 버튼을 숨긴다.
+   min-width는 "이 너비 이상"이라는 뜻으로, 모바일 우선 확장의 기준점이다. */
+@media (min-width: 768px) {
+  nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  #menu-button {
+    display: none;
+  }
+}
+
+/* 1024px부터: 본문이 너무 넓어지지 않게 최대 너비를 묶고 가운데에 둔다. */
+@media (min-width: 1024px) {
+  main {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* 프로젝트 카드 격자: 행·열 2차원이라 Grid가 정답이다.
+   auto-fit은 빈칸을 접어 카드를 늘리고, 칸은 최소 280px·최대 균등 분할이다.
+   칸 사이 간격 1rem. 카드가 1개뿐이라 지금은 1칸으로 보인다. */
+#project {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+/* 버튼·카드 상호작용: hover에서 변하고 transition으로 부드럽게 잇는다.
+   카드 입체감은 box-shadow로 준다. */
+button {
+  transition: opacity 0.2s;
+}
+button:hover {
+  opacity: 0.7;
+}
+article {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
+}
+article:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
 body {
-  /* 위에서 정한 배경 변수를 그대로 쓴다 */
+  /* var(--bg)는 "저장소에서 --bg 값을 꺼내 쓴다"는 뜻이다.
+     라이트면 흰색, 다크 조건이 참이면 어두운 색이 같은 자리로 들어온다. */
   background: var(--bg);
   /* 위에서 정한 글자색 변수를 그대로 쓴다 */
   color: var(--text);
