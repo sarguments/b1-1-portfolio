@@ -25,6 +25,13 @@ nav {
   display: none;
 }
 
+/* 메뉴 열림 상태: 모바일에서 버튼으로 여는 메뉴.
+   JS가 nav에 open 표시를 붙였다 떼면 이 규칙이 보였다 안 보였다 한다.
+   768px 이상에서는 항상 펼쳐져서 이 규칙이 필요 없다. */
+nav.open {
+  display: block;
+}
+
 /* 768px부터: 메뉴를 펼치고 햄버거 버튼을 숨긴다.
    min-width는 "이 너비 이상"이라는 뜻으로, 모바일 우선 확장의 기준점이다. */
 @media (min-width: 768px) {
@@ -69,6 +76,30 @@ article {
 }
 article:hover {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 맨 위로 버튼: 평소에는 숨기고, 300px 이상 내리면 JS가 show 표시를 붙인다.
+   화면 우측 하단에 고정한다. */
+#top-button {
+  display: none;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+}
+#top-button.show {
+  display: block;
+}
+
+/* 등장 애니메이션: 평소에는 투명+아래로, 보임 표시가 붙으면 제자리로.
+   JS 감시(IntersectionObserver)가 표시를 붙인다. */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
 }
 
 body {
