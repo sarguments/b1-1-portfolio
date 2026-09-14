@@ -40,10 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. 집기: 위로 버튼 1개
   const topButton = document.querySelector('#top-button');
 
-  // 2. 스크롤하면: 300px 넘었는지 보고 show 표시를 붙였다 뗐다 한다
+  // 2. 스크롤하면: 300px 넘었는지 보고 show 표시를 붙였다 뗐다 한다.
+  // 60px 넘으면 nav에 scrolled 표시를 붙여 배경색을 바꾼다.
   window.addEventListener('scroll', () => {
   const over = window.scrollY > 300;
   topButton.classList.toggle('show', over);
+  nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 
   // 3. 클릭하면: 맨 위로 미끄러지듯 간다
@@ -109,6 +111,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // 입력하면: 해당 오류 문구를 바로 지운다. input 이벤트 처리다.
+  userName.addEventListener('input', () => {
+    document.querySelector('#name-error').textContent = '';
+  });
+  userEmail.addEventListener('input', () => {
+    document.querySelector('#email-error').textContent = '';
+  });
+  userMessage.addEventListener('input', () => {
+    document.querySelector('#message-error').textContent = '';
+  });
+
   // 저장소 목록: 상태 1개가 화면을 결정한다.
   // 로딩 → 성공·빈 결과·오류. 실패해도 망 단절이 아니면 ok 검사로 잡는다.
   const reposStatus = document.querySelector('#repos-status');
@@ -120,15 +133,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderRepos(repos) {
     reposList.innerHTML = '';
     if (repos.length === 0) {
-      reposStatus.textContent = '공개 저장소가 없습니다.';
+      reposStatus.textContent = '표시할 프로젝트가 없습니다.';
       return;
     }
     reposStatus.textContent = '';
     repos
       .map((repo) => {
-        const name = repo.name;
-        const desc = repo.description || '설명 없음';
-        const url = repo.html_url;
+        // 구조분해: 객체에서 값을 꺼내 변수에 담는다.
+        const { name, html_url: url, description } = repo;
+        const desc = description || '설명 없음';
         return `<article><a href="${url}">${name}</a><p>${desc}</p></article>`;
       })
       .forEach((html) => {
