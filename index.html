@@ -13,7 +13,56 @@
   <script src="js/main.js" defer></script>
 </head>
 <body>
-  <h1>B1-1 포트폴리오</h1>
-  <p>지금은 빈 골격이다. 각 섹션은 이후 작업에서 채운다.</p>
+  <header id="top">
+    <nav>
+      <a href="#about">소개</a>
+      <a href="#tech">기술</a>
+      <a href="#project">프로젝트</a>
+      <a href="#contact">문의</a>
+    </nav>
+    <a href="#top">맨 위로</a>
+  </header>
+  <main>
+    <section id="hero">
+      <h1>안녕하세요, sarguments입니다.</h1>
+      <p>외부 라이브러리 없이 HTML·CSS·JS만으로 만드는 포트폴리오입니다.</p>
+    </section>
+    <section id="about">
+      <h2>기록하고 다시 재현하는 걸 좋아합니다.</h2>
+      <p>지금은 B1-1 미션 진행 중입니다.</p>
+      <img src="images/profile.svg" alt="sarguments 프로필 사진" />
+    </section>
+    <section id="tech">
+      <h2>기술</h2>
+      <ul>
+        <li>HTML — 시맨틱 구조</li>
+        <li>CSS — 반응형·다크모드</li>
+        <li>JavaScript — 상태와 렌더링</li>
+        <li>Git·GitHub — 기록과 배포</li>
+      </ul>
+    </section>
+    <section id="project">
+      <h2>프로젝트</h2>
+      <article>
+        <p>GitHub 저장소 목록이 여기에 표시됩니다.</p>
+      </article>
+    </section>
+    <section id="contact">
+      <h2>문의</h2>
+      <form>
+        <label for="contact-name">이름</label>
+        <input type="text" id="contact-name" name="name" required />
+        <label for="contact-email">이메일</label>
+        <input type="email" id="contact-email" name="email" required />
+        <label for="contact-message">메시지</label>
+        <textarea id="contact-message" name="message" required></textarea>
+        <button type="submit">보내기</button>
+        <p>메시지를 받았습니다.</p>
+      </form>
+    </section>    
+  </main>
+  <footer>
+    <div>© sarguments · 외부 라이브러리 없이 제작</div>
+  </footer>
 </body>
 </html>
