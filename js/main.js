@@ -108,4 +108,55 @@ document.addEventListener('DOMContentLoaded', () => {
       form.reset();
     }
   });
+
+  // 저장소 목록: 상태 1개가 화면을 결정한다.
+  // 로딩 → 성공·빈 결과·오류. 실패해도 망 단절이 아니면 ok 검사로 잡는다.
+  const reposStatus = document.querySelector('#repos-status');
+  const reposList = document.querySelector('#repos-list');
+  const reposRetry = document.querySelector('#repos-retry');
+  const reposURL = 'https://api.github.com/users/sarguments/repos';
+
+  // 목록 그리기: 성공 응답을 카드로 바꾼다. 비어 있으면 빈 결과 안내다.
+  function renderRepos(repos) {
+    reposList.innerHTML = '';
+    if (repos.length === 0) {
+      reposStatus.textContent = '공개 저장소가 없습니다.';
+      return;
+    }
+    reposStatus.textContent = '';
+    repos
+      .map((repo) => {
+        const name = repo.name;
+        const desc = repo.description || '설명 없음';
+        const url = repo.html_url;
+        return `<article><a href="${url}">${name}</a><p>${desc}</p></article>`;
+      })
+      .forEach((html) => {
+        reposList.insertAdjacentHTML('beforeend', html);
+      });
+  }
+
+  // 불러오기: 로딩 표시 후 fetch, ok 검사, 상태별 분기다.
+  async function loadRepos() {
+    reposStatus.textContent = '저장소 목록을 불러오는 중입니다.';
+    reposList.innerHTML = '';
+    reposRetry.hidden = true;
+    try {
+      const res = await fetch(reposURL);
+      if (!res.ok) {
+        if (res.status === 403) throw new Error('API 호출 한도를 초과했습니다. 잠시 후 다시 시도해주세요.');
+        if (res.status === 404) throw new Error('사용자를 찾을 수 없습니다.');
+        throw new Error(`로드 실패 (HTTP ${res.status})`);
+      }
+      renderRepos(await res.json());
+    } catch (err) {
+      // 망 단절이면 err로 바로 온다. 404·403은 위에서 만든 메시지다.
+      reposStatus.textContent = err.message;
+      reposRetry.hidden = false;
+    }
+  }
+
+  // 다시 시도 버튼과 첫 진입에 연결한다.
+  reposRetry.addEventListener('click', loadRepos);
+  loadRepos();
 });
