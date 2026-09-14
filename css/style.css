@@ -1,84 +1,454 @@
-/* 변수 저장소. :root라 어디서든 var(--이름)으로 꺼낸다. */
+/* ================================================================
+   디자인 토큰 저장소
+   색·간격·모서리 값은 여기만 고친다. :root라 어디서든 var(--이름)으로 꺼낸다.
+   ================================================================ */
 :root {
-  /* 페이지 배경. 라이트 모드 기본값 */
-  --bg: #ffffff;
-  /* 본문 글자색. 순수 검정(#000)보다 눈이 덜 피로하다 */
-  --text: #111111;
+  /* 색 역할 토큰. 라이트 모드 기본값 */
+  --bg: #ffffff;            /* 페이지 배경 */
+  --text: #1a1b1e;          /* 본문 글자색. 순수 검정보다 눈이 덜 피로하다 */
+  --muted: #5c6370;         /* 보조 글자색(설명·상태 문구) */
+  --border: #e5e7eb;        /* 경계선 */
+  --card: #f8f9fb;          /* 카드·입력창·버튼 바탕 */
+  --accent: #1f6feb;        /* 링크·주요 동작 */
+  --accent-strong: #1a5cd6; /* accent의 hover 상태 */
+  --on-accent: #ffffff;     /* accent 바탕 위에 올라가는 글자 */
+  --error: #c92a2a;         /* 폼 오류 문구 */
+  --shadow: 0 6px 16px rgba(16, 24, 40, 0.08);
+
+  /* 간격 규칙: 4 · 8 · 12 · 16 · 24 · 32 · 48px. 임의 px 대신 여기서 고른다 */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+
+  /* 모서리는 한 값으로 통일한다 */
+  --radius: 12px;
 }
 
 /* 다크모드: data-theme="dark"일 때 같은 이름 변수를 덮어쓴다. */
 [data-theme="dark"] {
-  /* 페이지 배경. 다크 모드 값 */
   --bg: #121212;
   --text: #f1f3f5;
+  --muted: #9aa4b2;
+  --border: #2c3138;
+  --card: #1b1e24;
+  --accent: #6ea8fe;
+  --accent-strong: #8fbaff;
+  --on-accent: #121212;
+  --error: #ff8787;
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
 }
 
-/* 내비: 한 줄 정렬이라 Flex. 기본은 숨기고 768부터 펼친다. */
-nav {
-  display: none;
+/* ================================================================
+   기본값
+   ================================================================ */
+/* padding·border를 폭 안쪽에 포함시켜 계산을 단순하게 한다 */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/* 메뉴 열림 상태. 768 이상에선 항상 펼쳐져서 필요 없다. */
-nav.active {
-  display: block;
+/* 부드러운 스크롤: 앵커 이동이 미끄러지듯 간다. */
+html {
+  scroll-behavior: smooth;
 }
 
-/* 768부터 메뉴 펼침 + 버튼 숨김. */
-@media (min-width: 768px) {
-  nav {
-    display: flex;
-    justify-content: space-between;
-  }
-  #menu-button {
-    display: none;
-  }
+body {
+  /* 여백은 main·header·footer가 각자 책임지고 body는 0으로 */
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  /* 시스템 글꼴 우선: 별도 웹폰트 없이도 각 기기에서 가장 자연스러운 글꼴이 골라진다 */
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* 1024부터 본문 폭 묶고 가운데. */
-@media (min-width: 1024px) {
-  main {
-    max-width: 1024px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+/* 제목 계층: 크기·자간·행간으로 수준을 구분한다 */
+h1 {
+  margin: 0 0 var(--space-4);
+  font-size: clamp(1.8rem, 1.3rem + 2.4vw, 2.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
-/* 카드 격자: Grid + auto-fit. 카드 1개라 지금은 1칸. */
-#project {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+h2 {
+  margin: 0 0 var(--space-3);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
-/* 버튼·카드: hover에서 변하고 transition으로 잇는다. */
+p {
+  margin: 0 0 var(--space-4);
+}
+
+a {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* 키보드 이동 시 어디에 있는지 보이게 하는 표시 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* 버튼 공통 모양: 손가락이 누르기 좋은 높이와 클릭 반응 */
 button {
-  transition: opacity 0.2s;
+  font: inherit;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.55rem 1rem;
+  min-height: 2.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
 }
 button:hover {
-  opacity: 0.7;
+  border-color: var(--accent);
+  color: var(--accent);
 }
-article {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s;
-}
-article:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+button:active {
+  transform: scale(0.98);
 }
 
-/* 맨 위로 버튼: 평소에는 숨기고, 300px 이상 내리면 JS가 show 표시를 붙인다.
-   화면 우측 하단에 고정한다. */
+/* 주요 동작(hero 첫 링크·폼 보내기·다시 시도)은 accent를 채운다 */
+#contact button[type="submit"],
+#repos-retry {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+#contact button[type="submit"]:hover,
+#repos-retry:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: var(--on-accent);
+}
+
+/* ================================================================
+   헤더와 내비
+   sticky로 상단에 붙이고, 모바일에서는 nav를 숨겼다 펼친다.
+   ================================================================ */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+#menu-button,
+#theme-toggle {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.875rem;
+}
+/* 테마 버튼은 항상 오른쪽 끝으로 */
+#theme-toggle {
+  margin-left: auto;
+}
+
+/* 내비: 기본은 숨기고 768부터 펼친다. */
+nav {
+  display: none;
+  flex-basis: 100%;
+}
+
+/* 메뉴 열림 상태: 헤더 아래에 세로 목록으로 펼쳐진다. */
+nav.active {
+  display: block;
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-2);
+}
+
+nav a {
+  display: block;
+  padding: var(--space-2) var(--space-1);
+  color: var(--muted);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: var(--text);
+}
+
+/* 스크롤 60px 이상: JS가 nav에 scrolled를 붙인다.
+   헤더가 sticky라 시각 변화는 헤더 그림자로 보여 준다. */
+header:has(nav.scrolled) {
+  box-shadow: var(--shadow);
+}
+nav.scrolled {
+  background: var(--bg);
+}
+
+/* ================================================================
+   본문 구역
+   ================================================================ */
+main {
+  padding-inline: var(--space-4);
+}
+
+section {
+  padding-block: var(--space-7);
+  /* sticky 헤더에 앵커 제목이 가려지지 않게 위쪽 여유를 둔다 */
+  scroll-margin-top: 4.5rem;
+}
+
+/* hero는 첫인상이라 위아래 여백을 더 준다 */
+#hero {
+  padding-block: calc(var(--space-7) + var(--space-5)) var(--space-7);
+}
+#hero h1 + p {
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+/* hero 링크 2개는 버튼처럼 보이게 한다 */
+#hero a {
+  display: inline-block;
+  min-height: 2.75rem;
+  margin: var(--space-1) var(--space-2) var(--space-1) 0;
+  padding: 0.55rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+#hero a[href="#project"] {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+#hero a[href="#project"]:hover {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: var(--on-accent);
+}
+#hero a[href="#contact"]:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#about p {
+  color: var(--muted);
+}
+#about img {
+  display: block;
+  width: 7.5rem;
+  margin-top: var(--space-5);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+/* 기술 목록: 모바일 한 열에서 시작해 화면이 넓어지면 늘린다 */
+#tech ul {
+  list-style: none;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+#tech li {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-3) var(--space-4);
+}
+
+/* ================================================================
+   프로젝트: main.js가 그리는 상태 문구·필터·저장소 카드
+   ================================================================ */
+#repos-status {
+  color: var(--muted);
+  margin-bottom: var(--space-4);
+}
+/* 빈 문구일 때는 자리를 차지하지 않게 한다 */
+#repos-status:empty,
+#repos-filters:empty {
+  margin: 0;
+}
+
+/* 언어 필터: JS가 button을 만들어 넣는다. 둥근 칩 모양 */
+#repos-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+#repos-filters button {
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+}
+
+/* 저장소 카드 격자: 모바일 한 열, 넓어지면 auto-fit이 열을 늘린다 */
+#repos-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+#repos-list article {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+#repos-list article:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-2px);
+}
+#repos-list a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  overflow-wrap: break-word;
+}
+#repos-list a:hover {
+  text-decoration: underline;
+}
+#repos-list p {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+
+#repos-retry {
+  margin-top: var(--space-4);
+}
+
+/* ================================================================
+   문의 폼
+   ================================================================ */
+#contact form {
+  max-width: 34rem;
+}
+#contact label {
+  display: block;
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+#contact input,
+#contact textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem;
+  transition: border-color 0.2s;
+}
+#contact input:focus,
+#contact textarea:focus {
+  border-color: var(--accent);
+}
+#contact textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+/* 검증 오류 문구: JS가 textContent를 채운다 */
+#name-error,
+#email-error,
+#message-error {
+  margin: var(--space-1) 0 0;
+  color: var(--error);
+  font-size: 0.85rem;
+}
+#form-result {
+  margin: var(--space-3) 0 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+/* 문구가 비어 있을 때는 여백도 없앤다 */
+#contact form p:empty {
+  margin: 0;
+}
+#contact button[type="submit"] {
+  margin-top: var(--space-4);
+}
+
+/* ================================================================
+   푸터
+   ================================================================ */
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-6) var(--space-4);
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+footer p {
+  margin: 0;
+}
+footer a {
+  color: var(--muted);
+}
+footer a:hover {
+  color: var(--accent);
+}
+
+/* ================================================================
+   맨 위로 버튼: 평소에는 숨기고, 300px 이상 내리면 JS가 show 표시를 붙인다.
+   ================================================================ */
 #top-button {
   display: none;
   position: fixed;
   right: 1rem;
   bottom: 1rem;
+  z-index: 20;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  box-shadow: var(--shadow);
 }
 #top-button.show {
   display: block;
 }
 
-/* 등장 애니메이션: 평소에는 투명+아래로, 보임 표시가 붙으면 제자리로.
-   JS 감시(IntersectionObserver)가 표시를 붙인다. */
+/* ================================================================
+   등장 애니메이션: 평소에는 투명+아래로, 보임 표시가 붙으면 제자리로.
+   JS 감시(IntersectionObserver, 임계값 0.2)가 표시를 붙인다.
+   ================================================================ */
 .reveal {
   opacity: 0;
   transform: translateY(16px);
@@ -89,41 +459,75 @@ article:hover {
   transform: none;
 }
 
-/* 저장소 목록: 카드 격자를 그대로 쓴다. 링크는 밑줄 없이 굵게.
-   hidden 속성은 CSS 없이도 숨긴다. */
-#repos-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
-}
-#repos-list a {
-  text-decoration: none;
-  color: inherit;
-  font-weight: bold;
+/* 움직임 줄이기 설정을 존중한다 */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    transition: none;
+  }
 }
 
-/* 부드러운 스크롤: 앵커 이동이 미끄러지듯 간다. */
-html {
-  scroll-behavior: smooth;
+/* ================================================================
+   768px부터: 내비 가로 펼침, 기술 2열, 카드 격자 확장
+   ================================================================ */
+@media (min-width: 768px) {
+  main {
+    padding-inline: var(--space-6);
+  }
+  header {
+    padding: var(--space-3) var(--space-6);
+  }
+  footer {
+    padding-inline: var(--space-6);
+  }
+
+  /* 메뉴 버튼은 숨기고 내비는 항상 펼친다 */
+  #menu-button {
+    display: none;
+  }
+  nav {
+    display: flex;
+    order: -1;
+    flex-basis: auto;
+    gap: var(--space-5);
+  }
+  nav a {
+    display: inline-block;
+    padding: var(--space-1) 0;
+  }
+  /* 모바일에서 열린 상태로 넓어졌을 때 구분선이 남지 않게 */
+  nav.active {
+    border-top: none;
+    padding-top: 0;
+  }
+
+  #tech ul {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  #repos-list {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
 }
 
-/* 네비게이션 스크롤 상태: 60px 이상 내리면 JS가 scrolled 표시를 붙인다.
-   배경색이 바뀌어 읽기가 쉬워진다. */
-nav.scrolled {
-  background: var(--bg);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
+/* ================================================================
+   1024px부터: 본문 폭 묶고 가운데, 헤더·푸터도 같은 선에 맞춘다
+   ================================================================ */
+@media (min-width: 1024px) {
+  main {
+    max-width: 1024px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  header,
+  footer {
+    /* 본문 최대 폭 1024 안쪽 여백(2rem)과 같은 선에 맞춘다 */
+    padding-inline: max(var(--space-6), calc((100% - 1024px) / 2 + var(--space-6)));
+  }
 
-body {
-  /* var(--bg)는 "저장소에서 --bg 값을 꺼내 쓴다"는 뜻이다.
-     라이트면 흰색, 다크 조건이 참이면 어두운 색이 같은 자리로 들어온다. */
-  background: var(--bg);
-  /* 위에서 정한 글자색 변수를 그대로 쓴다 */
-  color: var(--text);
-  /* 시스템 글꼴 우선: 별도 웹폰트 없이도 각 기기에서 가장 자연스러운 글꼴이 골라진다 */
-  font-family: system-ui, -apple-system, sans-serif;
-  /* 화면 가장자리와 본문 사이의 여백. rem은 루트 글자 크기 기준이라
-     기본 16px에서 2rem = 32px이다. px와 달리 사용자 글자 크기 설정을
-     따라가서 접근성에 유리하다 */
-  margin: 2rem;
+  #tech ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
