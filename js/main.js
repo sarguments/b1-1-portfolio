@@ -30,10 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuButton = document.querySelector('#menu-button');
   const nav = document.querySelector('nav');
 
-  // 클릭 1번 = open 표시 붙였다 뗐다 + 글자 바꾸기.
+  // 클릭 1번 = active 표시 붙였다 뗐다 + 글자 바꾸기.
   // toggle은 붙었는지(true/false)를 돌려준다.
   menuButton.addEventListener('click', () => {
-    const opened = nav.classList.toggle('open');
+    const opened = nav.classList.toggle('active');
     menuButton.textContent = opened ? '닫기' : '메뉴';
   });
 
