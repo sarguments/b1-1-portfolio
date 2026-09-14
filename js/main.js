@@ -1,15 +1,12 @@
 'use strict';
 
-// HTML에 onclick을 쓰지 않고 여기서 이벤트를 연결한다.
-// DOMContentLoaded는 "HTML 해석이 끝난 뒤"를 보장하는 신호다.
-// (defer로 연결했으므로 순서도 보장된다)
+// onclick 대신 여기서 묶는다. defer + DOMContentLoaded라 순서 보장된다.
 document.addEventListener('DOMContentLoaded', () => {
-  // 집기: 테마 버튼 1개 + 테마값이 붙는 html 1개.
+  // 테마 버튼 1개 + 테마값이 붙는 html 1개.
   const themeButton = document.querySelector('#theme-toggle');
   const root = document.documentElement;
 
-  // 중앙 상태: 화면을 결정하는 값을 한 곳에 모은다.
-  // 이벤트는 이 값을 바꾸고, 적용 함수가 화면을 갱신한다.
+  // 화면을 결정하는 값은 한 곳에. 이벤트는 값만 바꾸고 적용 함수가 그린다.
   const STATE = {
     theme: root.getAttribute('data-theme') || 'light',
     menuOpen: false,
@@ -24,14 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     themeButton.textContent = STATE.theme === 'dark' ? '라이트 모드' : '다크 모드';
   }
 
-  // 클릭 1번 = 상태 뒤집기 → 적용. 읽기→뒤집기→붙이기+저장+글자 순서다.
+  // 클릭 1번 = 뒤집기 → 적용.
   themeButton.addEventListener('click', () => {
     STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
     applyTheme();
   });
   applyTheme();
 
-  // 집기: 메뉴 버튼 1개 + 여닫을 nav 1개.
+  // 메뉴 버튼 1개 + 여닫을 nav 1개.
   const menuButton = document.querySelector('#menu-button');
   const nav = document.querySelector('nav');
 
@@ -53,14 +50,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. 스크롤하면: 300px 넘었는지 보고 show 표시를 붙였다 뗐다 한다.
   // 60px 넘으면 nav에 scrolled 표시를 붙여 배경색을 바꾼다.
   window.addEventListener('scroll', () => {
-  const over = window.scrollY > 300;
-  topButton.classList.toggle('show', over);
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+    const over = window.scrollY > 300;
+    topButton.classList.toggle('show', over);
+    nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 
   // 3. 클릭하면: 맨 위로 미끄러지듯 간다
   topButton.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
   // 등장 감시: 구역이 20% 보이면 visible 표시를 붙인다.
@@ -78,16 +75,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // reveal 표시 붙은 구역 전부 감시 시작한다.
   document.querySelectorAll('.reveal').forEach((el) => watcher.observe(el));
 
-  // 폼 검증: 제출 막고 빈값·형식 검사한다.
-  // 통과하면 성공 문구만 남긴다. 실제 전송은 안 한다.
+  // 폼 검증: 막고 검사하고 통과하면 성공 문구만 남긴다.
   const form = document.querySelector('#contact form');
   const userName = document.querySelector('#contact-name');
   const userEmail = document.querySelector('#contact-email');
   const userMessage = document.querySelector('#contact-message');
 
   form.addEventListener('submit', (event) => {
-    // 기본 전송(새로고침)을 막는다. 없으면 검사 결과가 날아간다.
-    event.preventDefault();
+    event.preventDefault(); // 안 막으면 검사 결과가 새로고침에 날아간다.
     let valid = true;
 
     // 이름: 비었으면 오류, 아니면 지운다.
@@ -98,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#name-error').textContent = '';
     }
 
-    // 이메일: "문자@문자.문자" 형태만 통과시킨다.
+    // 이메일: "문자@문자.문자" 형태만 통과.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value.trim())) {
       document.querySelector('#email-error').textContent = '올바른 이메일 형식을 입력해주세요.';
       valid = false;
@@ -114,14 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
       document.querySelector('#message-error').textContent = '';
     }
 
-    // 전부 맞으면 성공 문구를 확정하고 입력칸을 비운다.
+    // 전부 맞으면 성공 문구 확정하고 비운다.
     if (valid) {
       document.querySelector('#form-result').textContent = '메시지를 받았습니다.';
       form.reset();
     }
   });
 
-  // 입력하면: 해당 오류 문구를 바로 지운다. input 이벤트 처리다.
+  // 입력하면 해당 오류 문구를 바로 지운다.
   userName.addEventListener('input', () => {
     document.querySelector('#name-error').textContent = '';
   });
@@ -132,15 +127,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#message-error').textContent = '';
   });
 
-  // 저장소 목록: 상태 1개가 화면을 결정한다.
-  // 로딩 → 성공·빈 결과·오류. 실패해도 망 단절이 아니면 ok 검사로 잡는다.
+  // 저장소 목록. fetch는 망 단절 때만 실패해서 ok 검사가 필수다.
   const reposStatus = document.querySelector('#repos-status');
   const reposList = document.querySelector('#repos-list');
   const reposRetry = document.querySelector('#repos-retry');
   const reposURL = 'https://api.github.com/users/sarguments/repos';
 
   // 목록 그리기: 저장 후 필터로 고르고 카드로 바꾼다.
-  // 비어 있으면 빈 결과 안내다.
   function renderRepos(repos) {
     STATE.repos = repos;
     const shown = repos.filter((repo) => STATE.reposFilter === '전체' || (repo.language || '기타') === STATE.reposFilter);
