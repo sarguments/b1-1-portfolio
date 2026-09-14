@@ -37,8 +37,13 @@
 
 ## 스크린샷
 
+**데스크톱**
 ![데스크톱 화면](images/desktop.png)
+
+**모바일**
 ![모바일 화면](images/mobile.png)
+
+**다크모드**
 ![다크모드 화면](images/dark.png)
 
 ## 현재 상태
