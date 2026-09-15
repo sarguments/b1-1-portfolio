@@ -2,12 +2,12 @@
 
 나를 소개하는 반응형 웹페이지. 외부 라이브러리 없이 HTML·CSS·JavaScript만으로 만든다.
 
-## 이 골격의 생각
+## 설계 기록
 
-- 구조(HTML)·표현(CSS)·동작(JS)을 파일로 나눈다. 섞지 않는 게 유지보수의 시작이다.
-- CSS 값은 `:root` 변수에 모아 둔다. 테마 변경이 변수 교체 한 번으로 끝나게 하려는 준비다.
-- JS는 `defer`로 연결한다. HTML 해석을 막지 않고, 해석이 끝난 뒤 순서대로 실행된다.
-- 변수는 기본 `const`, 이벤트는 `addEventListener`로 연결한다. `var`와 인라인 이벤트는 쓰지 않는다.
+- 접근성: 스킵링크·`aria-expanded`·`aria-describedby`·`role=status/alert`로 키보드·스크린리더 흐름을 챙긴다.
+- 상태 관리: 화면을 결정하는 값은 `STATE` 한 곳에 모으고 `setState`로만 바꾼다. 추적은 조건부 디버그 로그로 한다.
+- 견고성: 테마 저장은 try/catch, 목록 요청은 8초 타임아웃+수동 재시도, 외부 데이터는 이스케이프 후 삽입한다.
+- 금지 준수: `var`·인라인 이벤트·인라인 스타일·외부 라이브러리 없음.
 
 ## 구조
 
@@ -43,15 +43,6 @@
 
 ## 스크린샷
 
-**데스크톱**
-![데스크톱 화면](images/desktop.png)
-
-**모바일**
-![모바일 화면](images/mobile.png)
-
-**다크모드**
-![다크모드 화면](images/dark.png)
-
-## 현재 상태
-
-- 5구역·반응형·인터랙션·폼 검증·API 4상태까지 구현, 배포 검증 대기.
+| 데스크톱 | 모바일 | 다크모드 |
+| --- | --- | --- |
+| <img src="images/desktop.png" alt="데스크톱 화면" width="300" /> | <img src="images/mobile.png" alt="모바일 화면" width="300" /> | <img src="images/dark.png" alt="다크모드 화면" width="300" /> |
