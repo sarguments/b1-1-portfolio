@@ -14,16 +14,27 @@ document.addEventListener('DOMContentLoaded', () => {
     reposFilter: '전체',
   };
 
+  // STATE는 화면 상태의 단일 진실 원천이다. 호출부는 새 patch 객체를 전달한다.
+  // 현재는 Object.assign으로 병합하고, 불변 복사 방향으로 확장할 수 있게 한다.
+  function setState(patch) {
+    Object.assign(STATE, patch);
+    if (window.__B11_DEBUG) console.debug('[B1-1 STATE]', patch);
+  }
+
   // 적용: 테마 상태값을 화면에 반영한다.
   function applyTheme() {
     root.setAttribute('data-theme', STATE.theme);
-    localStorage.setItem('user-theme', STATE.theme);
+    try {
+      localStorage.setItem('user-theme', STATE.theme);
+    } catch {
+      // 저장하지 못하면 대체값으로 메모리 상태만 유지한다.
+    }
     themeButton.textContent = STATE.theme === 'dark' ? '라이트 모드' : '다크 모드';
   }
 
   // 클릭 1번 = 뒤집기 → 적용.
   themeButton.addEventListener('click', () => {
-    STATE.theme = STATE.theme === 'dark' ? 'light' : 'dark';
+    setState({ theme: STATE.theme === 'dark' ? 'light' : 'dark' });
     applyTheme();
   });
   applyTheme();
@@ -36,11 +47,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function applyMenu() {
     nav.classList.toggle('active', STATE.menuOpen);
     menuButton.textContent = STATE.menuOpen ? '닫기' : '메뉴';
+    menuButton.setAttribute('aria-expanded', String(STATE.menuOpen));
   }
 
   // 클릭 1번 = 상태 뒤집기 → 적용.
   menuButton.addEventListener('click', () => {
-    STATE.menuOpen = !STATE.menuOpen;
+    setState({ menuOpen: !STATE.menuOpen });
     applyMenu();
   });
 
@@ -80,6 +92,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const userName = document.querySelector('#contact-name');
   const userEmail = document.querySelector('#contact-email');
   const userMessage = document.querySelector('#contact-message');
+  const nameError = document.querySelector('#name-error');
+  const emailError = document.querySelector('#email-error');
+  const messageError = document.querySelector('#message-error');
+
+  function setFieldError(input, errorEl, msg) {
+    errorEl.textContent = msg;
+    input.setAttribute('aria-invalid', 'true');
+  }
+
+  function clearFieldError(input, errorEl) {
+    errorEl.textContent = '';
+    input.setAttribute('aria-invalid', 'false');
+  }
 
   form.addEventListener('submit', (event) => {
     event.preventDefault(); // 안 막으면 검사 결과가 새로고침에 날아간다.
@@ -87,26 +112,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 이름: 비었으면 오류, 아니면 지운다.
     if (userName.value.trim() === '') {
-      document.querySelector('#name-error').textContent = '이름을 입력해주세요.';
+      setFieldError(userName, nameError, '이름을 입력해주세요.');
       valid = false;
     } else {
-      document.querySelector('#name-error').textContent = '';
+      clearFieldError(userName, nameError);
     }
 
     // 이메일: "문자@문자.문자" 형태만 통과.
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value.trim())) {
-      document.querySelector('#email-error').textContent = '올바른 이메일 형식을 입력해주세요.';
+      setFieldError(userEmail, emailError, '올바른 이메일 형식을 입력해주세요.');
       valid = false;
     } else {
-      document.querySelector('#email-error').textContent = '';
+      clearFieldError(userEmail, emailError);
     }
 
     // 메시지: 비었으면 오류, 아니면 지운다.
     if (userMessage.value.trim() === '') {
-      document.querySelector('#message-error').textContent = '메시지를 입력해주세요.';
+      setFieldError(userMessage, messageError, '메시지를 입력해주세요.');
       valid = false;
     } else {
-      document.querySelector('#message-error').textContent = '';
+      clearFieldError(userMessage, messageError);
     }
 
     // 전부 맞으면 성공 문구 확정하고 비운다.
@@ -118,13 +143,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 입력하면 해당 오류 문구를 바로 지운다.
   userName.addEventListener('input', () => {
-    document.querySelector('#name-error').textContent = '';
+    clearFieldError(userName, nameError);
   });
   userEmail.addEventListener('input', () => {
-    document.querySelector('#email-error').textContent = '';
+    clearFieldError(userEmail, emailError);
   });
   userMessage.addEventListener('input', () => {
-    document.querySelector('#message-error').textContent = '';
+    clearFieldError(userMessage, messageError);
   });
 
   // 저장소 목록. fetch는 망 단절 때만 실패해서 ok 검사가 필수다.
@@ -132,6 +157,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const reposList = document.querySelector('#repos-list');
   const reposRetry = document.querySelector('#repos-retry');
   const reposURL = 'https://api.github.com/users/sarguments/repos';
+
+  function escapeHTML(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
 
   // 목록 그리기: 저장 후 필터로 고르고 카드로 바꾼다.
   function renderRepos(repos) {
@@ -148,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 구조분해: 객체에서 값을 꺼내 변수에 담는다.
         const { name, html_url: url, description } = repo;
         const desc = description || '설명 없음';
-        return `<article><a href="${url}">${name}</a><p>${desc}</p></article>`;
+        return `<article><a href="${escapeHTML(url)}">${escapeHTML(name)}</a><p>${escapeHTML(desc)}</p></article>`;
       })
       .forEach((html) => {
         reposList.insertAdjacentHTML('beforeend', html);
@@ -166,20 +200,27 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.type = 'button';
       btn.textContent = lang;
       btn.addEventListener('click', () => {
-        STATE.reposFilter = lang;
+        setState({ reposFilter: lang });
         renderRepos(STATE.repos);
       });
       filters.appendChild(btn);
     });
   }
 
-  // 불러오기: 로딩 표시 후 fetch, ok 검사, 상태별 분기다.
+  // 재시도 정책: 수동 재시도 버튼만 제공하고 자동 재시도하지 않는다.
+  // 요청은 8초 뒤 중단하며, 결과는 캐싱하지 않는다.
   async function loadRepos() {
     reposStatus.textContent = '저장소 목록을 불러오는 중입니다.';
     reposList.innerHTML = '';
     reposRetry.hidden = true;
+    const controller = new AbortController();
+    let timedOut = false;
+    const timeoutId = window.setTimeout(() => {
+      timedOut = true;
+      controller.abort();
+    }, 8000);
     try {
-      const res = await fetch(reposURL);
+      const res = await fetch(reposURL, { signal: controller.signal });
       if (!res.ok) {
         if (res.status === 403) throw new Error('API 호출 한도를 초과했습니다. 잠시 후 다시 시도해주세요.');
         if (res.status === 404) throw new Error('사용자를 찾을 수 없습니다.');
@@ -189,8 +230,10 @@ document.addEventListener('DOMContentLoaded', () => {
       renderFilters(STATE.repos);
     } catch (err) {
       // 망 단절이면 err로 바로 온다. 404·403은 위에서 만든 메시지다.
-      reposStatus.textContent = err.message;
+      reposStatus.textContent = timedOut ? '요청 시간이 초과됐습니다. 다시 시도해주세요.' : err.message;
       reposRetry.hidden = false;
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   }
 
