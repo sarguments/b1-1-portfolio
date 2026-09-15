@@ -20,7 +20,7 @@
 
 ## 학습 자료
 
-- [이해용 강의 슬라이드](presentation/index.html)
+- [이해용 강의 슬라이드](https://sarguments.github.io/b1-1-portfolio/presentation/#/1)
 
 ## 실행
 
