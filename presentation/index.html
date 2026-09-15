@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>B1-1 이해용 강의</title>
+<style>
+  :root { --accent: #1f6feb; --ink: #1a1b1e; --muted: #5c6370; --card: #f8f9fb; --line: #e5e7eb; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--ink); line-height: 1.7; }
+  .deck { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .slides > section { display: none; }
+  .slides > section.active { display: block; }
+  h1 { font-size: 2rem; line-height: 1.3; }
+  h2 { font-size: 1.4rem; color: var(--accent); border-bottom: 2px solid var(--line); padding-bottom: .4rem; }
+  li { margin: .4em 0; }
+  code { background: #eef1f4; padding: 0 .35em; border-radius: 6px; font-size: .95em; }
+  .flow { font-size: 1.25rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .9em 1em; margin: 1em 0; line-height: 2; }
+  .flow code { font-size: 1em; }
+  .core { border-left: 6px solid var(--accent); background: #f0f6ff; padding: .7em 1em; margin-top: 1em; }
+  .core::before { content: "📌 기억할 한 문장"; display: block; font-weight: 700; margin-bottom: .3em; }
+  .check { border-left: 6px solid #e67700; background: #fff8e6; padding: .7em 1em; margin-top: 1em; }
+  .check::before { content: "✋ 덮고 말해보기"; display: block; font-weight: 700; margin-bottom: .3em; }
+  svg.diagram { width: 100%; height: auto; background: var(--card); border: 1px solid var(--line); border-radius: 12px; margin: 1em 0; }
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--line); display: flex; align-items: center; justify-content: center; gap: 1rem; padding: .6rem; }
+  .nav button { font: inherit; padding: .4rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; }
+  .nav button:hover { border-color: var(--accent); color: var(--accent); }
+  #counter { color: var(--muted); min-width: 4em; text-align: center; }
+  @media print { .nav { display: none; } .slides > section { display: block !important; border-top: 2px solid #ccc; padding: 1em 0; } }
+</style>
+</head>
+<body>
+<div class="deck">
+<div class="slides">
+
+<section>
+<h1>B1-1 이해용 강의</h1>
+<p>외우지 말고 이해하기. 각 장의 파란 박스만 자기 말로 말할 수 있으면 된다.</p>
+<p>조작: 방향키 · 스페이스 · 하단 버튼. 주소에 장 번호가 남는다.</p>
+</section>
+
+<section>
+<h2>0. 전체 지도와 파일 구조</h2>
+<svg class="diagram" viewBox="0 0 640 220" role="img" aria-label="파일 구조도">
+<rect x="230" y="10" width="180" height="48" rx="10" fill="#1f6feb"/><text x="320" y="40" text-anchor="middle" fill="#fff" font-size="16">index.html (구조)</text>
+<rect x="60" y="120" width="160" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="140" y="149" text-anchor="middle" font-size="14">css/style.css</text>
+<rect x="240" y="120" width="160" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="149" text-anchor="middle" font-size="14">js/main.js</text>
+<rect x="420" y="120" width="160" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="500" y="149" text-anchor="middle" font-size="14">images/</text>
+<line x1="290" y1="58" x2="170" y2="120" stroke="#1f6feb" stroke-width="2"/><line x1="320" y1="58" x2="320" y2="120" stroke="#1f6feb" stroke-width="2"/><line x1="350" y1="58" x2="470" y2="120" stroke="#1f6feb" stroke-width="2"/>
+<text x="320" y="205" text-anchor="middle" font-size="13" fill="#5c6370">구조 · 표현 · 동작을 파일로 나눈다. 섞지 않는다.</text>
+</svg>
+<ul>
+<li>화면 만들기: 반응형 · Flex/Grid · 모바일 퍼스트</li>
+<li>움직임 만들기: 이벤트 · STATE · 상태→렌더</li>
+<li>바깥 데이터: fetch · 목록 변환 · 폼 검증</li>
+<li>안 보이는 배려: 접근성 · FOUC · 디버그</li>
+</ul>
+<div class="core">이 강의는 화면 → 움직임 → 데이터 → 배려 순서로 간다. 코드 위치도 이 순서다.</div>
+</section>
+
+<section>
+<h2>1. 반응형과 미디어쿼리</h2>
+<svg class="diagram" viewBox="0 0 640 190" role="img" aria-label="브레이크포인트 도식">
+<rect x="20" y="20" width="120" height="110" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="80" y="55" text-anchor="middle" font-size="14" font-weight="bold">360px</text><text x="80" y="80" text-anchor="middle" font-size="12">카드 1열</text><text x="80" y="100" text-anchor="middle" font-size="12">햄버거</text>
+<text x="165" y="85" text-anchor="middle" font-size="20" fill="#1f6feb">→</text>
+<rect x="190" y="20" width="150" height="110" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="265" y="55" text-anchor="middle" font-size="14" font-weight="bold">768px</text><text x="265" y="80" text-anchor="middle" font-size="12">내비 펼침</text><text x="265" y="100" text-anchor="middle" font-size="12">카드 2열</text>
+<text x="365" y="85" text-anchor="middle" font-size="20" fill="#1f6feb">→</text>
+<rect x="390" y="20" width="230" height="110" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="505" y="55" text-anchor="middle" font-size="14" font-weight="bold">1024px</text><text x="505" y="80" text-anchor="middle" font-size="12">최대폭 1024px 중앙</text><text x="505" y="100" text-anchor="middle" font-size="12">카드 4열</text>
+<text x="320" y="165" text-anchor="middle" font-size="13" fill="#5c6370">기본은 좁은 화면. min-width에서 넓혀 간다.</text>
+</svg>
+<ul>
+<li>미디어쿼리는 화면 너비 조건에 따라 다른 스타일을 덧입히는 분기</li>
+<li>모바일 퍼스트 = 좁은 화면을 기본으로 쓰고 넓어질 때 덮어쓴다</li>
+</ul>
+<div class="core">좁은 화면이 기본, 넓어지면 덮어쓴다. 그래서 저사양·터치 환경이 먼저 보장된다.</div>
+<div class="check">왜 데스크톱을 기본으로 안 하는가?</div>
+</section>
+
+<section>
+<h2>2. Flex vs Grid</h2>
+<ul>
+<li>Flex는 한 축(가로 또는 세로) 정렬용 1차원. 내비 로고 좌측·메뉴 우측이 정석</li>
+<li>Grid는 행·열 동시 제어용 2차원. 카드 격자가 정석</li>
+<li><code>auto-fit minmax(260px, 1fr)</code>: 빈칸을 접어 카드를 늘린다</li>
+<li>반대 <code>auto-fill</code>은 빈칸을 유지해서 카드가 한쪽으로 쏠린다</li>
+</ul>
+<div class="core">한 줄 정렬은 Flex, 격자는 Grid. 카드가 적어도 꽉 차 보이는 건 auto-fit 덕분이다.</div>
+<div class="check">내비를 Grid로, 카드를 Flex로 하면 뭐가 불편한가?</div>
+</section>
+
+<section>
+<h2>3. 테마·저장소·FOUC</h2>
+<div class="flow"><code>&lt;head&gt; 선주입</code> → 화면 그리기 → 토글 → <code>localStorage</code> 저장 → 새로고침 복원</div>
+<ul>
+<li><code>localStorage</code>는 브라우저에 문자열을 저장하는 창고. 새로고침해도 남는다</li>
+<li>저장은 <code>try/catch</code>: 막히면 메모리 상태로만 동작한다</li>
+<li>FOUC = 스타일 전 흰 화면 번쩍임. <code>DOMContentLoaded</code>에서 복원하면 생긴다</li>
+<li>그래서 <code>&lt;head&gt;</code> 동기 스크립트로 <code>data-theme</code>을 그리기 전에 박는다</li>
+</ul>
+<div class="core">깜빡임의 원인은 복원 시점이다. 그리기 전에 박으면 0이 된다.</div>
+<div class="check">선주입 스크립트를 body 끝으로 옮기면 무슨 일이 생기는가?</div>
+</section>
+
+<section>
+<h2>4. 이벤트와 var 금지</h2>
+<ul>
+<li><code>defer</code> = 해석을 막지 않고 받아서 해석 끝난 뒤 순서대로 실행. DOM 준비 보장</li>
+<li><code>async</code>는 완료 즉시 실행이라 DOM 미완성 위험. 원문은 <code>defer</code> 요구</li>
+<li><code>var</code> 금지 이유: 함수 스코프·호이스팅 <code>undefined</code>·중복 선언 허용</li>
+<li>기본 <code>const</code>, 재할당만 <code>let</code>. 인라인 <code>onclick</code> 대신 <code>addEventListener</code></li>
+</ul>
+<div class="core">defer는 순서 보장, var 금지는 예측 가능성. 둘 다 나중에 헤매지 않기 위한 규칙이다.</div>
+<div class="check">var의 세 가지 문제점을 말해보기.</div>
+</section>
+
+<section>
+<h2>5. STATE와 상태→렌더</h2>
+<svg class="diagram" viewBox="0 0 640 150" role="img" aria-label="상태 렌더 흐름도">
+<rect x="10" y="45" width="110" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="65" y="74" text-anchor="middle" font-size="14">이벤트</text>
+<text x="135" y="74" text-anchor="middle" font-size="20" fill="#1f6feb">→</text>
+<rect x="150" y="45" width="160" height="48" rx="10" fill="#1f6feb"/><text x="230" y="74" text-anchor="middle" fill="#fff" font-size="14">setState (STATE)</text>
+<text x="325" y="74" text-anchor="middle" font-size="20" fill="#1f6feb">→</text>
+<rect x="340" y="45" width="130" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="405" y="74" text-anchor="middle" font-size="14">적용 함수</text>
+<text x="485" y="74" text-anchor="middle" font-size="20" fill="#1f6feb">→</text>
+<rect x="500" y="45" width="130" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="565" y="74" text-anchor="middle" font-size="14">DOM 갱신</text>
+<text x="320" y="125" text-anchor="middle" font-size="13" fill="#5c6370">테마 · 메뉴 · 맨 위로 · 목록 · 폼, 5흐름 전부 같은 모양.</text>
+</svg>
+<ul>
+<li>STATE = 화면을 결정하는 값을 한 객체에 모은 것. 단일 진실 원천</li>
+<li>값은 <code>setState</code>로만 바꾼다. 흩어진 변수보다 추적이 쉽다</li>
+</ul>
+<div class="core">이벤트는 값만 바꾸고 그리기는 따로. 흐름이 다섯 개여도 모양은 하나다.</div>
+<div class="check">변수 다섯 개로 나눠 관리하면 뭐가 어긋나는가?</div>
+</section>
+
+<section>
+<h2>6. 스크롤 등장과 임계값</h2>
+<ul>
+<li><code>scroll</code> 리스너로 직접 계산하면 Reflow·Repaint 반복으로 버벅인다</li>
+<li><code>IntersectionObserver</code> = 화면 진입을 브라우저가 비동기로 알려주는 API</li>
+<li>임계값 0.2 = 20% 보이면 콜백 실행. 0은 닿자마자, 1은 전부 보여야</li>
+<li>한 번 보이면 <code>unobserve</code>로 감시 종료. 맨 위로는 300px, 내비 변경은 60px</li>
+</ul>
+<div class="core">스크롤 계산은 브라우저에 맡기고, 기준은 0.2. 다 본 건 감시를 끈다.</div>
+<div class="check">임계값을 1로 바꾸면 카드 등장이 어떻게 달라지는가?</div>
+</section>
+
+<section>
+<h2>7. fetch와 4상태</h2>
+<svg class="diagram" viewBox="0 0 640 260" role="img" aria-label="fetch 상태 분기도">
+<rect x="230" y="8" width="180" height="44" rx="10" fill="#1f6feb"/><text x="320" y="36" text-anchor="middle" fill="#fff" font-size="15">fetch 요청</text>
+<line x1="320" y1="52" x2="320" y2="72" stroke="#1f6feb" stroke-width="2"/>
+<rect x="200" y="72" width="240" height="44" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="100" text-anchor="middle" font-size="14">response.ok 검사</text>
+<line x1="230" y1="116" x2="120" y2="140" stroke="#1f6feb" stroke-width="2"/><line x1="320" y1="116" x2="320" y2="140" stroke="#1f6feb" stroke-width="2"/><line x1="410" y1="116" x2="520" y2="140" stroke="#1f6feb" stroke-width="2"/>
+<rect x="20" y="140" width="200" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="120" y="168" text-anchor="middle" font-size="13">403 한도 초과</text>
+<rect x="220" y="140" width="200" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="320" y="168" text-anchor="middle" font-size="13">404 사용자 없음</text>
+<rect x="420" y="140" width="200" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="520" y="168" text-anchor="middle" font-size="13">망 단절 → catch</text>
+<rect x="140" y="205" width="360" height="40" rx="10" fill="#f0f6ff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="231" text-anchor="middle" font-size="13">로딩 · 성공 · 빈 결과 · 오류 + 재시도</text>
+</svg>
+<ul>
+<li><code>fetch</code>는 404·403에도 실패하지 않는다. 망 단절 때만 <code>catch</code>로 간다</li>
+<li>요청은 8초 타임아웃(<code>AbortController</code>), 캐싱 없음</li>
+</ul>
+<div class="core">fetch의 함정은 성공처럼 보이는 실패다. ok 검사로 잡는다.</div>
+<div class="check">ok 검사를 빼먹으면 403 때 화면이 어떻게 되는가?</div>
+</section>
+
+<section>
+<h2>8. 목록 변환 3단계</h2>
+<div class="flow"><code>filter</code>로 선별 → <code>map</code>으로 카드 변환 → <code>forEach</code>로 삽입</div>
+<ul>
+<li><code>filter</code>: 언어 조건에 맞는 저장소만 고른다</li>
+<li><code>map</code>: 객체 1개를 카드 HTML 1개로 바꾼다. 구조분해로 값을 꺼낸다</li>
+<li>외부 데이터는 <code>escapeHTML</code> 후 삽입. 스크립트 섞임(XSS) 방지</li>
+</ul>
+<div class="core">고르고 → 바꾸고 → 꽂는다. 꽂기 전에 이스케이프가 끼어 있다.</div>
+<div class="check">이스케이프 없이 name을 그대로 넣으면 무슨 위험이 있는가?</div>
+</section>
+
+<section>
+<h2>9. 폼 검증과 접근성 연결</h2>
+<ul>
+<li><code>submit</code>에서 <code>preventDefault</code>: 안 막으면 검사 결과가 새로고침에 날아간다</li>
+<li>빈값·이메일 정규식 검사 후 오류 표시, 입력(<code>input</code>)하면 지운다</li>
+<li><code>aria-describedby</code> = 입력칸과 오류 문구를 연결. 스크린리더가 같이 읽는다</li>
+<li><code>aria-invalid</code> 토글, 오류 단락은 <code>role=alert</code>로 즉시 알림</li>
+</ul>
+<div class="core">검증은 막고·검사하고·알리고. 알리는 쪽은 장애 여부와 무관하게 모두에게 보인다.</div>
+<div class="check">preventDefault를 빼면 왜 검증이 소용없어지는가?</div>
+</section>
+
+<section>
+<h2>10. 스킵링크와 라이브 영역</h2>
+<ul>
+<li>스킵링크: 키보드 사용자가 내비를 Tab으로 다 넘기지 않고 본문으로 점프</li>
+<li>평소엔 화면 밖(<code>top: -100px</code>), Tab 포커스가 오면 나타난다</li>
+<li><code>role=status</code> = 상태 변화(목록·전송 결과)를 자동으로 읽어준다</li>
+<li><code>aria-expanded</code> = 메뉴 열림 상태를 스크린리더에 전달. JS가 동기화한다</li>
+</ul>
+<div class="core">안 보이는 배려 셋트: 건너뛰기 · 자동 읽기 · 상태 전달.</div>
+<div class="check">스킵링크 없이 키보드만으로 본문에 가려면 몇 번 눌러야 하는가?</div>
+</section>
+
+<section>
+<h2>11. 디버그와 기준값</h2>
+<ul>
+<li><code>__B11_DEBUG</code>: 상태 변경 로그 스위치. 평소엔 꺼져 있어 조용하다</li>
+<li>콘솔에 <code>window.__B11_DEBUG = true</code> → 이후 변경이 찍힌다</li>
+<li>기준값 3종: 스크롤탑 300px · 내비 60px · 임계값 0.2. 바꾸면 README에 명시</li>
+</ul>
+<div class="core">평소엔 조용히, 볼 때만 켠다. 숫자를 바꾸면 문서도 같이 바꾼다.</div>
+<div class="check">상시 로그를 켜두면 뭐가 문제인가?</div>
+</section>
+
+<section>
+<h2>12. 최종 점검</h2>
+<ul>
+<li>파란 박스 12개를 덮고 말할 수 있는가?</li>
+<li>주황 박스 12개에 답할 수 있는가?</li>
+<li>배포 URL에서 5구역·테마·메뉴·목록·폼을 직접 보여줄 수 있는가?</li>
+</ul>
+<div class="core">이 세 가지가 되면 동료평가에서 막힐 질문이 없다.</div>
+</section>
+
+</div>
+</div>
+<div class="nav">
+<button type="button" id="prev">이전</button>
+<span id="counter"></span>
+<button type="button" id="next">다음</button>
+</div>
+<script>
+  const slides = Array.from(document.querySelectorAll('.slides > section'));
+  const counter = document.querySelector('#counter');
+  let current = 0;
+  function show(n) {
+    current = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, i) => s.classList.toggle('active', i === current));
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    window.location.hash = '#/' + (current + 1);
+  }
+  function fromHash() {
+    const m = /^#\/(\d+)$/.exec(window.location.hash);
+    show(m ? parseInt(m[1], 10) - 1 : 0);
+  }
+  document.querySelector('#prev').addEventListener('click', () => show(current - 1));
+  document.querySelector('#next').addEventListener('click', () => show(current + 1));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    if (e.key === 'Home') show(0);
+    if (e.key === 'End') show(slides.length - 1);
+  });
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+</script>
+</body>
+</html>
