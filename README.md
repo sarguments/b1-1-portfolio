@@ -1,5 +1,7 @@
 # B1-1 포트폴리오
 
+🔗 **라이브 데모**: <https://sarguments.github.io/b1-1-portfolio/>
+
 나를 소개하는 반응형 웹페이지. 외부 라이브러리 없이 HTML·CSS·JavaScript만으로 만든다.
 
 ## 설계 기록
