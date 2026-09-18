@@ -15,7 +15,7 @@
 - `css/style.css` — 변수와 기본 스타일
 - `js/main.js` — 동작 진입점
 - `images/` — 이미지 보관
-- `presentation/` — 이해용 강의 슬라이드(단일 `index.html`, 외부 라이브러리 없음)
+- `presentation/` — 이해용 강의 슬라이드(질문 단위로 구성, 코드 위치와 확인 방법 포함. 단일 `index.html`, 외부 라이브러리 없음)
 - 배포 파일: GitHub Pages는 추가 파일이 필요 없고 루트 `index.html` 기준으로 서빙한다. `CNAME`은 커스텀 도메인을 연결할 때만 추가한다.
 
 ## 학습 자료
