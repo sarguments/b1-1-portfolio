@@ -106,50 +106,74 @@ document.addEventListener('DOMContentLoaded', () => {
     input.setAttribute('aria-invalid', 'false');
   }
 
+  // 필드 검사 3종: 오류 문구를 갱신하고 통과 여부를 돌려준다.
+  function checkName() {
+    const ok = userName.value.trim() !== '';
+    if (ok) {
+      clearFieldError(userName, nameError);
+    } else {
+      setFieldError(userName, nameError, '이름을 입력해주세요.');
+    }
+    return ok;
+  }
+
+  function checkEmail() {
+    // "문자@문자.문자" 형태만 통과.
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value.trim());
+    if (ok) {
+      clearFieldError(userEmail, emailError);
+    } else {
+      setFieldError(userEmail, emailError, '올바른 이메일 형식을 입력해주세요.');
+    }
+    return ok;
+  }
+
+  function checkMessage() {
+    const ok = userMessage.value.trim() !== '';
+    if (ok) {
+      clearFieldError(userMessage, messageError);
+    } else {
+      setFieldError(userMessage, messageError, '메시지를 입력해주세요.');
+    }
+    return ok;
+  }
+
+  let submitAttempted = false;
+
   form.addEventListener('submit', (event) => {
     event.preventDefault(); // 안 막으면 검사 결과가 새로고침에 날아간다.
-    let valid = true;
+    submitAttempted = true;
+    // 배열을 먼저 만들어 3필드를 모두 검사한 뒤 통과 여부를 합친다.
+    const valid = [checkName(), checkEmail(), checkMessage()].every((ok) => ok);
 
-    // 이름: 비었으면 오류, 아니면 지운다.
-    if (userName.value.trim() === '') {
-      setFieldError(userName, nameError, '이름을 입력해주세요.');
-      valid = false;
-    } else {
-      clearFieldError(userName, nameError);
-    }
-
-    // 이메일: "문자@문자.문자" 형태만 통과.
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(userEmail.value.trim())) {
-      setFieldError(userEmail, emailError, '올바른 이메일 형식을 입력해주세요.');
-      valid = false;
-    } else {
-      clearFieldError(userEmail, emailError);
-    }
-
-    // 메시지: 비었으면 오류, 아니면 지운다.
-    if (userMessage.value.trim() === '') {
-      setFieldError(userMessage, messageError, '메시지를 입력해주세요.');
-      valid = false;
-    } else {
-      clearFieldError(userMessage, messageError);
-    }
-
-    // 전부 맞으면 성공 문구 확정하고 비운다.
     if (valid) {
+      submitAttempted = false;
       document.querySelector('#form-result').textContent = '메시지를 받았습니다.';
       form.reset();
     }
   });
 
-  // 입력하면 해당 오류 문구를 바로 지운다.
+  // 첫 제출 실패 전에는 입력 시 오류를 지우기만 하고, 실패 후에는 그 필드만 즉시 재검사한다.
   userName.addEventListener('input', () => {
-    clearFieldError(userName, nameError);
+    if (submitAttempted) {
+      checkName();
+    } else {
+      clearFieldError(userName, nameError);
+    }
   });
   userEmail.addEventListener('input', () => {
-    clearFieldError(userEmail, emailError);
+    if (submitAttempted) {
+      checkEmail();
+    } else {
+      clearFieldError(userEmail, emailError);
+    }
   });
   userMessage.addEventListener('input', () => {
-    clearFieldError(userMessage, messageError);
+    if (submitAttempted) {
+      checkMessage();
+    } else {
+      clearFieldError(userMessage, messageError);
+    }
   });
 
   // 저장소 목록. fetch는 망 단절 때만 실패해서 ok 검사가 필수다.
