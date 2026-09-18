@@ -73,7 +73,8 @@
     </section>
     <section id="contact" class="reveal">
       <h2>문의</h2>
-      <form>
+      <!-- novalidate: 브라우저 기본 검증 풍선 대신 main.js의 필드별 커스텀 검증을 쓴다. -->
+      <form novalidate>
         <label for="contact-name">이름</label>
         <!-- aria-describedby로 에러 문구와 연결, aria-invalid 초기값은 false -->
         <input type="text" id="contact-name" name="name" required aria-describedby="name-error" aria-invalid="false" />
