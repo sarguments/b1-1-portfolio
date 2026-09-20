@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>B1-1 이해용 강의</title>
+<title>B1-1 포트폴리오 발표</title>
 <style>
   :root { --accent: #1f6feb; --ink: #1a1b1e; --muted: #5c6370; --card: #f8f9fb; --line: #e5e7eb; }
   * { box-sizing: border-box; }
@@ -11,19 +11,16 @@
   .deck { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
   .slides > section { display: none; }
   .slides > section.active { display: block; }
-  h1 { font-size: 2rem; line-height: 1.3; }
   h2 { font-size: 1.4rem; color: var(--accent); border-bottom: 2px solid var(--line); padding-bottom: .4rem; }
   li { margin: .4em 0; }
   code { background: #eef1f4; padding: 0 .35em; border-radius: 6px; font-size: .95em; }
-  .flow { font-size: 1.25rem; font-weight: 700; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .9em 1em; margin: 1em 0; line-height: 2; }
-  .flow code { font-size: 1em; }
-  .core { border-left: 6px solid var(--accent); background: #f0f6ff; padding: .7em 1em; margin-top: 1em; }
-  .core::before { content: "📌 기억할 한 문장"; display: block; font-weight: 700; margin-bottom: .3em; }
-  .check { border-left: 6px solid #e67700; background: #fff8e6; padding: .7em 1em; margin-top: 1em; }
-  .check::before { content: "✋ 직접 확인"; display: block; font-weight: 700; margin-bottom: .3em; }
-  .note { border-left: 6px solid var(--muted); background: var(--card); padding: .7em 1em; margin-top: 1em; color: var(--ink); }
-  .locs { font-size: .9rem; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .7em 1em; margin: 1em 0; }
-  .locs code { font-size: .88em; }
+  pre.code { font-size: .82rem; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: .9em 1em; margin: 1em 0; overflow-x: auto; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.55; }
+  pre.code code { background: none; padding: 0; font-size: 1em; }
+  .t-cm { color: #6e7781; font-style: italic; } .t-st { color: #0a3069; } .t-kw { color: #cf222e; }
+  .t-nu { color: #0550ae; } .t-fn { color: #8250df; } .t-var { color: #953800; }
+  .t-sel { color: #1f6feb; } .t-prop { color: #0550ae; } .t-tag { color: #116329; } .t-attr { color: #7d4e00; }
+  .terms { margin-top: 1.2em; padding-top: .7em; border-top: 1px dashed var(--line); font-size: .84rem; color: var(--muted); line-height: 2; }
+  .terms code { white-space: nowrap; }
   table { border-collapse: collapse; width: 100%; font-size: .92rem; margin: 1em 0; }
   th, td { border: 1px solid var(--line); padding: .45em .6em; text-align: left; vertical-align: top; }
   th { background: var(--card); }
@@ -32,8 +29,6 @@
   .nav button { font: inherit; padding: .4rem 1.1rem; border: 1px solid var(--line); border-radius: 10px; background: var(--card); cursor: pointer; }
   .nav button:hover { border-color: var(--accent); color: var(--accent); }
   #counter { color: var(--muted); min-width: 4em; text-align: center; }
-  body:not(.locs-on) .loc { display: none; }
-  #locs-toggle[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 700; }
   @media print { .nav { display: none; } .slides > section { display: block !important; page-break-before: always; border-top: 2px solid #ccc; padding: 1em 0; } }
 </style>
 </head>
@@ -46,15 +41,10 @@
 </defs></svg>
 <div class="slides">
 
-<section>
-<h1>B1-1 이해용 강의</h1>
-<p>외우지 말고 이해하기. 이번엔 순서를 바꿨다. 개념별로 나열하는 대신, 이 페이지가 답해야 할 열다섯 가지 질문에 따라간다.</p>
-<p>매 장은 같은 모양이다. 질문이 뭔지, 이 코드가 실제로 뭘 하는지, 어느 파일 몇 줄에 있는지, 화면에서 뭘 눌러보면 되는지. 파란 박스만 자기 말로 말할 수 있으면 된다.</p>
-<p>조작: 방향키 · 스페이스 · 하단 버튼, 모바일에선 좌우 스와이프. 스페이스는 다음 장으로 가니 한 장이 길 때는 휠로 내리세요. 주소에 장 번호가 남는다.</p>
-</section>
 
 <section>
-<h2>전체 흐름: 모든 장은 이 흐름의 한 지점</h2>
+<h2>전체 흐름: 모든 동작은 하나의 모양입니다</h2>
+<p>B1-1 포트폴리오 — 외부 라이브러리 없이 HTML·CSS·JavaScript만으로 만든 반응형 자기소개 페이지입니다. (<a href="https://sarguments.github.io/b1-1-portfolio/">sarguments.github.io/b1-1-portfolio</a>)</p>
 <svg class="diagram" viewBox="0 0 640 160" role="img" aria-label="상태 렌더 흐름도">
 <rect x="10" y="45" width="110" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="65" y="74" text-anchor="middle" font-size="14">이벤트</text>
 <line x1="122" y1="69" x2="148" y2="69" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
@@ -66,35 +56,31 @@
 <text x="320" y="132" text-anchor="middle" font-size="13" fill="#5c6370">테마 · 메뉴 · 목록 세 흐름이 이 모양. 폼과 스크롤은 예외.</text>
 </svg>
 <ul>
-<li>사용자 행동을 <code>addEventListener</code>로 받고, 값을 <code>setState</code>로 바꾸고, 적용 함수가 화면을 다시 그린다.</li>
-<li>이 순서를 손으로 그리며 말할 수 있으면 뒤의 장 절반은 이미 알고 있는 거다.</li>
+<li>사용자 행동을 <code>addEventListener</code>로 받고, 값을 <code>setState</code>로 바꾸고, 적용 함수가 화면을 다시 그립니다. 이 페이지의 모든 동작이 이 순서입니다.</li>
+<li>값을 바꾸는 통로가 <code>setState</code> 하나라서, "지금 화면이 왜 이렇게 보이는가"를 거슬러 올라가면 항상 STATE에 닿습니다.</li>
 </ul>
-<p class="locs loc">리스너 열 곳: <span class="loc"><code>js/main.js:36, 54, 64, 71, 143, 157, 164, 171, 234, 272</code></span> · <code>setState</code>: <span class="loc"><code>js/main.js:19</code></span> · <code>STATE</code>: <span class="loc"><code>js/main.js:10-15</code></span></p>
-<div class="check">빈 종이에 이 흐름도를 그리고, 각 칸에 실제 함수 이름을 붙여보자. <code>applyTheme</code> · <code>applyMenu</code> · <code>renderRepos</code>.</div>
+<pre class="code" data-lang="js"><code>// 화면을 결정하는 값은 한 객체에 모읍니다
+const STATE = {
+  theme: root.getAttribute('data-theme') || 'light',   // 지금 테마
+  menuOpen: false,                                     // 메뉴 열림/닫힘
+  repos: [],                                           // API에서 받은 저장소 목록
+  reposFilter: '전체',                                  // 언어 필터 기준
+};
+
+// 값은 setState로만 바꾼다 — 직접 대입은 금지
+function setState(patch) {
+  Object.assign(STATE, patch);   // patch에 온 키만 STATE에 복사
+  // 디버그 스위치를 켠 경우에만 "방금 뭐가 바뀌었나"가 찍힌다
+  if (window.__B11_DEBUG) console.debug('[B1-1 STATE]', patch);
+}</code></pre>
+<p><b>한 번의 클릭을 따라가 보면</b> — 테마 버튼을 누르면 <code>setState({ theme: 'dark' })</code>가 호출됩니다. <code>Object.assign</code>은 patch로 온 키만 복사해서 붙이므로 <b><code>theme</code>만 바뀌고</b> 나머지 셋(<code>menuOpen</code>·<code>repos</code>·<code>reposFilter</code>)은 그대로입니다. 그 다음 <code>applyTheme()</code>이 바뀐 값을 읽어 화면을 다시 그립니다. <code>STATE.theme = 'dark'</code>처럼 직접 대입하지 않고 일부러 함수를 거치는 이유는 세 번째 줄에 있습니다. 통로가 하나니 이 한 곳에서 이 페이지의 모든 값 변경을 지켜볼 수 있습니다.</p>
+<p>이 뒤의 열다섯 장이 각각 "어디서 받고, 어떤 값을 바꿔, 무엇을 다시 그리는지"를 보여줍니다.</p>
+<div class="terms">🔤 <code>addEventListener</code> — “이 요소에서 저 일이 일어나면 이 함수 실행”을 등록 · <code>DOM</code> — HTML 구조를 브라우저가 나무 모양 객체로 만들어 놓은 것 · <code>적용 함수</code> — STATE의 값을 읽어 화면을 다시 그리는 함수 · <code>patch</code> — setState에게 “바뀐 것만” 넘기는 객체 · <code>Object.assign</code> — 한 객체의 속성을 다른 객체에 복사하는 함수</div>
 </section>
 
-<section>
-<h2>문서와 코드가 달랐던 여섯 곳 — 세 곳은 9/19에 코드로 채움</h2>
-<p>README와 요구사항에 쓰인 말을 그대로 믿고 외우면, 코드를 같이 열어본 순간 말꼬리가 잡힌다. 이 강의는 정정하지 않고 코드의 실제를 그대로 말한다. 2026-09-19에 세 곳(Q1 1200 분기·Q9 위임·Q13 내비 space-between)은 채점표대로 코드를 리팩터링했고, 나머지는 코드의 실제가 답이다.</p>
-<table>
-<tr><th>말</th><th>코드의 실제</th></tr>
-<tr><td>반응형 확인 기준이 360·768·1200px</td><td>넓히는 분기는 768·1024·1200 세 개다 — 1200 분기는 9/19에 신설했다. 360은 쿼리가 아니라 모바일 퍼스트 기본값이고, 1024는 README에 적히지 않았다. (Q1)</td></tr>
-<tr><td>폼 오류에 즉각 피드백</td><td>처음부터 즉각이 아니었다. 네이티브 검증이 커스텀 문구를 막는 결함을 뒤늦게 발견해서 <code>novalidate</code>와 입력 중 재검사를 추가했다. 그 내력이 Git 로그에 있다. (Q5)</td></tr>
-<tr><td><code>addEventListener</code>의 위임 이점</td><td>원래는 쓰지 않았지만 9/19에 리팩터링했다. 필터는 이제 부모 리스너 하나 + <code>closest</code> 위임이고, 개선 전후가 Git 로그에 있다. (Q9)</td></tr>
-<tr><td>내비는 Flex <code>space-between</code></td><td>9/19에 실현됐다. 768px부터 내비가 <code>flex: 1</code> + <code>space-between</code>이고, 푸터의 space-between은 그대로다. (Q13)</td></tr>
-<tr><td>상태 하나가 화면을 결정</td><td>STATE를 거치는 건 테마·메뉴·목록 세 흐름뿐이다. 폼은 지역 변수, 스크롤은 클래스 토글 바로 간다. (Q14)</td></tr>
-<tr><td>저장소 카드 4열</td><td>1200px 이상에서는 4열로 명시 고정한다(9/19 신설). 그 아래는 auto-fit이 세는 실측: 375px→1열, 800px→2열, 1100px→3열, 1280px→4열. (Q1)</td></tr>
-</table>
-<div class="core">모범 답안을 외우는 게 아니라, 내 코드가 실제로 뭘 하는지 정확히 아는 게 이 강의의 목적이다.</div>
-<div class="check">이 표의 여섯 줄 중 세 줄(1200 분기·위임·내비 space-between)은 9/19 커밋 전후 코드가 달라진 자리다. 어느 장에서 무슨 코드가 바뀌었는지로 찾아보자.</div>
-</section>
 
 <section>
 <h2>Q1. 창을 줄이면 모바일 레이아웃으로 바뀌는가</h2>
-<ul>
-<li>이 페이지의 미디어쿼리는 세 개다. <code>min-width: 768px</code>에서 내비를 펼치고(space-between 포함) 카드를 2열로, <code>1024px</code>에서 본문 최대폭을 걸고 기술을 4열로, 9/19에 신설한 <code>1200px</code>에서 본문 열을 1200으로 넓히고 저장소 카드를 4열로 고정한다.</li>
-<li>좁은 화면이 기본이다. 360px 분기는 없다. 모바일 퍼스트에서는 기본 스타일 자체가 좁은 화면용이고, 넓어질 때 덧입힌다. 데스크톱을 기본으로 두지 않는 이유는 저사양·터치 환경이 먼저 보장되기 때문이다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 200" role="img" aria-label="브레이크포인트 도식">
 <rect x="10" y="20" width="105" height="105" rx="10" fill="#1f6feb"/><text x="62" y="50" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">360px</text><text x="62" y="72" text-anchor="middle" fill="#fff" font-size="10.5">카드 1열 · 햄버거</text><text x="62" y="90" text-anchor="middle" fill="#dbe7ff" font-size="10.5">(쿼리 아님 · 기본)</text>
 <line x1="117" y1="72" x2="133" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
@@ -102,21 +88,35 @@
 <line x1="277" y1="72" x2="293" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <rect x="295" y="20" width="150" height="105" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="370" y="50" text-anchor="middle" font-size="13" font-weight="bold">1024px</text><text x="370" y="72" text-anchor="middle" font-size="10.5">분기 ②</text><text x="370" y="90" text-anchor="middle" font-size="10.5" fill="#5c6370">최대폭 · 기술 4열</text>
 <line x1="447" y1="72" x2="463" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="465" y="20" width="165" height="105" rx="10" fill="#116329"/><text x="547" y="45" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">1200px</text><text x="547" y="65" text-anchor="middle" fill="#d6f0dc" font-size="10.5">분기 ③ · 9/19 신설</text><text x="547" y="83" text-anchor="middle" fill="#d6f0dc" font-size="10.5">본문 열 1200</text><text x="547" y="100" text-anchor="middle" fill="#d6f0dc" font-size="10.5">카드 4열 고정</text>
-<text x="320" y="165" text-anchor="middle" font-size="13" fill="#5c6370">분기는 세 개다. 좁은 쪽은 애초에 분기가 필요 없다.</text>
+<rect x="465" y="20" width="165" height="105" rx="10" fill="#116329"/><text x="547" y="45" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">1200px</text><text x="547" y="65" text-anchor="middle" fill="#d6f0dc" font-size="10.5">분기 ③</text><text x="547" y="83" text-anchor="middle" fill="#d6f0dc" font-size="10.5">본문 열 1200</text><text x="547" y="100" text-anchor="middle" fill="#d6f0dc" font-size="10.5">카드 4열 고정</text>
+<text x="320" y="160" text-anchor="middle" font-size="12" fill="#5c6370">실측: 375px→1열 · 800px→2열 · 1100px→3열 · 1280px→4열(명시 고정)</text>
 </svg>
-<p class="locs loc"><span class="loc"><code>css/style.css:494</code></span> 768 분기 · <span class="loc"><code>:540</code></span> 1024 분기 · <span class="loc"><code>:561</code></span> 1200 분기 · <span class="loc"><code>:509-517</code></span> 내비 전개(space-between <code>:513-514</code>)</p>
-<div class="core">좁은 화면이 기본, 넓어지면 덮어쓴다. 360은 쿼리가 아니라 기본값이다.</div>
-<div class="check">DevTools로 767→768에서 햄버거가 가로 메뉴로 바뀌는 것을, 1199→1200에서 카드가 3열에서 4열로 바뀌는 것을 보자.</div>
+<ul>
+<li>넓어지는 분기(<code>min-width</code> 미디어쿼리)가 세 개입니다. <b>768px</b>에서 내비를 가로로 펼치고 저장소 카드를 여러 열로, <b>1024px</b>에서 본문 폭을 1024로 묶고 기술 목록을 4열로, <b>1200px</b>에서 본문 폭을 1200으로 넓히고 저장소 카드를 4열로 고정합니다.</li>
+<li>360px 분기는 없습니다. 모바일 퍼스트에서는 좁은 화면용 기본 스타일이 곧 360의 답이기 때문입니다. 아래 코드의 '기본' 부분이 좁은 화면에서 실제로 보이는 모습입니다.</li>
+</ul>
+<pre class="code" data-lang="css"><code>/* 기본 = 좁은 화면 (미디어쿼리 불필요) */
+nav         { display: none; }                    /* 햄버거 메뉴 */
+#repos-list { grid-template-columns: 1fr; }       /* 카드 1열 */
+
+@media (min-width: 768px) {
+  nav { display: flex; }
+  #repos-list { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+@media (min-width: 1024px) {
+  main { max-width: 1024px; margin-inline: auto; }
+  #tech ul { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1200px) {
+  main { max-width: 1200px; }
+  #repos-list { grid-template-columns: repeat(4, 1fr); }
+}</code></pre>
+<div class="terms">🔤 <code>미디어 쿼리</code> — “화면 너비 조건이면 이 스타일” 하는 CSS 조건문 · <code>모바일 퍼스트</code> — 좁은 화면을 기본으로 쓰고 넓어질 때 덧입히는 순서 · <code>auto-fit</code> — 격자에서 빈칸을 접어 카드로 채움 · <code>브레이크포인트</code> — 레이아웃이 바뀌는 화면 너비 지점</div>
 </section>
+
 
 <section>
 <h2>Q2. 테마 토글이 새로고침 후에도 유지되는가</h2>
-<ul>
-<li>버튼을 누르면 <code>theme</code> 값이 반전하고, <code>applyTheme</code>이 <code>&lt;html&gt;</code>의 <code>data-theme</code> 속성을 바꾸면서 <code>localStorage</code>에 저장한다. 저장은 <code>try/catch</code>다. 막혀도 화면은 동작한다.</li>
-<li>새로고침 후 복원의 주체는 main.js가 아니라 <code>&lt;head&gt;</code>의 인라인 스크립트다. 첫 그림이 그려지기 전에 저장된 값을 읽어 속성을 먼저 박는다. 그래서 흰 화면이 번쩍이는 FOUC가 없다. main.js는 defer라 이보다 늦게 실행된다.</li>
-<li>저장된 값이 없으면 OS 설정(<code>prefers-color-scheme</code>)을 따른다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 235" role="img" aria-label="FOUC 복원 시점 비교 도식">
 <text x="14" y="55" font-size="12" fill="#b42318">틀리면</text>
 <rect x="85" y="32" width="95" height="40" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="132" y="57" text-anchor="middle" font-size="12">HTML 해석</text>
@@ -130,20 +130,44 @@
 <rect x="365" y="142" width="135" height="40" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="432" y="160" text-anchor="middle" font-size="12">data-theme</text><text x="432" y="176" text-anchor="middle" font-size="12">먼저 부착</text>
 <rect x="530" y="142" width="85" height="40" rx="10" fill="#1f6feb"/><text x="572" y="167" text-anchor="middle" fill="#fff" font-size="12">첫 그림부터</text>
 <line x1="180" y1="162" x2="206" y2="162" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/><line x1="335" y1="162" x2="361" y2="162" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/><line x1="500" y1="162" x2="526" y2="162" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<text x="320" y="218" text-anchor="middle" font-size="13" fill="#5c6370">복원 시점이 첫 그림보다 앞이면 번쩍임은 0이다.</text>
+<text x="320" y="218" text-anchor="middle" font-size="13" fill="#5c6370">복원 시점이 첫 그림보다 앞이면 번쩍임은 0입니다.</text>
 </svg>
-<p class="locs loc"><span class="loc"><code>js/main.js:36-38</code></span> 토글 · <span class="loc"><code>:25-28</code></span> <code>applyTheme</code>와 저장 · <span class="loc"><code>index.html:13-21</code></span> head 선주입</p>
-<div class="core">깜빡임의 원인은 복원 시점이다. 그리기 전에 박으면 0이 된다.</div>
-<div class="check">다크로 바꾸고 F5. 번쩍임이 없는지. 그리고 head 스크립트를 body 끝으로 옮기면 뭐가 보일지 미리 예상해 보자.</div>
+<ul>
+<li>버튼을 누르면 <code>theme</code> 값이 반전하고, <code>applyTheme</code>이 <code>&lt;html&gt;</code>의 <code>data-theme</code> 속성을 바꾸면서 <code>localStorage</code>에 저장합니다. 저장은 <code>try/catch</code>로 감싸서, 저장소가 막혀도 화면 전환 자체는 동작합니다.</li>
+<li>새로고침 후 복원의 주체는 main.js가 아니라 <code>&lt;head&gt;</code>의 인라인 스크립트입니다. 첫 그림이 그려지기 전에 저장된 값을 읽어 속성을 먼저 박기 때문에, 흰 화면이 번쩍이는 FOUC가 없습니다. main.js는 <code>defer</code>라 이보다 늦게 실행됩니다.</li>
+<li>저장된 값이 없으면 OS 설정(<code>prefers-color-scheme</code>)을 따릅니다.</li>
+</ul>
+<pre class="code" data-lang="html"><code>&lt;head&gt; 안에서 먼저 실행 — 그리기 전에 테마를 박는다
+&lt;script&gt;
+  (function () {
+    try {
+      const saved = localStorage.getItem('user-theme');
+      const systemDark =
+        window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute(
+        'data-theme', saved || (systemDark ? 'dark' : 'light'));
+    } catch (e) {}
+  })();
+&lt;/script&gt;</code></pre>
+<pre class="code" data-lang="js"><code>버튼을 누르면 — main.js
+themeButton.addEventListener('click', () =&gt; {
+  setState({ theme: STATE.theme === 'dark' ? 'light' : 'dark' });
+  applyTheme();
+});
+
+function applyTheme() {
+  root.setAttribute('data-theme', STATE.theme);          // 화면 전환
+  try {
+    localStorage.setItem('user-theme', STATE.theme);     // 복원용 저장
+  } catch { /* 막혀도 메모리 상태만 유지, 화면은 동작 */ }
+  themeButton.textContent = STATE.theme === 'dark' ? '라이트 모드' : '다크 모드';
+}</code></pre>
+<div class="terms">🔤 <code>localStorage</code> — 새로고침에도 남는 브라우저 안쪽 저장 공간 · <code>FOUC</code> — 스타일 붙기 전 흰 화면이 찰나 번쩍이는 현상 · <code>defer</code> — 스크립트를 미리 받되 HTML 해석이 끝난 뒤 실행 보장 · <code>prefers-color-scheme</code> — OS가 다크 모드인지 물어보는 시스템 설정</div>
 </section>
+
 
 <section>
 <h2>Q3. 메뉴·등장 애니메이션·맨 위로 버튼</h2>
-<ul>
-<li>햄버거는 <code>setState({menuOpen})</code> → <code>applyMenu</code>. 메뉴 표시와 <code>aria-expanded</code>를 같은 함수에서 같이 바꿔서, 스크린리더에도 열림 상태가 맞물린다.</li>
-<li>등장은 <code>IntersectionObserver</code>다. scroll 리스너로 매번 계산하면 Reflow·Repaint가 반복돼 버벅인다. 브라우저에 감시를 맡기고, 구역이 20%(<code>threshold: 0.2</code>) 보이면 클래스를 붙인 뒤 <code>unobserve</code>로 감시를 끈다. 한 번만 등장한다.</li>
-<li>스크롤 이벤트 하나에서 300px를 넘으면 맨 위로 버튼을, 60px를 넘으면 내비 배경을 바꾼다. 클릭하면 <code>scrollTo({behavior:'smooth'})</code>.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 150" role="img" aria-label="스크롤 임계값 도식">
 <line x1="30" y1="85" x2="610" y2="85" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <text x="30" y="115" text-anchor="start" font-size="12" fill="#5c6370">0 (맨 위)</text>
@@ -151,257 +175,443 @@
 <line x1="390" y1="70" x2="390" y2="100" stroke="#e67700" stroke-width="3"/><text x="390" y="55" text-anchor="middle" font-size="13" font-weight="bold">300px</text><text x="390" y="133" text-anchor="middle" font-size="12" fill="#5c6370">맨 위로 버튼 표시</text>
 <text x="560" y="115" text-anchor="middle" font-size="12" fill="#5c6370">스크롤 양 (눈금 개념도)</text>
 </svg>
-<p class="locs loc"><span class="loc"><code>js/main.js:54</code></span> 메뉴 · <span class="loc"><code>:47</code></span> <code>applyMenu</code> · <span class="loc"><code>:64-68</code></span> 300/60px · <span class="loc"><code>:71-72</code></span> scrollTo · <span class="loc"><code>:77-85</code></span> 옵저버</p>
-<div class="core">계산은 브라우저에 맡기고 기준은 0.2, 다 본 구역은 감시를 끈다. 임계값을 1로 올리면 전부 보여야 등장한다.</div>
-<div class="check">메뉴 열고 → 스크롤해서 카드 등장 → 버튼 뜨면 클릭으로 위로. 한 흐름으로 이어서.</div>
+<ul>
+<li><b>메뉴</b>: 햄버거 버튼은 <code>setState({menuOpen})</code> → <code>applyMenu</code>. 메뉴 표시와 <code>aria-expanded</code>를 같은 함수에서 함께 바꿔서, 눈으로 보이는 열림과 스크린리더가 알려주는 열림이 어긋나지 않습니다.</li>
+<li><b>등장</b>: 스크롤 이벤트로 매번 계산하면 레이아웃을 다시 짜는 작업(Reflow)이 반복돼 버벅입니다. 그래서 브라우저에 감시를 맡깁니다. <code>IntersectionObserver</code>가 구역의 20%(<code>threshold: 0.2</code>)가 보일 때 클래스를 붙이고, <code>unobserve</code>로 그 구역 감시를 끕니다. 등장은 한 번뿐입니다.</li>
+<li><b>맨 위로</b>: 스크롤 이벤트 하나에서 300px를 넘으면 버튼을, 60px를 넘으면 내비 배경을 표시로 바꿉니다. 클릭하면 <code>scrollTo({behavior:'smooth'})</code>로 미끄러지듯 올라갑니다.</li>
+</ul>
+<pre class="code" data-lang="js"><code>function applyMenu() {
+  nav.classList.toggle('active', STATE.menuOpen);   // 보이는 메뉴
+  // 스크린리더에도 같은 상태를 함께 넘긴다
+  menuButton.setAttribute('aria-expanded', String(STATE.menuOpen));
+}
+
+const watcher = new IntersectionObserver((entries) =&gt; {
+  entries.forEach((entry) =&gt; {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');   // 등장
+      watcher.unobserve(entry.target);         // 본 구역은 감시 종료
+    }
+  });
+}, { threshold: 0.2 });
+
+window.addEventListener('scroll', () =&gt; {
+  topButton.classList.toggle('show', window.scrollY &gt; 300);
+  nav.classList.toggle('scrolled', window.scrollY &gt; 60);
+});</code></pre>
+<div class="terms">🔤 <code>IntersectionObserver</code> — “요소가 화면에 들어왔나”를 브라우저가 대신 감시하는 API · <code>threshold 0.2</code> — 20% 보일 때 발동 · unobserve로 본 구역은 감시 종료 · <code>aria-expanded</code> — 버튼이 여는 것이 지금 열렸는지 스크린리더에 알림 · <code>Reflow</code> — 레이아웃을 다시 짜는 계산 — 스크롤마다 하면 버벅임</div>
 </section>
+
 
 <section>
 <h2>Q4. 저장소 목록과 로딩·에러·빈 상태</h2>
-<ul>
-<li><code>fetch</code>의 함정: 404나 403에도 프로미스는 성공으로 끝난다. 거절되는 건 망이 끊길 때뿐이다. 그래서 <code>res.ok</code>를 직접 검사해서 실패를 내가 만든다.</li>
-<li>화면 상태는 넷이다. 로딩 문구 → 성공(문구를 비우고 카드 렌더) / 목록이 비면 빈 결과 문구 / 오류는 403 한도, 404 사용자 없음, 그 외 HTTP, 망 단절·타임아웃으로 나뉜다. 타임아웃은 <code>AbortController</code>로 8초, 재시도는 버튼으로 수동, 캐싱은 없다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 260" role="img" aria-label="fetch 상태 분기도">
 <rect x="230" y="8" width="180" height="44" rx="10" fill="#1f6feb"/><text x="320" y="36" text-anchor="middle" fill="#fff" font-size="15">fetch 요청</text>
 <line x1="320" y1="52" x2="320" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <rect x="200" y="72" width="240" height="44" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="100" text-anchor="middle" font-size="14">res.ok 검사</text>
 <line x1="230" y1="116" x2="115" y2="140" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/><line x1="320" y1="116" x2="320" y2="140" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/><line x1="410" y1="116" x2="525" y2="140" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="20" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="115" y="162" text-anchor="middle" font-size="12">403 한도 초과</text><text x="115" y="178" text-anchor="middle" font-size="11" fill="#5c6370">시간당 60회 <tspan class="loc">(:256)</tspan></text>
-<rect x="225" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="320" y="162" text-anchor="middle" font-size="12">404 사용자 없음</text><text x="320" y="178" text-anchor="middle" font-size="11" fill="#5c6370">그 외 HTTP는<tspan class="loc"> :258</tspan></text>
-<rect x="430" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="525" y="162" text-anchor="middle" font-size="12">망 단절·타임아웃</text><text x="525" y="178" text-anchor="middle" font-size="11" fill="#5c6370">catch · 8초 abort<tspan class="loc">(:247)</tspan></text>
+<rect x="20" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="115" y="162" text-anchor="middle" font-size="12">403 한도 초과</text><text x="115" y="178" text-anchor="middle" font-size="11" fill="#5c6370">GitHub 시간당 60회</text>
+<rect x="225" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="320" y="162" text-anchor="middle" font-size="12">404 사용자 없음</text><text x="320" y="178" text-anchor="middle" font-size="11" fill="#5c6370">그 외 HTTP 상태 코드</text>
+<rect x="430" y="140" width="190" height="44" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="525" y="162" text-anchor="middle" font-size="12">망 단절·타임아웃</text><text x="525" y="178" text-anchor="middle" font-size="11" fill="#5c6370">catch · 8초 abort</text>
 <rect x="140" y="205" width="360" height="40" rx="10" fill="#f0f6ff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="231" text-anchor="middle" font-size="13">로딩 · 성공 · 빈 결과 · 오류 → '다시 시도'</text>
 </svg>
-<p class="locs loc"><span class="loc"><code>js/main.js:245</code></span> 로딩 · <span class="loc"><code>:200</code></span> 빈 결과 · <span class="loc"><code>:203</code></span> 성공 · <span class="loc"><code>:247-251</code></span> 8초 · <span class="loc"><code>:256-258</code></span> 상태 분기 · <span class="loc"><code>:262-265</code></span> catch · <span class="loc"><code>:272</code></span> 재시도</p>
-<div class="core">성공처럼 보이는 실패를 ok 검사로 걸러서 넷으로 나눈다. 403은 GitHub 한도(시간당 60회) 초과라는 뜻이기도 하다.</div>
-<div class="check">Network 탭을 Offline으로 바꾸고 새로고침해서 오류 상태와 '다시 시도'를, 없는 언어 필터로 빈 결과를 보자.</div>
+<ul>
+<li><code>fetch</code>의 함정부터: 서버가 404나 403으로 답해도 <code>fetch</code> 자체는 성공으로 끝납니다. 거절되는 건 망이 끊길 때뿐입니다. 그래서 <code>res.ok</code>를 직접 검사해서 실패를 내가 만듭니다.</li>
+<li>화면 상태는 넷입니다. 로딩 문구 → 성공(문구를 비우고 카드 렌더) · 목록이 비면 빈 결과 문구 · 오류(403 한도 / 404 사용자 없음 / 그 외 HTTP / 망 단절·타임아웃).</li>
+<li>타임아웃은 8초(<code>AbortController</code>), 재시도는 버튼으로만 수동, 캐싱은 없습니다.</li>
+</ul>
+<pre class="code" data-lang="js"><code>async function loadRepos() {
+  // ① 로딩
+  reposStatus.textContent = '저장소 목록을 불러오는 중입니다.';
+  const controller = new AbortController();
+  // 8초 후 요청 취소
+  const timeoutId = setTimeout(() =&gt; controller.abort(), 8000);
+  try {
+    const res = await fetch(reposURL, { signal: controller.signal });
+    // ② 실패를 내가 만든다 — fetch는 404·403도 성공이라 ok를 직접 검사
+    if (!res.ok) {
+      if (res.status === 403)
+        throw new Error('API 호출 한도를 초과했습니다. 잠시 후 다시 시도해주세요.');
+      if (res.status === 404) throw new Error('사용자를 찾을 수 없습니다.');
+      throw new Error(`로드 실패 (HTTP ${res.status})`);
+    }
+    // ③ 성공 → 카드 렌더
+    renderRepos(await res.json());
+    renderFilters(STATE.repos);
+  } catch (err) {
+    // ④ 오류 문구 + 수동 재시도 버튼 표시
+    reposStatus.textContent = timedOut
+      ? '요청 시간이 초과됐습니다. 다시 시도해주세요.'
+      : err.message;
+    reposRetry.hidden = false;
+  } finally {
+    // ⑤ 성공·실패 모두 타이머 정리
+    window.clearTimeout(timeoutId);
+  }
+}</code></pre>
+<div class="terms">🔤 <code>fetch · 프로미스</code> — 서버에 데이터를 주문하는 함수 · “나중에 답장” 표 · <code>response.ok</code> — 서버가 200번대로 성공 답했는지 표시 · <code>AbortController</code> — 이미 보낸 요청을 취소하는 손잡이</div>
 </section>
+
 
 <section>
 <h2>Q5. 폼 오류에 즉각 피드백이 뜨는가</h2>
-<ul>
-<li>브라우저 기본 검증은 <code>novalidate</code><span class="loc">(<span class="loc"><code>index.html:77</code></span>)</span>로 껐다. 네이티브 풍선이 먼저 뜨면 내 커스텀 문구가 가려지기 때문이다.</li>
-<li>오류는 입력칸에 <code>aria-describedby</code>로 연결된 <code>role=alert</code> 자리에 뜬다. 스크린리더도 같은 문구를 읽는다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 330" role="img" aria-label="폼 검증 흐름도">
-<rect x="240" y="8" width="160" height="34" rx="10" fill="#1f6feb"/><text x="320" y="30" text-anchor="middle" fill="#fff" font-size="13">submit <tspan class="loc">(:143)</tspan></text>
+<rect x="240" y="8" width="160" height="34" rx="10" fill="#1f6feb"/><text x="320" y="30" text-anchor="middle" fill="#fff" font-size="13">submit</text>
 <line x1="320" y1="42" x2="320" y2="58" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <rect x="235" y="58" width="170" height="32" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="79" text-anchor="middle" font-size="12">preventDefault() 막기</text>
 <line x1="320" y1="90" x2="320" y2="106" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="190" y="106" width="260" height="38" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="130" text-anchor="middle" font-size="12">세 필드 전수 검사 <tspan class="loc">(:110 / :120 / :131)</tspan></text>
+<rect x="190" y="106" width="260" height="38" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="320" y="130" text-anchor="middle" font-size="12">세 필드 전수 검사</text>
 <line x1="320" y1="144" x2="320" y2="162" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <polygon points="320,162 425,196 320,230 215,196" fill="#f8f9fb" stroke="#1f6feb" stroke-width="2"/><text x="320" y="201" text-anchor="middle" font-size="13" font-weight="bold">다 통과?</text>
 <line x1="425" y1="196" x2="452" y2="196" stroke="#116329" stroke-width="2" marker-end="url(#m-green)"/><text x="438" y="189" text-anchor="middle" font-size="11" fill="#116329">예</text>
-<rect x="452" y="178" width="180" height="38" rx="10" fill="#e6f4ea" stroke="#116329" stroke-width="2"/><text x="542" y="195" text-anchor="middle" font-size="12">성공 문구 + 폼 초기화</text><text x="542" y="210" text-anchor="middle" font-size="10.5" fill="#5c6370"><tspan class="loc">(:151-152)</tspan></text>
+<rect x="452" y="178" width="180" height="38" rx="10" fill="#e6f4ea" stroke="#116329" stroke-width="2"/><text x="542" y="195" text-anchor="middle" font-size="12">성공 문구 + 폼 초기화</text>
 <line x1="215" y1="196" x2="188" y2="196" stroke="#e67700" stroke-width="2" marker-end="url(#m-orange)"/><text x="203" y="189" text-anchor="middle" font-size="11" fill="#e67700">아니오</text>
 <rect x="8" y="178" width="180" height="38" rx="10" fill="#fff8e6" stroke="#e67700" stroke-width="2"/><text x="98" y="195" text-anchor="middle" font-size="12">오류 문구 표시 (role=alert)</text><text x="98" y="210" text-anchor="middle" font-size="10.5" fill="#5c6370">aria-describedby로 연결</text>
 <line x1="60" y1="216" x2="60" y2="242" stroke="#e67700" stroke-width="2" marker-end="url(#m-orange)"/><line x1="140" y1="242" x2="140" y2="216" stroke="#1f6feb" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#m-blue)"/><text x="150" y="234" font-size="10.5" fill="#5c6370">재검사로 문구 갱신</text>
-<rect x="8" y="242" width="180" height="56" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="98" y="260" text-anchor="middle" font-size="12">입력 이벤트 <tspan class="loc">(:157-177)</tspan></text><text x="98" y="276" text-anchor="middle" font-size="10.5" fill="#5c6370">처음 제출 전이면: 문구만 지움</text><text x="98" y="291" text-anchor="middle" font-size="10.5" fill="#5c6370">한 번 실패 후면: 그 필드 재검사</text>
-<text x="320" y="322" text-anchor="middle" font-size="13" fill="#5c6370">안 막으면 통과 여부와 무관하게 화면이 새로고침돼 결과가 사라진다. 그래서 첫 단계가 preventDefault.</text>
+<rect x="8" y="242" width="180" height="56" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="98" y="260" text-anchor="middle" font-size="12">입력 이벤트</text><text x="98" y="276" text-anchor="middle" font-size="10.5" fill="#5c6370">처음 제출 전이면: 문구만 지움</text><text x="98" y="291" text-anchor="middle" font-size="10.5" fill="#5c6370">한 번 실패 후면: 그 필드 재검사</text>
+<text x="320" y="322" text-anchor="middle" font-size="13" fill="#5c6370">첫 단계가 preventDefault인 이유: 통과 여부와 무관하게 화면이 새로고침되면 결과가 사라집니다.</text>
 </svg>
-<div class="note">이 '즉각'은 처음부터 있던 게 아니다. 네이티브 검증을 끄기 전에는 커스텀 문구가 아예 못 떴다. 자체 점검으로 발견한 결함이고, git log에 수정 내역이 그대로 남아 있다.</div>
-<div class="core">검증은 막고·검사하고·알리고. 알리는 자리는 접근성 트리와 같은 자리다.</div>
-<div class="check">빈값 제출 → 세 문구 → 타이핑하자마자 오류 문구가 지워지는 것 → 정상 제출 후 초기화까지.</div>
+<ul>
+<li>브라우저 기본 검증은 폼에 <code>novalidate</code>를 붙여 껐습니다. 네이티브 풍선이 먼저 뜨면 커스텀 문구가 가려지기 때문입니다.</li>
+<li>오류는 입력칸에 <code>aria-describedby</code>로 연결된 <code>role=alert</code> 자리에 뜹니다. 눈으로 보이는 문구와 스크린리더가 읽는 문구가 같은 자리 하나입니다.</li>
+<li>처음 제출이 실패한 뒤부터는, 타이핑하는 동안 그 필드만 즉시 재검사해서 오류 문구를 갱신합니다.</li>
+</ul>
+<pre class="code" data-lang="html"><code>&lt;form novalidate&gt;
+  &lt;label for="contact-name"&gt;이름&lt;/label&gt;
+  &lt;input type="text" id="contact-name" name="name" required
+         aria-describedby="name-error" aria-invalid="false" /&gt;
+  &lt;p id="name-error" role="alert"&gt;&lt;/p&gt;
+  ...
+&lt;/form&gt;</code></pre>
+<pre class="code" data-lang="js"><code>form.addEventListener('submit', (event) =&gt; {
+  // 안 막으면 검사 결과가 새로고침에 날아간다
+  event.preventDefault();
+  const valid = [checkName(), checkEmail(), checkMessage()].every((ok) =&gt; ok);
+  if (valid) {
+    document.querySelector('#form-result').textContent = '메시지를 받았습니다.';
+    form.reset();
+  }
+});
+
+userName.addEventListener('input', () =&gt; {
+  // 한 번이라도 실패한 뒤엔 그 필드만 즉시 재검사,
+  // 그 전에는 입력마다 오류 문구를 지운다
+  if (submitAttempted) checkName();
+  else clearFieldError(userName, nameError);
+});</code></pre>
+<div class="terms">🔤 <code>novalidate</code> — 브라우저가 원래 하던 검증을 꺼 달라는 선언 · <code>preventDefault()</code> — 브라우저 기본 행동(제출 시 새로고침) 취소 · <code>aria-describedby</code> — 입력칸을 설명 문구와 연결 · <code>role=alert</code> — 문구가 뜨면 스크린리더가 즉시 읽는 자리</div>
 </section>
+
 
 <section>
 <h2>Q6. 왜 세 개의 파일인가</h2>
 <ul>
-<li><code>index.html</code>은 구조, <code>css/style.css</code>는 표현, <code>js/main.js</code>는 동작. 관심사를 나눠서 한 파일을 고쳐도 나머지가 안 무너진다.</li>
-<li>연결의 증거는 두 줄이다. css link<span class="loc">(<span class="loc"><code>index.html:10</code></span>)</span>와 <code>&lt;script … defer&gt;</code><span class="loc">(<span class="loc"><code>:24</code></span>)</span>. <code>defer</code>는 HTML 해석을 막지 않고, 해석이 끝난 뒤 순서대로 실행하라는 뜻이다. <code>async</code>는 다운로드가 끝나면 중간에라도 실행돼서 DOM이 아직 없다. 원문이 defer를 요구한 이유다.</li>
-<li>같이 지켜진 규칙: <code>var</code> 금지(함수 스코프·호이스팅·중복 선언 때문에 기본 <code>const</code>, 재할당만 <code>let</code>), 인라인 <code>onclick</code> 금지, 인라인 스타일 금지.</li>
+<li><code>index.html</code>은 구조, <code>css/style.css</code>는 표현, <code>js/main.js</code>는 동작. 역할을 나눠서 한 파일을 고쳐도 나머지가 무너지지 않습니다.</li>
+<li>연결은 HTML의 두 줄뿐입니다. <code>defer</code>는 HTML 해석을 막지 않으면서 해석이 끝난 뒤 순서대로 실행하라는 뜻입니다. <code>async</code>는 다운로드가 끝나면 중간에라도 실행되므로 DOM이 아직 없을 수 있습니다. 원문 요구사항이 defer를 지정한 이유입니다.</li>
+<li>같이 지킨 규칙: <code>var</code> 금지(함수 스코프·호이스팅·중복 선언 문제 때문에 상수 <code>const</code>, 재할당만 <code>let</code>), 인라인 <code>onclick</code> 금지, 인라인 스타일 금지. JS는 최상위에서 <code>'use strict'</code>와 <code>DOMContentLoaded</code>로 준비를 보장합니다.</li>
 </ul>
-<p class="locs loc"><span class="loc"><code>index.html:10, 24</code></span> 두 링크 · <span class="loc"><code>js/main.js:4</code></span> <code>DOMContentLoaded</code></p>
-<div class="core">분리의 증거는 HTML의 두 링크와 JS의 준비 보장 하나. 이 세 줄이면 설명이 끝난다.</div>
-<div class="check">index.html을 열고 두 링크를 손으로 가리켜 보자. JS 파일에는 onclick이 하나도 없다.</div>
+<pre class="code" data-lang="html"><code>&lt;head&gt; 안에서 — 연결의 전부
+&lt;link rel="stylesheet" href="css/style.css" /&gt;
+&lt;script src="js/main.js" defer&gt;&lt;/script&gt;</code></pre>
+<div class="terms">🔤 <code>defer · async</code> — 해석 끝난 뒤 실행 · 다운로드 끝나면 중간에도 실행(DOM 준비 안 됨) · <code>DOMContentLoaded</code> — HTML 해석이 끝나 준비됐다는 이벤트 · <code>const · let</code> — 재할당 불가 상수 · 재할당 가능 선언(var의 스코프·호이스팅 문제 회피)</div>
 </section>
+
 
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — 뼈대</h2>
-<p>선택 기준은 단순하다. div만 쓰면 보조기기가 각 부분의 역할을 모른다. 문서의 뼈대는 다섯 덩어리다.</p>
+<p>선택 기준은 하나입니다. div만 쓰면 보조기기가 각 부분의 역할을 알 수 없습니다. 태그 자체가 역할을 알려줘야 해서, 문서의 뼈대는 다음 다섯 덩어리로 잡았습니다.</p>
 <table>
-<tr><th class="loc">줄</th><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
-<tr><td><span class="loc">28</span></td><td><code>a.skip-link</code></td><td>평소엔 <code>top:-100px</code>로 화면 밖, Tab 포커스면 나타남<span class="loc">(css:115-127)</span>. 내비를 Tab으로 다 넘기지 않고 본문으로 점프</td></tr>
-<tr><td><span class="loc">29</span></td><td><code>header</code></td><td>문서의 시작. 메뉴 버튼·테마 토글·내비가 매달림</td></tr>
-<tr><td><span class="loc">34</span></td><td>└ <code>nav</code></td><td>앵커 링크 목록. 지점은 다음 장의 다섯 섹션 id. <code>aria-expanded</code>·<code>aria-controls</code>로 버튼과 연결<span class="loc">(:31)</span></td></tr>
-<tr><td><span class="loc">42</span></td><td><code>main</code></td><td>문서에 딱 하나. 스킵링크가 도착하는 자리</td></tr>
-<tr><td><span class="loc">97</span></td><td><code>footer</code></td><td>문서의 끝. 강의·GitHub 링크</td></tr>
+<tr><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
+<tr><td><code>a.skip-link</code></td><td>평소엔 화면 밖(<code>top:-100px</code>)에 있다가 Tab 포커스가 오면 나타나는 본문 점프 링크. 내비를 키보드로 다 넘기지 않습니다</td></tr>
+<tr><td><code>header</code></td><td>문서의 시작. 메뉴 버튼·테마 토글·내비가 매달립니다</td></tr>
+<tr><td>└ <code>nav</code></td><td>앵커 링크 목록. <code>aria-expanded</code>·<code>aria-controls</code>로 메뉴 버튼과 연결됩니다</td></tr>
+<tr><td><code>main</code></td><td>문서에 딱 하나. 스킵링크가 도착하는 자리(<code>id="main"</code>)</td></tr>
+<tr><td><code>footer</code></td><td>문서의 끝. 발표 자료와 GitHub 링크</td></tr>
 </table>
-<div class="core">시맨틱은 예쁜 태그 고르기가 아니라, 안 보이는 사용자에게 역할을 넘기는 일이다.</div>
-<div class="check">화면을 클릭하지 말고 Tab부터 눌러보자. 스킵링크가 뜨고, Enter를 누르면 본문으로 건너뛴다.</div>
+<pre class="code" data-lang="html"><code>&lt;a class="skip-link" href="#main"&gt;본문으로 건너뛰기&lt;/a&gt;
+&lt;header&gt;
+  &lt;button id="menu-button"
+          aria-expanded="false" aria-controls="primary-nav"&gt;메뉴&lt;/button&gt;
+  &lt;button id="theme-toggle"&gt;다크 모드&lt;/button&gt;
+  &lt;nav id="primary-nav" aria-label="주요 탐색"&gt;
+    소개 · 기술 · 프로젝트 · 문의 링크 4개
+  &lt;/nav&gt;
+&lt;/header&gt;
+&lt;main id="main"&gt; … &lt;/main&gt;
+&lt;footer&gt; … &lt;/footer&gt;</code></pre>
+<div class="terms">🔤 <code>시맨틱 태그</code> — 이름 자체가 역할까지 알리는 태그 · <code>스킵링크</code> — 키보드 사용자가 메뉴를 건너뛰는 링크 · <code>aria-controls</code> — 버튼이 여닫는 대상을 id로 짝지음 · <code>스크린리더</code> — 화면을 소리 읽어 주는 보조기기</div>
 </section>
+
 
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — main 안</h2>
-<p>뼈대 안쪽. main은 다시 다섯 개 구역이고, id가 곧 내비 앵커의 지점이다.</p>
+<p>뼈대 안쪽입니다. main은 다시 다섯 개 구역(<code>section</code>)이고, 각 구역의 id가 내비 앵커 링크의 지점이 됩니다. 이름(id) 있는 구역만 앵커가 됩니다.</p>
 <table>
-<tr><th class="loc">줄</th><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
-<tr><td><span class="loc">42</span></td><td><code>main</code></td><td>앞 장의 뼈대. 안은 다시 다섯 개 구역으로 갈린다</td></tr>
-<tr><td><span class="loc">43</span></td><td>└ <code>section#hero</code></td><td>첫 화면 자기소개. 유일한 <code>h1</code>을 가짐<span class="loc">(:44)</span></td></tr>
-<tr><td><span class="loc">48</span></td><td>└ <code>section#about</code></td><td>소개 문단 + 프로필 이미지. <code>alt</code> 한 줄<span class="loc">(:51)</span></td></tr>
-<tr><td><span class="loc">53</span></td><td>└ <code>section#tech</code></td><td>정적 기술 목록(<code>ul</code>)</td></tr>
-<tr><td><span class="loc">62</span></td><td>└ <code>section#project</code></td><td>저장소 목록 자리. 안에 래퍼 <code>article</code><span class="loc">(:64)</span> + JS가 생성하는 카드 <code>article</code><span class="loc">(main.js:209)</span> — 중첩은 의도된 구조</td></tr>
-<tr><td><span class="loc">74</span></td><td>└ <code>section#contact</code></td><td>폼<span class="loc">(:77)</span>. 모든 입력이 <code>label for</code>↔<code>id</code>로 짝<span class="loc">(:78/83/86)</span></td></tr>
+<tr><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
+<tr><td><code>section#hero</code></td><td>첫 화면 자기소개. 문서에 유일한 <code>h1</code>을 가집니다</td></tr>
+<tr><td><code>section#about</code></td><td>소개 문단 + 프로필 이미지. 이미지에 <code>alt</code> 한 줄</td></tr>
+<tr><td><code>section#tech</code></td><td>정적 기술 목록(<code>ul</code>)</td></tr>
+<tr><td><code>section#project</code></td><td>저장소 목록 자리. 안에 래퍼 <code>article</code> + JS가 생성하는 카드 <code>article</code> — article 중첩은 의도된 구조입니다(글감 안에 작은 글감)</td></tr>
+<tr><td><code>section#contact</code></td><td>문의 폼. 모든 입력이 <code>label for</code> ↔ <code>id</code>로 짝을 이룹니다</td></tr>
 </table>
-<div class="core">이름(id) 있는 구역만 앵커가 된다. 래퍼 article과 카드 article의 중첩도 이 구조의 일부다.</div>
-<div class="check">Elements에서 main이 하나인지, project 안에서 article이 두 겹인지 확인하자.</div>
+<pre class="code" data-lang="html"><code>&lt;main id="main"&gt;
+  &lt;section id="hero"&gt;&lt;h1&gt;…&lt;/h1&gt; …&lt;/section&gt;
+  &lt;section id="about" class="reveal"&gt;
+    소개 문단 …
+    &lt;img src="images/profile.svg" alt="sarguments 프로필 사진" /&gt;
+  &lt;/section&gt;
+  &lt;section id="tech" class="reveal"&gt;&lt;ul&gt;기술 4개&lt;/ul&gt;&lt;/section&gt;
+  &lt;section id="project" class="reveal"&gt;
+    &lt;article&gt;상태 문구 · 필터 · 카드 목록&lt;/article&gt;
+  &lt;/section&gt;
+  &lt;section id="contact" class="reveal"&gt;
+    &lt;form novalidate&gt; … &lt;/form&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+<div class="terms">🔤 <code>label ↔ id</code> — 이름표와 입력칸을 짝지어 연결 · <code>alt</code> — 이미지를 못 볼 때 대신 읽는 한 줄 설명 · <code>article</code> — 그 자체로 독립된 내용 덩어리(글감)</div>
 </section>
+
 
 <section>
 <h2>Q8. CSS 변수를 왜 모았나</h2>
 <ul>
-<li>색·간격·반경 값을 <code>:root</code>에 한 번씩 정의하고 같은 이름으로 재사용한다.</li>
-<li>다크모드는 새 스타일이 아니라 같은 이름의 다른 값이다. <code>[data-theme="dark"]</code> 블록이 변수만 덮어쓰면, 변수를 참조하는 수백 줄이 자동으로 따라 바뀐다.</li>
-<li>JS는 색 값을 전혀 만지지 않는다. <code>data-theme</code> 속성만 바꾼다<span class="loc">(<span class="loc"><code>main.js:26</code></span>)</span>. 표현은 CSS의 일이라는 분리가 여기에서도 지켜진다.</li>
+<li>색·간격·모서리 값을 <code>:root</code>에 한 번씩 정의하고 <code>var(--이름)</code>으로 재사용합니다. 값을 고칠 일이 생기면 정의 한 곳만 건드립니다.</li>
+<li>다크모드는 새 스타일이 아니라 같은 이름의 다른 값입니다. <code>[data-theme="dark"]</code> 블록이 변수만 덮어쓰면, 변수를 참조하는 아래쪽 스타일 전부가 자동으로 따라 바뀝니다.</li>
+<li>JS는 색 값을 전혀 만지지 않습니다. <code>data-theme</code> 속성만 바꿉니다. 표현은 CSS의 일이라는 분리가 테마 전환에서도 지켜집니다.</li>
 </ul>
-<p class="locs loc"><span class="loc"><code>css/style.css:7-31</code></span> <code>:root</code> · <span class="loc"><code>:34-45</code></span> dark 재정의</p>
-<div class="core">이름은 두고 값만 갈아치우면, 테마 전환은 속성 하나가 된다.</div>
-<div class="check">DevTools에서 <code>--bg</code> 값을 직접 바꿔보자. 정의를 고친 적 없는데 화면 전체가 바뀐다.</div>
+<pre class="code" data-lang="css"><code>:root {                          /* 라이트가 기본값 */
+  --bg: #ffffff;
+  --text: #1a1b1e;
+  --accent: #1f6feb;
+}
+[data-theme="dark"] {            /* 이름은 두고 값만 갈아끼움 */
+  --bg: #121212;
+  --text: #f1f3f5;
+  --accent: #6ea8fe;
+}
+
+body { background: var(--bg); color: var(--text); }   // 참조자는 그대로</code></pre>
+<div class="terms">🔤 <code>CSS 사용자 정의 속성</code> — 값에 --이름을 붙여 한 곳에 정의하고 재사용 · <code>:root</code> — 문서의 최상위 — 변수를 모으는 정의 자리 · <code>data-* 속성</code> — HTML·CSS·JS가 자유 이름으로 약속을 주고받는 속성</div>
 </section>
+
 
 <section>
 <h2>Q9. onclick 대신 addEventListener</h2>
 <ul>
-<li>구조와 동작을 분리한다. HTML에 행동을 박아두면 세 파일로 나눈 의미가 무너진다.</li>
-<li><code>onclick</code>은 속성 하나라서 두 번째가 첫 번째를 덮어쓴다. <code>addEventListener</code>는 같은 요소에 여러 리스너를 붙일 수 있다.</li>
-<li>이 코드에 리스너는 열 곳이다. index.html을 검색하면 <code>onclick</code>은 없다.</li>
+<li>구조와 동작을 분리합니다. HTML에 행동을 박아두면 세 파일로 나눈 의미가 무너집니다.</li>
+<li><code>onclick</code>은 속성 하나라서 두 번째 대입이 첫 번째를 덮어씁니다. <code>addEventListener</code>는 같은 요소에 여러 리스너를 붙일 수 있습니다. 이 코드에 리스너는 열 곳이고, HTML에는 <code>onclick</code>이 한 건도 없습니다.</li>
+<li>필터 버튼은 이벤트 위임입니다. 버튼마다 리스너를 붙이면 목록을 다시 그릴 때마다 리스너도 다시 붙여야 합니다. 부모 리스너 하나면 다시 그려도 붙일 게 없습니다.</li>
 </ul>
-<p class="locs loc"><span class="loc"><code>js/main.js:36, 54, 64, 71, 143, 157, 164, 171, 234, 272</code></span></p>
-<div class="note">이벤트 위임(<code>event.target.closest</code>)은 9/19에 들어왔다. 원래는 필터 버튼도 생성마다 하나씩 붙였는데, 목록을 다시 그릴 때마다 리스너를 다시 붙여야 해서 리팩터링했다. 지금은 <code>renderFilters</code>가 버튼에 <code>data-filter</code> 값만 싣고<span class="loc">(<span class="loc"><code>:227</code></span>)</span>, 클릭은 부모 <code>#repos-filters</code> 리스너 하나가 받아서 눌린 버튼을 <code>closest</code>로 고른다<span class="loc">(<span class="loc"><code>:234-239</code></span>)</span>. 개선 전후가 Git 로그에 있다.</div>
-<div class="core">없는 걸 증명하는 건 있다고 설명하는 것보다 쉽다. onclick 0건은 검색 한 번이다.</div>
-<div class="check">Elements에서 onclick을 검색해서 0건을 눈으로 확인하자.</div>
+<pre class="code" data-lang="js"><code>// 버튼은 식별 값만 싣습니다 — 리스너를 달지 않아요
+function renderFilters(repos) {
+  langs.forEach((lang) =&gt; {
+    const btn = document.createElement('button');
+    btn.textContent = lang;
+    btn.dataset.filter = lang;         // data-filter 값만
+    filters.appendChild(btn);
+  });
+}
+
+// 클릭은 부모(#repos-filters) 리스너 하나가 받고,
+// 눌린 버튼은 closest로 고릅니다
+document.querySelector('#repos-filters')
+  .addEventListener('click', (event) =&gt; {
+    const btn = event.target.closest('button[data-filter]');
+    if (!btn) return;
+    setState({ reposFilter: btn.dataset.filter });
+    renderRepos(STATE.repos);
+  });</code></pre>
+<div class="terms">🔤 <code>이벤트 위임</code> — 자식 여러 개의 이벤트를 부모 리스너 하나로 받음 · <code>closest()</code> — 눌린 지점에서 조건에 맞는 조상을 거슬러 검색 · <code>onclick</code> — HTML에 직접 박는 행동 — 재대입 시 덮어써짐</div>
 </section>
+
 
 <section>
 <h2>Q10. 다크모드 한 흐름을 처음부터 끝까지</h2>
 <svg class="diagram" viewBox="0 0 640 200" role="img" aria-label="다크모드 8단계 흐름도">
-<rect x="8" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="78" y="34" text-anchor="middle" font-size="12" font-weight="bold">① 클릭</text><text x="78" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">theme-toggle <tspan class="loc">(:36)</tspan></text>
+<rect x="8" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="78" y="34" text-anchor="middle" font-size="12" font-weight="bold">① 클릭</text><text x="78" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">theme-toggle</text>
 <line x1="148" y1="38" x2="166" y2="38" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="168" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="238" y="34" text-anchor="middle" font-size="12" font-weight="bold">② setState</text><text x="238" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">{theme} <tspan class="loc">(:37)</tspan></text>
+<rect x="168" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="238" y="34" text-anchor="middle" font-size="12" font-weight="bold">② setState</text><text x="238" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">{theme}</text>
 <line x1="308" y1="38" x2="326" y2="38" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="328" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="398" y="34" text-anchor="middle" font-size="12" font-weight="bold">③ applyTheme</text><text x="398" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">호출 <tspan class="loc">(:38)</tspan></text>
+<rect x="328" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="398" y="34" text-anchor="middle" font-size="12" font-weight="bold">③ applyTheme</text><text x="398" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">호출</text>
 <line x1="468" y1="38" x2="486" y2="38" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="488" y="14" width="144" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="560" y="34" text-anchor="middle" font-size="12" font-weight="bold">④ data-theme</text><text x="560" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">html에 부착 <tspan class="loc">(:26)</tspan></text>
+<rect x="488" y="14" width="144" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="560" y="34" text-anchor="middle" font-size="12" font-weight="bold">④ data-theme</text><text x="560" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">html에 부착</text>
 <line x1="560" y1="62" x2="560" y2="86" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="488" y="88" width="144" height="48" rx="10" fill="#1f6feb"/><text x="560" y="108" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑤ dark 변수 세트</text><text x="560" y="126" text-anchor="middle" fill="#dbe7ff" font-size="10.5"><tspan class="loc">css:34</tspan> 색 값 일괄 전환</text>
+<rect x="488" y="88" width="144" height="48" rx="10" fill="#1f6feb"/><text x="560" y="108" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">⑤ dark 변수 세트</text><text x="560" y="126" text-anchor="middle" fill="#dbe7ff" font-size="10.5">색 값 일괄 전환</text>
 <line x1="486" y1="112" x2="470" y2="112" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="328" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="398" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑥ 버튼 라벨</text><text x="398" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">문구 갱신 <tspan class="loc">(:32)</tspan></text>
+<rect x="328" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="398" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑥ 버튼 라벨</text><text x="398" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">문구 갱신</text>
 <line x1="326" y1="112" x2="310" y2="112" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="168" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="238" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑦ 저장</text><text x="238" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">user-theme <tspan class="loc">(:28)</tspan></text>
+<rect x="168" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="238" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑦ 저장</text><text x="238" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">localStorage 'user-theme'</text>
 <line x1="166" y1="112" x2="150" y2="112" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="8" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="78" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑧ F5: head가 먼저</text><text x="78" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">복원 <tspan class="loc">(:13-21)</tspan></text>
-<text x="320" y="170" text-anchor="middle" font-size="13" fill="#5c6370">바꾸는 곳 한 곳(②), 그리는 곳 한 곳(③④⑤), 저장 한 곳(⑦). 여덟 단계가 한 가닥이다.</text>
+<rect x="8" y="88" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="78" y="108" text-anchor="middle" font-size="12" font-weight="bold">⑧ F5: head가 먼저</text><text x="78" y="126" text-anchor="middle" font-size="10.5" fill="#5c6370">복원 · 번쩍임 없음</text>
+<text x="320" y="170" text-anchor="middle" font-size="13" fill="#5c6370">바꾸는 곳 한 곳(②), 그리는 곳 한 줄(③④⑤), 저장 한 곳(⑦). 여덟 단계가 한 가닥입니다.</text>
 </svg>
 <ul>
-<li>콘솔에 <code>window.__B11_DEBUG = true</code>를 치면 그 뒤부터 상태 변경이 로그로 찍힌다<span class="loc">(<span class="loc"><code>:21</code></span>)</span>. 평소에는 조용하다. 볼 때만 켠다.</li>
+<li>값을 바꾸는 단계(②)와 화면을 그리는 단계(③④⑤)가 분리돼 있어서, 같은 코드가 첫 방문(OS 설정)·토글(클릭)·복원(head 선주입) 세 상황에서 그대로 재사용됩니다.</li>
+<li>디버그: 콘솔에 <code>window.__B11_DEBUG = true</code>를 입력하면 그 뒤부터 상태 변경이 <code>[B1-1 STATE]</code> 로그로 찍힙니다. 평소에는 조용해서 사용자 화면을 더럽히지 않습니다.</li>
 </ul>
-<div class="core">한 흐름의 여덟 단계를 처음부터 끝까지 말할 수 있으면, 목록과 폼도 같은 모양이라는 걸 알게 된다.</div>
-<div class="check">디버그를 켜고 토글을 눌러보자. 로그의 <code>{theme: 'dark'}</code>를 가리키며 위 여덟 단계를 말하면 이 장은 끝이다.</div>
+<div class="terms">🔤 <code>__B11_DEBUG</code> — 상태 변경 로그를 켜고 끄는 전역 스위치 · <code>조건부 로그</code> — 평소엔 조용, 개발자가 볼 때만 찍힘</div>
 </section>
+
 
 <section>
 <h2>Q11. async/await·try/catch의 분기 따라가기</h2>
 <ul>
-<li>try 안의 순서: 로딩 상태 세팅 → <code>fetch(url, {signal})</code> → <code>res.ok</code> 검사 → <code>json()</code> → 렌더. 각 단계에서 실패하면 던지는 지점이 다르다.</li>
-<li>분기 네 개가 코드에 따로 존재한다. 403은 한도 초과 문구<span class="loc">(<span class="loc"><code>:256</code></span>)</span>, 404는 사용자 없음<span class="loc">(<span class="loc"><code>:257</code></span>)</span>, 그 외 HTTP는 상태 코드 문구<span class="loc">(<span class="loc"><code>:258</code></span>)</span>, 망 단절과 타임아웃은 catch<span class="loc">(<span class="loc"><code>:262-265</code></span>)</span>. 타임아웃은 8초에 <code>controller.abort()</code>를 걸고<span class="loc">(<span class="loc"><code>:247-251</code></span>)</span>, <code>finally</code>에서 타이머를 정리한다<span class="loc">(<span class="loc"><code>:266-268</code></span>)</span>.</li>
-<li>"catch 하나로 다 처리"가 아니다. 실패의 종류마다 화면 문구가 달라야 해서 분기도 나뉘어 있다.</li>
+<li>try 안의 순서: 로딩 상태 세팅 → <code>fetch(url, {signal})</code> → <code>res.ok</code> 검사 → <code>json()</code> → 렌더. 단계마다 실패 지점이 다릅니다.</li>
+<li>실패 네 종류에 문구 네 개를 대응시켰습니다. 403 한도 초과 / 404 사용자 없음 / 그 외 HTTP 상태 코드 / 망 단절·타임아웃. "catch 하나로 다 처리"가 아니라, 화면에 보여줄 말이 다르기 때문에 던지는 자리도 나뉘어 있습니다.</li>
+<li>타임아웃은 8초에 <code>controller.abort()</code>를 걸어 요청을 취소하고, <code>finally</code>에서 타이머를 정리합니다. 성공해도, 실패해도 남는 게 없도록.</li>
 </ul>
-<p class="locs loc"><span class="loc"><code>js/main.js:244-273</code></span> 요청부터 정리까지 한 덩어리</p>
-<div class="core">실패의 종류가 다르면 문구도 다르다. 분기는 catch 하나가 아니라 코드 네 곳에 있다.</div>
-<div class="check">Network 탭 Offline에서 '다시 시도'까지, catch 경로를 실제로 타는 것을 보자.</div>
+<pre class="code" data-lang="js"><code>const controller = new AbortController();
+let timedOut = false;
+const timeoutId = setTimeout(() =&gt; {
+  timedOut = true;
+  controller.abort();
+}, 8000);
+try {
+  const res = await fetch(reposURL, { signal: controller.signal });
+  // 여기서 실패를 '던진다' — 종류마다 화면 문구가 달라야 해서
+  if (!res.ok) {
+    if (res.status === 403)
+      throw new Error('API 호출 한도를 초과했습니다. 잠시 후 다시 시도해주세요.');
+    if (res.status === 404) throw new Error('사용자를 찾을 수 없습니다.');
+    throw new Error(`로드 실패 (HTTP ${res.status})`);
+  }
+  renderRepos(await res.json());
+} catch (err) {
+  // 던진 것과 망 단절(타임아웃 포함)이 여기로 모인다
+  reposStatus.textContent = timedOut
+    ? '요청 시간이 초과됐습니다. 다시 시도해주세요.'
+    : err.message;
+  reposRetry.hidden = false;
+} finally {
+  // 성공/실패 무관하게 타이머 정리
+  window.clearTimeout(timeoutId);
+}</code></pre>
+<div class="terms">🔤 <code>async · await</code> — 시간 걸리는 일을 윗줄→아랫줄 읽듯이 쓰는 문법 · <code>try · catch · finally</code> — 시도 → 오류 처리 → 무조건 마무리 · <code>throw</code> — catch로 넘길 오류를 직접 만들어 던짐</div>
 </section>
+
 
 <section>
 <h2>Q12. 데이터가 카드가 되는 세 단계</h2>
-<ul>
-<li>map 안에서 두 가지가 더 일어난다. 구조분해<span class="loc">(<span class="loc"><code>:207</code></span>)</span>로 값을 꺼내고 템플릿 리터럴<span class="loc">(<span class="loc"><code>:209</code></span>)</span>로 조립한다. forEach는 목록 전체를 다시 쓰지 않고 <code>insertAdjacentHTML('beforeend')</code>로 하나씩 붙인다.</li>
-<li>심기 전에 이스케이프가 한 단계 더 있다. API에서 온 name이나 description은 외부 데이터라서, <code>escapeHTML</code><span class="loc">(<span class="loc"><code>:185-192</code></span>)</span>로 태그 문자를 전부 안전 문자로 바꾼 뒤 넣는다. 안 그러면 이름에 스크립트를 심은 저장소가 내 페이지에서 실행될 수 있다.</li>
-</ul>
+<p>API에서 온 배열을 화면의 카드로 바꾸는 파이프라인입니다. 고르고(filter) → 카드 문장으로 바꾸고(map) → 하나씩 꽂습니다(forEach). 그리고 심기 전에 안전 문자로 갈아두는 단계가 한 겹 더 있습니다.</p>
 <svg class="diagram" viewBox="0 0 640 185" role="img" aria-label="목록 변환 도식">
 <rect x="10" y="30" width="130" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="75" y="52" text-anchor="middle" font-size="12">API 응답 배열</text><text x="75" y="70" text-anchor="middle" font-size="11" fill="#5c6370">저장소 N개</text>
 <line x1="142" y1="56" x2="168" y2="56" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="170" y="30" width="125" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="232" y="52" text-anchor="middle" font-size="12" font-weight="bold">filter</text><text x="232" y="70" text-anchor="middle" font-size="11" fill="#5c6370">언어 선별 <tspan class="loc">(:197)</tspan></text>
+<rect x="170" y="30" width="125" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="232" y="52" text-anchor="middle" font-size="12" font-weight="bold">filter</text><text x="232" y="70" text-anchor="middle" font-size="11" fill="#5c6370">언어 선별</text>
 <line x1="297" y1="56" x2="323" y2="56" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="325" y="30" width="140" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="395" y="52" text-anchor="middle" font-size="12" font-weight="bold">map</text><text x="395" y="70" text-anchor="middle" font-size="11" fill="#5c6370">카드 변환 <tspan class="loc">(:205)</tspan></text>
+<rect x="325" y="30" width="140" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="395" y="52" text-anchor="middle" font-size="12" font-weight="bold">map</text><text x="395" y="70" text-anchor="middle" font-size="11" fill="#5c6370">카드 변환</text>
 <line x1="467" y1="56" x2="493" y2="56" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="495" y="30" width="135" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="562" y="52" text-anchor="middle" font-size="12" font-weight="bold">forEach</text><text x="562" y="70" text-anchor="middle" font-size="11" fill="#5c6370">하나씩 삽입 <tspan class="loc">(:211)</tspan></text>
-<rect x="325" y="110" width="140" height="34" rx="8" fill="#fff8e6" stroke="#e67700" stroke-width="2"/><text x="395" y="132" text-anchor="middle" font-size="12">escapeHTML <tspan class="loc">(:185)</tspan></text>
+<rect x="495" y="30" width="135" height="52" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="562" y="52" text-anchor="middle" font-size="12" font-weight="bold">forEach</text><text x="562" y="70" text-anchor="middle" font-size="11" fill="#5c6370">하나씩 삽입</text>
+<rect x="325" y="110" width="140" height="34" rx="8" fill="#fff8e6" stroke="#e67700" stroke-width="2"/><text x="395" y="132" text-anchor="middle" font-size="12">escapeHTML</text>
 <line x1="395" y1="82" x2="395" y2="110" stroke="#e67700" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#m-orange)"/>
-<text x="320" y="170" text-anchor="middle" font-size="13" fill="#5c6370">map 안에서: 꺼내고 → 조립하기 전에 안전 문자로</text>
+<text x="320" y="170" text-anchor="middle" font-size="13" fill="#5c6370">map 안에서: 값을 꺼내고 → 조립하기 전에 안전 문자로 바꿉니다</text>
 </svg>
-<div class="core">고르고, 바꾸고, 안전 문자로 바꾸고, 꽂는다.</div>
-<div class="check">언어 필터 칩을 누르면 목록이 즉시 갈아끼워지는 걸 볼 수 있다.</div>
+<pre class="code" data-lang="js"><code>const shown = repos.filter((repo) =&gt;
+  STATE.reposFilter === '전체' || (repo.language || '기타') === STATE.reposFilter);
+
+shown
+  .map((repo) =&gt; {
+    const { name, html_url: url, description } = repo;   // 구조분해 할당
+    const desc = description || '설명 없음';
+    // 템플릿 리터럴로 조립 — 외부 값은 전부 escapeHTML
+    return `&lt;article&gt;
+      &lt;a href="${escapeHTML(url)}"&gt;${escapeHTML(name)}&lt;/a&gt;
+      &lt;p&gt;${escapeHTML(desc)}&lt;/p&gt;
+    &lt;/article&gt;`;
+  })
+  .forEach((html) =&gt; reposList.insertAdjacentHTML('beforeend', html));
+
+// 이름에 &lt;script&gt;를 심은 저장소가 내 페이지에서 실행될 수 있습니다.
+// 그래서 심기 전에 안전 문자로 바꿉니다 (XSS 방지).
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&amp;/g, '&amp;amp;')
+    .replace(/&lt;/g, '&amp;lt;').replace(/&gt;/g, '&amp;gt;')
+    .replace(/"/g, '&amp;quot;').replace(/'/g, '&amp;#39;');
+}</code></pre>
+<div class="terms">🔤 <code>구조분해 할당</code> — const { name } = repo; 객체에서 값 한 줄 추출 · <code>템플릿 리터럴</code> — `` ` `` 문자열에 ${ }로 값 박아 조립 · <code>insertAdjacentHTML</code> — HTML 문자열을 지정 위치에 끼워 넣기 · <code>escapeHTML (XSS 방지)</code> — < > " 등을 안전 문자로 바꿔 문자로만 취급</div>
 </section>
+
 
 <section>
 <h2>Q13. Flex와 Grid는 어디에, 왜</h2>
-<ul>
-<li>Flex는 한 축이다. 헤더 한 줄, 내비 한 줄, 필터 한 줄처럼 좌우 정렬만 필요하면 1차원으로 충분하다<span class="loc">(<span class="loc"><code>css/style.css:172</code></span>, <span class="loc"><code>:509-517</code></span>, <span class="loc"><code>:318</code></span>)</span>.</li>
-<li>Grid는 두 축이다. 카드는 행과 열이 같이 굴러가야 해서 2차원이다. 기본은 1열<span class="loc">(<span class="loc"><code>:332-336</code></span>)</span>이고 넓어지면 <code>repeat(auto-fit, minmax(260px, 1fr))</code><span class="loc">(<span class="loc"><code>:533</code></span>)</span>이 남는 폭을 쪼개 열을 늘리고, 1200px 이상에서는 <code>repeat(4, 1fr)</code>로 명시 고정한다<span class="loc">(<span class="loc"><code>:571</code></span>)</span>. 카드가 적어도 빈 트랙을 접어서 채운다. <code>auto-fill</code>이었다면 빈칸을 남겨 한쪽으로 쏠린다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 230" role="img" aria-label="Flex와 Grid 비교 도식">
 <line x1="320" y1="15" x2="320" y2="215" stroke="#e5e7eb" stroke-width="2"/>
 <text x="160" y="30" text-anchor="middle" font-size="14" font-weight="bold">Flex · 한 축</text>
 <rect x="45" y="50" width="62" height="36" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="76" y="73" text-anchor="middle" font-size="11">내비</text>
 <rect x="115" y="50" width="62" height="36" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="146" y="73" text-anchor="middle" font-size="11">필터</text>
-<rect x="185" y="50" width="62" height="36" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="216" y="73" text-anchor="middle" font-size="11">카드</text>
+<rect x="185" y="50" width="62" height="36" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="216" y="73" text-anchor="middle" font-size="11">푸터</text>
 <line x1="45" y1="110" x2="247" y2="110" stroke="#e67700" stroke-width="2" marker-start="url(#m-orange)" marker-end="url(#m-orange)"/><text x="247" y="106" text-anchor="end" font-size="12" fill="#e67700">정렬 축 하나</text>
-<text x="160" y="145" text-anchor="middle" font-size="12" fill="#5c6370">header<tspan class="loc">(:172)</tspan> nav<tspan class="loc">(:509)</tspan> 필터<tspan class="loc">(:318)</tspan></text>
+<text x="160" y="145" text-anchor="middle" font-size="12" fill="#5c6370">header · nav · 필터</text>
 <text x="480" y="30" text-anchor="middle" font-size="14" font-weight="bold">Grid · 행과 열</text>
 <rect x="400" y="45" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><rect x="452" y="45" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><rect x="504" y="45" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/>
 <rect x="400" y="87" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><rect x="452" y="87" width="44" height="34" rx="8" fill="#1f6feb"/><rect x="504" y="87" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/>
 <rect x="400" y="129" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><rect x="452" y="129" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/><rect x="504" y="129" width="44" height="34" rx="8" fill="#fff" stroke="#1f6feb" stroke-width="2"/>
 <line x1="400" y1="180" x2="548" y2="180" stroke="#e67700" stroke-width="2" marker-start="url(#m-orange)" marker-end="url(#m-orange)"/><line x1="570" y1="45" x2="570" y2="163" stroke="#e67700" stroke-width="2" marker-start="url(#m-orange)" marker-end="url(#m-orange)"/>
 <text x="474" y="198" text-anchor="middle" font-size="12" fill="#e67700">둘 다 굴러간다</text>
-<text x="320" y="222" text-anchor="middle" font-size="13" fill="#5c6370">한 줄이면 Flex, 방향이 두 개면 Grid. 카드는 auto-fit이 열을 스스로 채운다.</text>
+<text x="320" y="222" text-anchor="middle" font-size="13" fill="#5c6370">한 줄이면 Flex, 방향이 두 개면 Grid. 카드는 auto-fit이 열을 스스로 채웁니다.</text>
 </svg>
-<div class="note">README가 내비에게 기대한 <code>space-between</code>은 9/19에 사실이 되었다. 768px부터 내비는 <code>flex: 1</code> + <code>space-between</code>으로 링크 4개를 폭 전체에 균등 배치한다<span class="loc">(<span class="loc"><code>:513-514</code></span>)</span>. 푸터는 원래부터 space-between<span class="loc">(<span class="loc"><code>:428</code></span>)</span>이었고, 모바일 행의 테마 버튼 우측 정리는 <code>margin-left: auto</code><span class="loc">(<span class="loc"><code>:189</code></span>)</span>가 맡는다.</div>
-<div class="core">한 줄 정렬은 Flex, 격자는 Grid. auto-fit이 격자를 스스로 채운다.</div>
-<div class="check">창을 넓히며 카드 열이 늘어나다 1200에서 4열로 고정되는 것을 보고, 내비(:513)와 푸터(:428)의 space-between 두 개를 코드에서 찾아보자.</div>
+<ul>
+<li>기준은 축입니다. 방향이 하나면 Flex, 두 개면 Grid. 헤더 한 줄, 내비 한 줄, 필터 한 줄처럼 좌우 정렬만 필요하면 1차원인 Flex로 충분합니다.</li>
+<li>저장소 카드는 행과 열이 같이 굴러가야 하는 2차원이라 Grid입니다. 기본은 1열이고, 넓어지면 <code>repeat(auto-fit, minmax(260px, 1fr))</code>이 남는 폭을 쪼개 열을 스스로 늘립니다. 1200px 이상에서는 <code>repeat(4, 1fr)</code>로 열 수를 명시 고정합니다.</li>
+<li><code>auto-fit</code>를 쓴 이유: 카드가 적어도 빈 트랙을 접어서 채웁니다. <code>auto-fill</code>이었다면 빈칸을 그대로 남겨 카드가 한쪽으로 쏠립니다.</li>
+</ul>
+<pre class="code" data-lang="css"><code>/* 한 축 → Flex */
+header { display: flex; align-items: center; }
+/* 링크 4개를 폭 전체에 균등 배치 */
+nav    { justify-content: space-between; flex: 1; }
+footer { display: flex; justify-content: space-between; }
+
+/* 두 축 → Grid */
+#repos-list { display: grid; grid-template-columns: 1fr; }  /* 기본 1열 */
+@media (min-width: 768px) {
+  #repos-list { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+@media (min-width: 1200px) {
+  #repos-list { grid-template-columns: repeat(4, 1fr); }
+}</code></pre>
+<div class="terms">🔤 <code>Flex</code> — 한 줄(1차원) 정렬 도구 · <code>Grid</code> — 행과 열(2차원) 격자 도구 · <code>space-between</code> — 요소들을 폭 전체에 균등 배치 · <code>auto-fill</code> — auto-fit과 달리 격자 빈칸을 그대로 둠</div>
 </section>
+
 
 <section>
 <h2>Q14. STATE 객체가 왜 필요한가</h2>
-<ul>
-<li>화면을 결정하는 값 네 개(<code>theme</code>, <code>menuOpen</code>, <code>repos</code>, <code>reposFilter</code>)를 한 객체에 모아뒀다. 바꾸는 통로는 <code>setState</code> 하나, 보는 함수들은 읽기만 한다. 상태가 어디에서 변하는지 묻는 질문에 한 곳으로 답한다.</li>
-<li>변수로 흩어두면 어떤가. 핸들러가 늘수록 "지금 이 화면을 결정하는 값이 뭔지"를 역추적하기 어렵다. 값 변경 지점이 한 곳이라 디버그 로그도 한 곳에 붙는다.</li>
-</ul>
 <svg class="diagram" viewBox="0 0 640 270" role="img" aria-label="STATE 경계 도식">
 <rect x="10" y="85" width="165" height="44" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="92" y="104" text-anchor="middle" font-size="12">이벤트 → setState()</text><text x="92" y="121" text-anchor="middle" font-size="11" fill="#5c6370">값을 바꾸는 유일한 통로</text>
 <line x1="175" y1="107" x2="218" y2="107" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="220" y="55" width="200" height="104" rx="12" fill="#1f6feb"/><text x="320" y="80" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">STATE</text><text x="320" y="103" text-anchor="middle" fill="#fff" font-size="12">theme · menuOpen</text><text x="320" y="123" text-anchor="middle" fill="#fff" font-size="12">repos · reposFilter</text><text x="320" y="146" text-anchor="middle" fill="#dbe7ff" font-size="11"><tspan class="loc">(:10-15)</tspan></text>
+<rect x="220" y="55" width="200" height="104" rx="12" fill="#1f6feb"/><text x="320" y="80" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">STATE</text><text x="320" y="103" text-anchor="middle" fill="#fff" font-size="12">theme · menuOpen</text><text x="320" y="123" text-anchor="middle" fill="#fff" font-size="12">repos · reposFilter</text>
 <line x1="420" y1="107" x2="448" y2="107" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <rect x="450" y="65" width="180" height="84" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="540" y="88" text-anchor="middle" font-size="12">applyTheme()</text><text x="540" y="108" text-anchor="middle" font-size="12">applyMenu()</text><text x="540" y="128" text-anchor="middle" font-size="12">renderRepos()</text>
-<text x="540" y="168" text-anchor="middle" font-size="11" fill="#5c6370">읽기만 하고 그리기만 한다</text>
+<text x="540" y="168" text-anchor="middle" font-size="11" fill="#5c6370">읽기만 하고 그리기만 합니다</text>
 <text x="320" y="205" text-anchor="middle" font-size="12" fill="#9a6700">· 예외: STATE를 안 거침 ·</text>
-<rect x="70" y="215" width="210" height="40" rx="10" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="5 4"/><text x="175" y="232" text-anchor="middle" font-size="12">폼: 지역 변수 valid</text><text x="175" y="248" text-anchor="middle" font-size="11" fill="#5c6370"><tspan class="loc">(:147)</tspan></text>
-<rect x="350" y="215" width="230" height="40" rx="10" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="5 4"/><text x="465" y="232" text-anchor="middle" font-size="12">스크롤: 클래스 직접 토글</text><text x="465" y="248" text-anchor="middle" font-size="11" fill="#5c6370"><tspan class="loc">(:64-68)</tspan></text>
+<rect x="70" y="215" width="210" height="40" rx="10" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="5 4"/><text x="175" y="232" text-anchor="middle" font-size="12">폼: 지역 변수 valid</text><text x="175" y="248" text-anchor="middle" font-size="11" fill="#5c6370">제출 단위 1회용</text>
+<rect x="350" y="215" width="230" height="40" rx="10" fill="#fff" stroke="#999" stroke-width="2" stroke-dasharray="5 4"/><text x="465" y="232" text-anchor="middle" font-size="12">스크롤: 클래스 직접 토글</text><text x="465" y="248" text-anchor="middle" font-size="11" fill="#5c6370">지나가는 신호일 뿐</text>
 </svg>
-<p class="locs loc"><span class="loc"><code>js/main.js:10-15</code></span> STATE · <span class="loc"><code>:19-22</code></span> setState와 로그</p>
-<div class="note">정직하게 말하면 예외가 두 개 있다. 폼의 유효성(<code>valid</code><span class="loc">, <span class="loc"><code>:147</code></span></span>)은 지역 변수에 바로 쓰고, 스크롤(300/60px<span class="loc">, <span class="loc"><code>:64-68</code></span></span>)은 화면을 '결정'하는 값이 아니라 지나가는 신호라서 클래스를 바로 토글한다. STATE의 경계를 이렇게 긋고, 그 이유까지가 설계 판단이다.</div>
-<div class="core">단일 진실 원천은 전부 모은다가 아니라, 뭐 모으고 뭐 두지 않았나를 설명할 수 있어야 성립한다.</div>
-<div class="check">에디터에서 setState를 검색해서 호출부를 세어보자. 폼과 스크롤이 안 걸린다.</div>
+<ul>
+<li>화면을 결정하는 값 네 개(<code>theme</code>, <code>menuOpen</code>, <code>repos</code>, <code>reposFilter</code>)를 한 객체에 모아뒀고, 바꾸는 통로는 <code>setState</code> 하나입니다. 그리는 함수들은 읽기만 합니다. "이 값은 어디서 바뀌나요"라는 질문에 한 곳으로 답할 수 있습니다.</li>
+<li>변수로 흩어두면 핸들러가 늘수록 화면의 원인을 역추적하기 어려워집니다. 변경 지점이 한 곳이라 디버그 로그도 <code>setState</code> 한 곳에 붙었습니다.</li>
+<li>정직한 예외 두 개: 폼의 유효성(<code>valid</code>)은 지역 변수에 바로 쓰고, 스크롤 표시(300/60px)는 화면을 '결정'하는 값이 아니라 지나가는 신호라서 클래스를 바로 토글합니다. 무엇을 모으고 무엇을 두지 않았는지 설명할 수 있어야 단일 진실 원천이 성립합니다.</li>
+</ul>
+<div class="terms">🔤 <code>STATE · setState</code> — 화면 결정 값의 저장소 · 바꾸는 유일한 통로 · <code>단일 진실 원천</code> — 같은 값의 원본을 한 곳에 두는 설계 · <code>지역 변수</code> — 함수 안에서만 사는 1회용 값</div>
 </section>
+
 
 <section>
 <h2>Q15. 모바일 퍼스트로 쓴 이유</h2>
 <ul>
-<li>기본 스타일이 곧 좁은 화면이다<span class="loc">(내비 숨김 <span class="loc"><code>css:193</code></span>, 기술 목록 1열 <span class="loc"><code>:293</code></span>, 저장소 격자 1열 <span class="loc"><code>:333</code></span>)</span>. 넓어지는 분기 <code>min-width</code> 세 개로 키운다.</li>
-<li>여기서 계산이 하나 사라진다. 데스크톱을 기본으로 두면 좁아질 때마다 max-width로 하나씩 되돌려가야 한다. 기본이 좁으면 분기는 넓어지는 방향 한쪽뿐이다. style.css에 max-width 미디어쿼리는 없다.</li>
-<li>Q1과 뿌리는 같고 물리는 결이 다르다. Q1은 동작을 묻고 이 장은 그 순서를 고른 이유를 묻는다.</li>
+<li>기본 스타일이 곧 좁은 화면입니다. 내비는 숨김, 기술 목록 1열, 저장소 격자 1열이 기본값이고, 넓어지는 분기 <code>min-width</code> 세 개로 키워갑니다. style.css에 <code>max-width</code> 미디어쿼리는 하나도 없습니다.</li>
+<li>계산이 하나 사라집니다. 데스크톱을 기본으로 두면 좁아질 때마다 되돌림(max-width 분기)이 필요하지만, 기본이 좁으면 분기는 넓어지는 방향 한쪽뿐입니다.</li>
+<li>가치 기준의 선택이기도 합니다. 저사양·터치 환경이 먼저 보장됩니다. Q1이 '동작'을 물었다면, 이 장은 그 순서를 고른 '이유'를 답합니다.</li>
 </ul>
-<div class="core">기본을 좁게 두면 역계산이 없어진다. 저사양·터치가 먼저 보장된다.</div>
-<div class="check">창을 좁혔다 넓혔다 하며 양쪽 방향을 다 넘겨보자. 분기가 넓어질 때만 도는 게 보인다.</div>
-</section>
+<pre class="code" data-lang="css"><code>/* 기본 = 모바일 */
+nav         { display: none; }        /* 햄버거로 접음 */
+#tech ul    { grid-template-columns: 1fr; }
+#repos-list { grid-template-columns: 1fr; }
 
-<section>
-<h2>마무리 점검</h2>
-<ul>
-<li>'전체 흐름' 장의 흐름도를 손으로 그리고, 예외 두 개(폼·스크롤)를 덧붙일 수 있는가.</li>
-<li>'문서와 코드가 달랐던 여섯 곳' 중 어디를 9/19에 내가 코드로 채웠고(1200 분기·위임·내비 space-between) 어디가 지금도 코드의 실제가 답인지(360 기본값·STATE 예외), 부정하지 않고 말할 수 있는가.</li>
-<li>Q1~Q15의 주황 박스를 순서 없이 뽑아서 배포 페이지에서 그대로 실행할 수 있는가.</li>
-</ul>
-<div class="core">열다섯 질문에 대한 답은 이 저장소 안에 이미 있다. 강의가 할 일은 그 위치를 외우게 하는 게 아니라 보이게 하는 것이다.</div>
+/* 넓어질 때만 덧입힘 — 되돌리는 분기 없음 */
+@media (min-width: 768px)  { nav { display: flex; } ... }
+@media (min-width: 1024px) { main { max-width: 1024px; } ... }
+@media (min-width: 1200px) { main { max-width: 1200px; } ... }</code></pre>
+<div class="terms">🔤 <code>min-width</code> — 화면이 넓어질 때 도는 분기 조건 · <code>max-width</code> — 좁아질 때 되돌리는 분기 조건 — 이 페이지엔 없음 · <code>모바일 퍼스트</code> — 저사양·터치 환경이 먼저 보장되는 순서</div>
 </section>
 
 </div>
@@ -409,10 +619,43 @@
 <div class="nav">
 <button type="button" id="prev">이전</button>
 <span id="counter"></span>
-<button type="button" id="locs-toggle" aria-pressed="false">줄 번호</button>
 <button type="button" id="next">다음</button>
 </div>
 <script>
+  // 내장 하이라이터: 외부 라이브러리 없이 regex 한 덩어리로 토큰만 입힌다.
+  (function () {
+    function esc(s) { return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+    var RX = {
+      js: /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|(`(?:[^`\\]|\\[\s\S])*`|'(?:[^'\\\n]|\\[\s\S])*'|\"(?:[^\"\\\n]|\\[\s\S])*\")|\b(const|let|function|return|if|else|new|try|catch|finally|throw|async|await|typeof)\b|(=>)|\b(\d+(?:\.\d+)?(?:px|rem|s|ms|%)?)\b|([A-Za-z_$][\w$.]*(?=\())/g,
+      css: /(\/\*[\s\S]*?\*\/)|(\"(?:[^\"\\]|\\.)*\"|'(?:[^'\\]|\\.)*')|\b(@media|@import|min-width|max-width)\b|(--[A-Za-z0-9-]+)|(#[0-9a-fA-F]{3,8}\b)|([.#][A-Za-z][\w-]*)|\b(\d+(?:\.\d+)?(?:px|rem|s|ms|%|fr|deg|vh|vw)?)\b|([A-Za-z-]+(?=\())|\b([a-z][a-z-]*)(?=\s*:)/g,
+      html: /(<\/?[A-Za-z][\w-]*|\/?>)|([A-Za-z_:][-:\w.]*(?==))|(\"(?:[^\"]*)\"|'(?:[^']*)')/g
+    };
+    var CLS = {
+      js: ['cm', 'st', 'kw', 'kw', 'nu', 'fn'],
+      css: ['cm', 'st', 'kw', 'var', 'nu', 'sel', 'nu', 'fn', 'prop'],
+      html: ['tag', 'attr', 'st']
+    };
+    function hl(src, lang) {
+      var rx = RX[lang], cls = CLS[lang];
+      if (!rx) return esc(src);
+      rx.lastIndex = 0;
+      var out = '', last = 0, m;
+      while ((m = rx.exec(src))) {
+        out += esc(src.slice(last, m.index));
+        var c = 'kw';
+        for (var i = 1; i < m.length; i++) { if (m[i] !== undefined) { c = cls[i - 1]; break; } }
+        out += '<span class="t-' + c + '">' + esc(m[0]) + '</span>';
+        last = rx.lastIndex;
+      }
+      return out + esc(src.slice(last));
+    }
+    var blocks = document.querySelectorAll('pre.code > code');
+    for (var b = 0; b < blocks.length; b++) {
+      var pre = blocks[b].parentNode;
+      blocks[b].innerHTML = hl(blocks[b].textContent, pre.getAttribute('data-lang') || 'js');
+    }
+  })();
+
   const slides = Array.from(document.querySelectorAll('.slides > section'));
   const counter = document.querySelector('#counter');
   let current = 0;
@@ -443,20 +686,6 @@
     if (Math.abs(dx) > 60) show(current + (dx < 0 ? 1 : -1));
     touchX = null;
   }, { passive: true });
-  const locsBtn = document.querySelector('#locs-toggle');
-  let locsOn = false;
-  try { locsOn = localStorage.getItem('b11-deck-locs') === '1'; } catch (e) {}
-  function setLocs(on) {
-    document.body.classList.toggle('locs-on', on);
-    locsBtn.setAttribute('aria-pressed', String(on));
-    locsBtn.textContent = on ? '줄 번호: 켜짐' : '줄 번호';
-  }
-  locsBtn.addEventListener('click', () => {
-    locsOn = !locsOn;
-    try { localStorage.setItem('b11-deck-locs', locsOn ? '1' : '0'); } catch (e) {}
-    setLocs(locsOn);
-  });
-  setLocs(locsOn);
   window.addEventListener('hashchange', fromHash);
   fromHash();
 </script>
