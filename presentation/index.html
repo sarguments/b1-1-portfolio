@@ -39,8 +39,47 @@
   .demo-btn:hover { background: var(--card); }
   .xss-pane { border: 1px solid var(--line); border-radius: 10px; padding: .6em .9em; margin: .5em 0; }
   .xss-pane b { display: block; font-size: .85rem; color: var(--muted); margin-bottom: .3em; }
-  @media print { .nav { display: none; } .slides > section { display: block !important; page-break-before: always; border-top: 2px solid #ccc; padding: 1em 0; } }
-</style>
+  .flow-active { stroke: #e67700; stroke-width: 4; }
+  /* ——— Q7 목업: 시맨틱 태그로 직접 지은 뼈대 그림 ——— */
+  .q7-mock { --c-top: #e67700; --c-main: #1f6feb; --c-sec: #116329; --c-card: #8250df; --c-bot: #868e96; border: 2px solid var(--line); border-radius: 12px; padding: 10px; display: grid; gap: 8px; background: #fdfdfe; font-size: .85rem; margin: 1em 0; }
+  .q7-mock header, .q7-mock main, .q7-mock .mblock, .q7-mock footer, .q7-mock nav, .q7-mock section, .q7-mock article { border: 1.5px solid var(--accent); border-radius: 8px; padding: 15px 7px 7px; position: relative; background: #fff; }
+  .q7-mock header, .q7-mock nav { border-color: var(--c-top); }
+  .q7-mock main, .q7-mock .mblock { border-color: var(--c-main); }
+  .q7-mock section { border-color: var(--c-sec); }
+  .q7-mock article { border-color: var(--c-card); }
+  .q7-mock footer { border-color: var(--c-bot); }
+  .q7-mock [data-t]::before { content: '<' attr(data-t) '>'; position: absolute; top: 3px; left: 6px; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .64rem; font-weight: 500; line-height: 1; color: var(--accent); white-space: nowrap; overflow: hidden; max-width: calc(100% - 10px); }
+  .q7-mock header > [data-t]::before, .q7-mock header[data-t]::before, .q7-mock nav[data-t]::before { color: var(--c-top); }
+  .q7-mock main[data-t]::before, .q7-mock .mblock[data-t]::before { color: var(--c-main); }
+  .q7-mock section[data-t]::before { color: var(--c-sec); }
+  .q7-mock article[data-t]::before { color: var(--c-card); }
+  .q7-mock footer[data-t]::before { color: var(--c-bot); }
+  .q7-mock main, .q7-mock .mblock { display: grid; gap: 6px; }
+  .q7-mock header { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .q7-mock nav span { background: var(--card); border-radius: 6px; padding: 1px 7px; margin-right: 3px; }
+  .q7-mock .kb { font: inherit; font-size: .8rem; border: 1px solid var(--line); border-radius: 8px; background: var(--card); padding: 1px 8px; color: var(--ink); }
+  .q7-mock section { min-height: 44px; }
+  .q7-mock footer { min-height: 26px; }
+  .q7-mock .sk { display: inline-block; height: 7px; width: 60%; background: var(--line); border-radius: 4px; margin-top: 4px; }
+  .q7-mock .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 6px; }
+  .q7-mock .cards article { padding: 14px 4px 4px; min-height: 26px; border-style: dashed; }
+  .q7-mock article.art-wrap { background: #faf5ff; }
+  .q7-mock article.art-wrap .cards { margin-bottom: 2px; }
+  .q7-mock.hl-root > header { background: #fff4e6; }
+  .q7-mock.hl-root > main, .q7-mock.hl-root > .mblock { background: #f0f6ff; }
+  .q7-mock.hl-root > footer { background: #f1f3f5; }
+  .q7-mock.hl-sec > main section, .q7-mock.hl-sec > .mblock section { background: #e9f7ef; }
+  .q7-legend { display: flex; flex-wrap: wrap; gap: .8em; font-size: .78rem; color: var(--muted); margin: 0; grid-column: 1 / -1; }
+  .q7-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  .q7-legend .lh { background: var(--c-top, #e67700); } .q7-legend .lm { background: var(--c-main, #1f6feb); }
+  .q7-legend .ls { background: var(--c-sec, #116329); } .q7-legend .lc { background: var(--c-card, #8250df); }
+  .q7-legend .lcc { background: #fff; border: 1.5px dashed var(--c-card, #8250df); }
+  .q7-legend .lf { background: var(--c-bot, #868e96); }
+  @media (min-width: 1100px) { .q7-split { display: grid; grid-template-columns: 360px 1fr; gap: 1.2em; align-items: stretch; } .q7-mock { margin-top: 0; grid-template-rows: auto 1fr auto auto; } .q7-mock > main, .q7-mock > .mblock { grid-template-rows: repeat(5, 1fr); } }
+  #q11-controls { display: flex; flex-wrap: wrap; gap: .4em; margin: .6em 0 .2em; }
+  #q11-controls .demo-btn[aria-pressed="true"] { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .slides > section { padding-bottom: 4.5rem; }
+  @media print { .nav { display: none; } .slides > section { display: block !important; page-break-before: always; border-top: 2px solid #ccc; padding: 1em 0; } }</style>
 </head>
 <body>
 <div class="deck">
@@ -99,8 +138,8 @@ function setState(patch) {
 <line x1="277" y1="72" x2="293" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <rect x="295" y="20" width="150" height="105" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="370" y="50" text-anchor="middle" font-size="13" font-weight="bold">1024px</text><text x="370" y="72" text-anchor="middle" font-size="10.5">분기 ②</text><text x="370" y="90" text-anchor="middle" font-size="10.5" fill="#5c6370">최대폭 · 기술 4열</text>
 <line x1="447" y1="72" x2="463" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
-<rect x="465" y="20" width="165" height="105" rx="10" fill="#116329"/><text x="547" y="45" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">1200px</text><text x="547" y="65" text-anchor="middle" fill="#d6f0dc" font-size="10.5">분기 ③</text><text x="547" y="83" text-anchor="middle" fill="#d6f0dc" font-size="10.5">본문 열 1200</text><text x="547" y="100" text-anchor="middle" fill="#d6f0dc" font-size="10.5">카드 4열 고정</text>
-<text x="320" y="160" text-anchor="middle" font-size="12" fill="#5c6370">실측: 375px→1열 · 800px→2열 · 1100px→3열 · 1280px→4열(명시 고정)</text>
+<rect x="465" y="20" width="165" height="105" rx="10" fill="#116329"/><text x="547" y="45" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">1200px</text><text x="547" y="65" text-anchor="middle" fill="#d6f0dc" font-size="10.5">분기 ③</text><text x="547" y="83" text-anchor="middle" fill="#d6f0dc" font-size="10.5">본문 열 1200</text><text x="547" y="100" text-anchor="middle" fill="#d6f0dc" font-size="10.5">카드 3열 상한</text>
+<text x="320" y="160" text-anchor="middle" font-size="12" fill="#5c6370">실측: 375px→1열 · 800px→2열 · 1100px→3열 · 1280px→3열(명시 상한)</text>
 </svg>
 <ul>
 <li>360px 분기는 없습니다. 기본 스타일이 곧 360px 분기 입니다.</li>
@@ -119,7 +158,7 @@ nav         { display: none; }                    /* 햄버거 메뉴 */
 }
 @media (min-width: 1200px) {
   main { max-width: 1200px; }
-  #repos-list { grid-template-columns: repeat(4, 1fr); }
+  #repos-list { grid-template-columns: repeat(3, 1fr); }
 }</code></pre>
 <div class="terms">🔤 <code>미디어 쿼리</code> — “화면 너비 조건이면 이 스타일” 하는 CSS 조건문 · <code>모바일 퍼스트</code> — 좁은 화면을 기본으로 쓰고 넓어질 때 덧입히는 순서 · <code>auto-fit</code> — 격자에서 빈칸을 접어 카드로 채움 · <code>브레이크포인트</code> — 레이아웃이 바뀌는 화면 너비 지점</div>
 </section>
@@ -183,14 +222,14 @@ function applyTheme() {
 <svg class="diagram" viewBox="0 0 640 150" role="img" aria-label="스크롤 임계값 도식">
 <line x1="30" y1="85" x2="610" y2="85" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
 <text x="30" y="115" text-anchor="start" font-size="12" fill="#5c6370">0 (맨 위)</text>
-<line x1="95" y1="70" x2="95" y2="100" stroke="#e67700" stroke-width="3"/><text x="95" y="55" text-anchor="middle" font-size="13" font-weight="bold">60px</text><text x="95" y="133" text-anchor="middle" font-size="12" fill="#5c6370">내비 배경 변경</text>
+<line x1="95" y1="70" x2="95" y2="100" stroke="#e67700" stroke-width="3"/><text x="95" y="55" text-anchor="middle" font-size="13" font-weight="bold">60px</text><text x="95" y="133" text-anchor="middle" font-size="12" fill="#5c6370">내비 불투명+그림자</text>
 <line x1="390" y1="70" x2="390" y2="100" stroke="#e67700" stroke-width="3"/><text x="390" y="55" text-anchor="middle" font-size="13" font-weight="bold">300px</text><text x="390" y="133" text-anchor="middle" font-size="12" fill="#5c6370">맨 위로 버튼 표시</text>
 <text x="560" y="115" text-anchor="middle" font-size="12" fill="#5c6370">스크롤 양 (눈금 개념도)</text>
 </svg>
 <ul>
 <li><b>메뉴</b>: <code>setState({menuOpen})</code> → <code>applyMenu</code>. 보이는 열림과 스크린리더가 읽는 열림(<code>aria-expanded</code>)을 같은 함수에서 함께 바꿉니다.</li>
 <li><b>등장</b>: 스크롤마다 계산하면 Reflow가 반복돼 버벅입니다. <code>IntersectionObserver</code>에 감시를 맡기고, 20% 지점에서 클래스를 붙인 뒤 <code>unobserve</code>로 감시를 끕니다 — 등장은 한 번뿐.</li>
-<li><b>맨 위로</b>: 스크롤 이벤트 하나에서 300px는 버튼, 60px는 내비 배경을 담당합니다. 클릭하면 <code>scrollTo({behavior:'smooth'})</code>로 올라갑니다.</li>
+<li><b>맨 위로</b>: 스크롤 이벤트 하나에서 300px는 버튼 표시, 60px는 내비 전환(불투명 배경+헤더 그림자)을 담당합니다. 클릭하면 <code>scrollTo({behavior:'smooth'})</code>로 올라갑니다.</li>
 </ul>
 <pre class="code" data-lang="js"><code>function applyMenu() {
   nav.classList.toggle('active', STATE.menuOpen);   // 보이는 메뉴
@@ -343,6 +382,24 @@ userName.addEventListener('input', () =&gt; {
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — 뼈대</h2>
 <p class="claim">⭐ 선택 기준은 하나 — div만 쓰면 보조기기가 각 부분의 역할을 모릅니다. 태그 이름이 곧 설명이어야 합니다.</p>
+<div class="q7-split">
+<div class="q7-mock hl-root" aria-hidden="true">
+  <header data-t="header">
+    <button type="button" class="kb" tabindex="-1">메뉴</button>
+    <button type="button" class="kb" tabindex="-1">다크 모드</button>
+    <nav data-t="nav"><span>소개</span><span>기술</span><span>프로젝트</span><span>문의</span></nav>
+  </header>
+  <main data-t="main id=main">
+    <section data-t="section#hero"><span class="sk"></span></section>
+    <section data-t="section#about"><span class="sk"></span></section>
+    <section data-t="section#tech"><span class="sk"></span></section>
+    <section data-t="section#project"><div class="cards"><article data-t="카드"></article><article></article><article></article><article></article></div></section>
+    <section data-t="section#contact"><span class="sk"></span></section>
+  </main>
+  <footer data-t="footer"><span class="sk" style="width:40%"></span></footer>
+  <p class="q7-legend"><span><i class="lh"></i>header·nav</span><span><i class="lm"></i>main</span><span><i class="ls"></i>section</span><span><i class="lcc"></i>article</span><span><i class="lf"></i>footer</span></p>
+</div>
+<div>
 <table>
 <tr><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
 <tr><td><code>a.skip-link</code></td><td>평소엔 화면 밖(<code>top:-100px</code>)에 있다가 Tab 포커스가 오면 나타나는 본문 점프 링크. 내비를 키보드로 다 넘기지 않습니다</td></tr>
@@ -362,6 +419,8 @@ userName.addEventListener('input', () =&gt; {
 &lt;/header&gt;
 &lt;main id="main"&gt; … &lt;/main&gt;
 &lt;footer&gt; … &lt;/footer&gt;</code></pre>
+</div>
+</div>
 <div class="terms">🔤 <code>시맨틱 태그</code> — 이름 자체가 역할까지 알리는 태그 · <code>스킵링크</code> — 키보드 사용자가 메뉴를 건너뛰는 링크 · <code>aria-controls</code> — 버튼이 여닫는 대상을 id로 짝지음 · <code>스크린리더</code> — 화면을 소리 읽어 주는 보조기기</div>
 </section>
 
@@ -369,12 +428,28 @@ userName.addEventListener('input', () =&gt; {
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — main 안</h2>
 <p class="claim">⭐ main 안의 다섯 구역(<code>section</code>)이 앵커의 지점 — 이름(id) 있는 구역만 링크가 됩니다.</p>
+<div class="q7-split">
+<div class="q7-mock hl-sec" aria-hidden="true">
+  <header data-t="header"><span class="sk" style="width:80%"></span></header>
+  <div class="mblock" data-t="main id=main">
+    <section data-t="section#hero"><span class="sk"></span></section>
+    <section data-t="section#about"><span class="sk"></span></section>
+    <section data-t="section#tech"><span class="sk"></span></section>
+    <section data-t="section#project"><article class="art-wrap" data-t="article 래퍼"><div class="cards"><article data-t="카드"></article><article></article><article></article><article></article></div></article></section>
+    <section data-t="section#contact"><span class="sk"></span></section>
+  </div>
+  <footer data-t="footer"><span class="sk" style="width:40%"></span></footer>
+  <p class="q7-legend"><span><i class="lh"></i>header·nav</span><span><i class="lm"></i>main</span><span><i class="ls"></i>section</span><span><i class="lc"></i>article 래퍼</span><span><i class="lcc"></i>article 카드</span><span><i class="lf"></i>footer</span></p>
+</div>
+<div>
 <table>
 <tr><th>요소</th><th>여기가 뭐하는 자리인가</th></tr>
 <tr><td><code>section#hero</code></td><td>첫 화면 자기소개. 문서에 유일한 <code>h1</code>을 가집니다</td></tr>
 <tr><td><code>section#about</code></td><td>소개 문단 + 프로필 이미지. 이미지에 <code>alt</code> 한 줄</td></tr>
 <tr><td><code>section#tech</code></td><td>정적 기술 목록(<code>ul</code>)</td></tr>
-<tr><td><code>section#project</code></td><td>저장소 목록 자리. 안에 래퍼 <code>article</code> + JS가 생성하는 카드 <code>article</code> — article 중첩은 의도된 구조입니다(글감 안에 작은 글감)</td></tr>
+<tr><td><code>section#project</code></td><td>저장소 목록 자리. 안에 래퍼 <code>article</code> 하나를 둡니다</td></tr>
+<tr><td>└ <code>article</code> (래퍼)</td><td>상태 문구·필터·목록을 담는 정적틀. JS가 만들지 않는 자리 잡기용</td></tr>
+<tr><td>└└ <code>article</code> (카드)</td><td>JS가 저장소마다 생성. 글감 안의 작은 글감 — <code>article</code> 중첩은 의도된 구조입니다</td></tr>
 <tr><td><code>section#contact</code></td><td>문의 폼. 모든 입력이 <code>label for</code> ↔ <code>id</code>로 짝을 이룹니다</td></tr>
 </table>
 <pre class="code" data-lang="html"><code>&lt;main id="main"&gt;
@@ -391,6 +466,8 @@ userName.addEventListener('input', () =&gt; {
     &lt;form novalidate&gt; … &lt;/form&gt;
   &lt;/section&gt;
 &lt;/main&gt;</code></pre>
+</div>
+</div>
 <div class="terms">🔤 <code>label ↔ id</code> — 이름표와 입력칸을 짝지어 연결 · <code>alt</code> — 이미지를 못 볼 때 대신 읽는 한 줄 설명 · <code>article</code> — 그 자체로 독립된 내용 덩어리(글감)</div>
 </section>
 
@@ -522,7 +599,7 @@ btn.dataset.filter = 'CSS'            // 쓰면 어트리뷰트가 즉시 따라
 <section>
 <h2>Q11. async/await·try/catch의 분기 따라가기</h2>
 <p class="claim">⭐ 실패 다섯 갈래가 catch 하나에 모입니다 — 그래서 던지는 자리가 다르고, 문구가 다릅니다.</p>
-<svg class="diagram" viewBox="0 0 640 340" role="img" aria-label="실패 다섯 갈래가 catch로 모이는 도식">
+<svg class="diagram" id="q11-diagram" viewBox="0 0 640 340" role="img" aria-label="실패 다섯 갈래가 catch로 모이는 도식">
 <text x="20" y="16" font-size="11" fill="#5c6370">try 안에서 실패가 만들어지는 다섯 지점</text>
 <rect x="12" y="26" width="112" height="48" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="68" y="46" text-anchor="middle" font-size="11">① 403 한도</text><text x="68" y="63" text-anchor="middle" font-size="10.5" fill="#5c6370">내가 throw</text>
 <rect x="138" y="26" width="112" height="48" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="194" y="46" text-anchor="middle" font-size="11">② 404 없음</text><text x="194" y="63" text-anchor="middle" font-size="10.5" fill="#5c6370">내가 throw</text>
@@ -540,6 +617,14 @@ btn.dataset.filter = 'CSS'            // 쓰면 어트리뷰트가 즉시 따라
 <line x1="56" y1="252" x2="196" y2="252" stroke="#116329" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#m-green)"/><text x="126" y="243" text-anchor="middle" font-size="10.5" fill="#116329">성공: 렌더 후 합류</text>
 <text x="320" y="318" text-anchor="middle" font-size="13" fill="#5c6370">나오는 자리가 달라야 화면에 보여주는 말도 달라집니다.</text>
 </svg>
+<div id="q11-controls" role="group" aria-label="실패 갈래 선택">
+<button type="button" class="demo-btn" aria-pressed="false">① 403</button>
+<button type="button" class="demo-btn" aria-pressed="false">② 404</button>
+<button type="button" class="demo-btn" aria-pressed="false">③ 그 외 HTTP</button>
+<button type="button" class="demo-btn" aria-pressed="false">④ 8초 abort</button>
+<button type="button" class="demo-btn" aria-pressed="false">⑤ 망 단절</button>
+</div>
+<pre class="demo-log" id="q11-log">갈래를 누르면 — 그 실패가 지나는 칸과 화면에 뜰 문구가 바로 표시됩니다</pre>
 <ul>
 <li>try 안의 순서: 로딩 → <code>fetch(url, {signal})</code> → <code>res.ok</code> → <code>json()</code> → 렌더. 단계마다 실패 지점이 다릅니다.</li>
 <li>실패 넷에 문구 넷: 403 한도 / 404 없음 / 그 외 HTTP / 망 단절·타임아웃. "catch 하나로 다 처리"가 아닙니다.</li>
@@ -628,7 +713,7 @@ function escapeHTML(value) {
 </svg>
 <ul>
 <li>좌우 정렬만 필요한 한 줄들(헤더·내비·필터)은 1차원 — Flex로 충분합니다.</li>
-<li>저장소 카드는 행과 열이 같이 굴러가는 2차원 — Grid. 넓어지면 <code>auto-fit</code>이 열을 늘리고, 1200px 이상은 4열로 명시 고정합니다.</li>
+<li>저장소 카드는 행과 열이 같이 굴러가는 2차원 — Grid. 넓어지면 <code>auto-fit</code>이 열을 늘리고, 1200px 이상은 3열로 명시 상한을 둡니다.</li>
 <li><code>auto-fit</code>를 쓴 이유: 카드가 적어도 빈 트랙을 접어 채웁니다. <code>auto-fill</code>이었다면 빈칸을 남겨 카드가 한쪽으로 쏠립니다.</li>
 </ul>
 <pre class="code" data-lang="css"><code>/* 한 축 → Flex */
@@ -643,7 +728,7 @@ footer { display: flex; justify-content: space-between; }
   #repos-list { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
 }
 @media (min-width: 1200px) {
-  #repos-list { grid-template-columns: repeat(4, 1fr); }
+  #repos-list { grid-template-columns: repeat(3, 1fr); }
 }</code></pre>
 <div class="terms">🔤 <code>Flex</code> — 한 줄(1차원) 정렬 도구 · <code>Grid</code> — 행과 열(2차원) 격자 도구 · <code>space-between</code> — 요소들을 폭 전체에 균등 배치 · <code>auto-fill</code> — auto-fit과 달리 격자 빈칸을 그대로 둠</div>
 </section>
@@ -801,6 +886,33 @@ nav         { display: none; }        /* 햄버거로 접음 */
       out.insertAdjacentHTML('beforeend', '이름: ' + (i === 0 ? evil : escapeHTML(evil)));
     });
   });
+
+  // ——— 동적 도식 (Q11): 갈래를 누르면 catch·finally와 화면 문구가 즉시 표시됩니다 ———
+  const q11svg = document.getElementById('q11-diagram');
+  if (q11svg) {
+    const branches = [
+      ['① 403 한도', 'if (!res.ok) throw — status 403', 'API 호출 한도를 초과했습니다. 잠시 후 다시 시도해주세요.'],
+      ['② 404 없음', 'if (!res.ok) throw — status 404', '사용자를 찾을 수 없습니다.'],
+      ['③ 그 외 HTTP', 'if (!res.ok) throw — 기본 문구', '로드 실패 (HTTP 500)'],
+      ['④ 8초 abort', 'timedOut=true 후 abort() → AbortError', '요청 시간이 초과됐습니다. 다시 시도해주세요.'],
+      ['⑤ 망 단절', 'fetch가 직접 거절 — catch의 유일한 자동 실패', '(네이티브 메시지: Failed to fetch)'],
+    ];
+    const ctr = document.getElementById('q11-controls');
+    const log = document.getElementById('q11-log');
+    const rs = q11svg.querySelectorAll('rect');    // 0~4 갈래, 5 catch, 6 finally
+    Array.from(ctr.querySelectorAll('button')).forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        ctr.querySelectorAll('button').forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+        rs.forEach((r) => r.classList.remove('flow-active'));
+        rs[i].classList.add('flow-active');
+        rs[5].classList.add('flow-active');
+        rs[6].classList.add('flow-active');
+        log.textContent = branches[i][0] + ' — ' + branches[i][1]
+          + '\n→ catch: 화면에 "' + branches[i][2] + '"'
+          + '\n→ finally: clearTimeout — 실패해도 남김없이 정리';
+      });
+    });
+  }
 
   // 인쇄(피드백 PDF) 시 접힌 세부까지 펼쳐서 증발을 막고, 끝나면 되돌린다
   let openedForPrint = [];
