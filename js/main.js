@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const reposStatus = document.querySelector('#repos-status');
   const reposList = document.querySelector('#repos-list');
   const reposRetry = document.querySelector('#repos-retry');
+  const reposFilters = document.querySelector('#repos-filters');
   const reposURL = 'https://api.github.com/users/sarguments/repos';
 
   function escapeHTML(value) {
@@ -214,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 필터 그리기: 전체 + 저장소에 있는 언어만 버튼으로 만든다.
-  // 누르면 필터 상태를 바꾸고 목록을 다시 그린다.
+  // 버튼마다 리스너를 달지 않는다. 버튼은 값(data-filter)만 싣고, 클릭은 아래 위임 리스너 하나가 받는다.
   function renderFilters(repos) {
     const filters = document.querySelector('#repos-filters');
     filters.innerHTML = '';
@@ -223,13 +224,19 @@ document.addEventListener('DOMContentLoaded', () => {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = lang;
-      btn.addEventListener('click', () => {
-        setState({ reposFilter: lang });
-        renderRepos(STATE.repos);
-      });
+      btn.dataset.filter = lang;
       filters.appendChild(btn);
     });
   }
+
+  // 이벤트 위임: 리스너는 부모(#repos-filters)에 하나. 클릭은 자식 버튼에서 여기로 올라오고,
+  // closest로 '어떤 버튼이 눌렸나'만 확인한다. 목록을 다시 그려도 다시 붙일 게 없다.
+  document.querySelector('#repos-filters').addEventListener('click', (event) => {
+    const btn = event.target.closest('button[data-filter]');
+    if (!btn) return;
+    setState({ reposFilter: btn.dataset.filter });
+    renderRepos(STATE.repos);
+  });
 
   // 재시도 정책: 수동 재시도 버튼만 제공하고 자동 재시도하지 않는다.
   // 요청은 8초 뒤 중단하며, 결과는 캐싱하지 않는다.

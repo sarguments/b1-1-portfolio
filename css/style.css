@@ -509,6 +509,9 @@ footer a:hover {
   nav {
     display: flex;
     order: -1;
+    /* 링크 4개를 남은 폭 전체에 균등 배치하는 것이 내비의 핵심 정렬 */
+    justify-content: space-between;
+    flex: 1;
     flex-basis: auto;
     gap: var(--space-5);
   }
@@ -547,6 +550,24 @@ footer a:hover {
   }
 
   #tech ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ================================================================
+   1200px부터: 본문 열을 1024에서 1200으로 넓히고 저장소 카드를 4열로 고정한
+   세 번째 확장 분기. 1200 이상에서는 auto-fit 대신 열 수를 명시한다.
+   ================================================================ */
+@media (min-width: 1200px) {
+  main {
+    max-width: 1200px;
+  }
+  header,
+  footer {
+    /* 본문 최대 폭 1200에 맞춰 헤더·푸터 정렬선도 같은 계산을 쓴다 */
+    padding-inline: max(var(--space-6), calc((100% - 1200px) / 2 + var(--space-6)));
+  }
+  #repos-list {
     grid-template-columns: repeat(4, 1fr);
   }
 }
