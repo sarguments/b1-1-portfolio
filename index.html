@@ -15,8 +15,8 @@
       try {
         const saved = localStorage.getItem('user-theme');
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = saved || (systemDark ? 'dark' : 'light')
-        document.documentElement.setAttribute('data-theme', saved || (systemDark ? 'dark' : 'light'));
+        const theme = saved || (systemDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
 
         console.log('[B1-1 THEME INIT]', {
           saved,
@@ -36,8 +36,12 @@
   <!-- 스킵링크: 키보드 사용자가 내비를 건너뛰고 본문으로 바로 이동한다 -->
   <a class="skip-link" href="#main">본문으로 건너뛰기</a>
   <header>
-    <!-- aria-expanded·aria-controls: 메뉴 열림 상태와 대상을 스크린리더에 알린다. 초기값 false -->
-    <button type="button" id="menu-button" aria-expanded="false" aria-controls="primary-nav">메뉴</button>
+    <!-- aria-expanded·aria-controls: 메뉴 열림 상태와 대상을 스크린리더에 알린다. 초기값 false.
+         아이콘은 CSS로 그리고, 스크린리더에는 숨긴 텍스트('메뉴')로 이름을 제공한다 -->
+    <button type="button" id="menu-button" aria-expanded="false" aria-controls="primary-nav">
+      <span class="menu-icon" aria-hidden="true"></span>
+      <span class="sr-only">메뉴</span>
+    </button>
     <button type="button" id="theme-toggle">다크 모드</button>
     <!-- nav 랜드마크: id로 메뉴 버튼과 연결하고 aria-label로 역할을 알린다 -->
     <nav id="primary-nav" aria-label="주요 탐색">

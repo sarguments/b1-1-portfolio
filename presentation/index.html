@@ -227,14 +227,13 @@ function applyTheme() {
 <text x="560" y="115" text-anchor="middle" font-size="12" fill="#5c6370">스크롤 양 (눈금 개념도)</text>
 </svg>
 <ul>
-<li><b>메뉴</b>: <code>setState({menuOpen})</code> → <code>applyMenu</code>. 보이는 열림과 스크린리더가 읽는 열림(<code>aria-expanded</code>)을 같은 함수에서 함께 바꿉니다.</li>
+<li><b>메뉴</b>: <code>setState({menuOpen})</code> → <code>applyMenu</code>. 버튼 이름('메뉴')은 고정이고, 열림·닫힘은 <code>aria-expanded</code>(스크린리더)와 CSS 아이콘 형태(☰→✕)로 전달합니다.</li>
 <li><b>등장</b>: 스크롤마다 계산하면 Reflow가 반복돼 버벅입니다. <code>IntersectionObserver</code>에 감시를 맡기고, 20% 지점에서 클래스를 붙인 뒤 <code>unobserve</code>로 감시를 끕니다 — 등장은 한 번뿐.</li>
 <li><b>맨 위로</b>: 스크롤 이벤트 하나에서 300px는 버튼 표시, 60px는 내비 전환(불투명 배경+헤더 그림자)을 담당합니다. 클릭하면 <code>scrollTo({behavior:'smooth'})</code>로 올라갑니다.</li>
 </ul>
 <pre class="code" data-lang="js"><code>function applyMenu() {
   nav.classList.toggle('active', STATE.menuOpen);   // 보이는 메뉴
-  menuButton.textContent = STATE.menuOpen ? '닫기' : '메뉴';   // 버튼 라벨
-  // 스크린리더에도 같은 상태를 함께 넘긴다
+  // 버튼 이름은 '메뉴'로 고정. 열림/닫힘은 aria-expanded(스크린리더) + CSS 아이콘 형태로 전달.
   menuButton.setAttribute('aria-expanded', String(STATE.menuOpen));
 }
 
@@ -411,7 +410,10 @@ userName.addEventListener('input', () =&gt; {
 <pre class="code" data-lang="html"><code>&lt;a class="skip-link" href="#main"&gt;본문으로 건너뛰기&lt;/a&gt;
 &lt;header&gt;
   &lt;button id="menu-button"
-          aria-expanded="false" aria-controls="primary-nav"&gt;메뉴&lt;/button&gt;
+          aria-expanded="false" aria-controls="primary-nav"&gt;
+    &lt;span class="menu-icon" aria-hidden="true"&gt;&lt;/span&gt; &lt;!-- CSS ☰--&gt;
+    &lt;span class="sr-only"&gt;메뉴&lt;/span&gt;
+  &lt;/button&gt;
   &lt;button id="theme-toggle"&gt;다크 모드&lt;/button&gt;
   &lt;nav id="primary-nav" aria-label="주요 탐색"&gt;
     소개 · 기술 · 프로젝트 · 문의 링크 4개

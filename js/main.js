@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const nav = document.querySelector('nav');
 
   // 적용: 메뉴 상태값을 화면에 반영한다.
+  // 버튼 이름은 '메뉴'로 고정. 열림/닫힘은 aria-expanded(스크린리더) + CSS 아이콘 형태로 전달.
   function applyMenu() {
     nav.classList.toggle('active', STATE.menuOpen);
-    menuButton.textContent = STATE.menuOpen ? '닫기' : '메뉴';
     menuButton.setAttribute('aria-expanded', String(STATE.menuOpen));
   }
 

@@ -127,6 +127,19 @@ img {
   top: var(--space-2);
 }
 
+/* 스크린리더 전용: 시각적으로 숨기고 스크린리더는 읽는다 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* 버튼 공통 모양: 손가락이 누르기 좋은 높이와 클릭 반응 */
 button {
   font: inherit;
@@ -183,6 +196,49 @@ header {
   min-height: 2.5rem;
   padding: 0.45rem 0.85rem;
   font-size: 0.875rem;
+}
+/* 메뉴 버튼: 아이콘 중앙 정렬 */
+#menu-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 햄버거 아이콘: 세 줄(가운데 + ::before + ::after) */
+.menu-icon {
+  display: block;
+  position: relative;
+  width: 1.25rem;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+.menu-icon::before,
+.menu-icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.2s, top 0.2s;
+}
+.menu-icon::before { top: -6px; }
+.menu-icon::after  { top:  6px; }
+
+/* 열림: 세 줄 → X자 (aria-expanded가 true일 때만) */
+#menu-button[aria-expanded='true'] .menu-icon {
+  background: transparent;
+}
+#menu-button[aria-expanded='true'] .menu-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+#menu-button[aria-expanded='true'] .menu-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
 }
 /* 테마 버튼은 항상 오른쪽 끝으로 */
 #theme-toggle {
@@ -485,6 +541,11 @@ footer a:hover {
     scroll-behavior: auto;
   }
   .reveal {
+    transition: none;
+  }
+  .menu-icon,
+  .menu-icon::before,
+  .menu-icon::after {
     transition: none;
   }
 }
