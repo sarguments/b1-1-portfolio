@@ -15,8 +15,17 @@
       try {
         const saved = localStorage.getItem('user-theme');
         const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = saved || (systemDark ? 'dark' : 'light')
         document.documentElement.setAttribute('data-theme', saved || (systemDark ? 'dark' : 'light'));
-      } catch (e) {}
+
+        console.log('[B1-1 THEME INIT]', {
+          saved,
+          systemDark,
+          theme,
+        });
+      } catch (e) {
+        console.error('[B1-1 THEME INIT ERROR]', e);
+      }
     })();
   </script>
   <!-- 동작(JS)도 분리한다. defer는 HTML 해석을 막지 않고,

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 현재는 Object.assign으로 병합하고, 불변 복사 방향으로 확장할 수 있게 한다.
   function setState(patch) {
     Object.assign(STATE, patch);
-    if (window.__B11_DEBUG) console.debug('[B1-1 STATE]', patch);
+    console.log('[B1-1 STATE]', patch);
   }
 
   // 적용: 테마 상태값을 화면에 반영한다.

@@ -93,7 +93,7 @@
 
 <section>
 <h2>전체 흐름: 모든 동작은 하나의 흐름으로</h2>
-<p class="claim">⭐ 클릭 한 번도 네 칸만 거칩니다 — 이벤트 → setState → 적용 함수 → 화면.</p>
+<p class="claim">⭐ 이벤트 → setState → 적용 함수 → 화면</p>
 <p>B1-1 포트폴리오 — 외부 라이브러리 없이 HTML·CSS·JavaScript만으로 만든 반응형 자기소개 페이지입니다. (<a href="https://sarguments.github.io/b1-1-portfolio/">sarguments.github.io/b1-1-portfolio</a>)</p>
 <svg class="diagram" viewBox="0 0 640 160" role="img" aria-label="상태 렌더 흐름도">
 <rect x="10" y="45" width="110" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="65" y="74" text-anchor="middle" font-size="14">이벤트</text>
@@ -119,8 +119,8 @@ const STATE = {
 // 값은 setState로만 바꾼다 — 직접 대입은 금지
 function setState(patch) {
   Object.assign(STATE, patch);   // patch에 온 키만 STATE에 복사
-  // 디버그 스위치를 켠 경우에만 "방금 뭐가 바뀌었나"가 찍힌다
-  if (window.__B11_DEBUG) console.debug('[B1-1 STATE]', patch);
+  // 상태가 바뀔 때마다 "방금 뭐가 바뀌었나"가 찍힌다
+  console.log('[B1-1 STATE]', patch);
 }</code></pre>
 <details><summary>예: 테마 클릭 한 번이 지나는 네 칸</summary>
 <p>테마 버튼을 누르면 <code>setState({ theme: 'dark' })</code>가 호출됩니다. <code>Object.assign</code>은 patch로 온 키만 붙이므로 <b><code>theme</code>만 바뀌고</b> 나머지는 그대로입니다. 그 다음 <code>applyTheme()</code>이 바뀐 값을 읽어 화면을 다시 그립니다. <code>STATE.theme = 'dark'</code>처럼 직접 대입하지 않고 일부러 함수를 거치는 이유는 코드 세 번째 줄입니다. 통로가 하나니, 모든 값 변경을 이 한 곳에서 지켜볼 수 있습니다.</p></details>
@@ -130,7 +130,7 @@ function setState(patch) {
 
 <section>
 <h2>Q1. 창을 줄이면 모바일 레이아웃으로 바뀌는가</h2>
-<p class="claim">⭐ 모바일 퍼스트 — 좁은 화면이 기본, 넓어질 때 덧붙이기.</p>
+<p class="claim">⭐ 모바일 퍼스트 — 좁은 화면이 기본, 넓어질 때 덧붙이기</p>
 <svg class="diagram" viewBox="0 0 640 200" role="img" aria-label="브레이크포인트 도식">
 <rect x="10" y="20" width="105" height="105" rx="10" fill="#1f6feb"/><text x="62" y="50" text-anchor="middle" fill="#fff" font-size="13" font-weight="bold">360px</text><text x="62" y="72" text-anchor="middle" fill="#fff" font-size="10.5">카드 1열 · 햄버거</text><text x="62" y="90" text-anchor="middle" fill="#dbe7ff" font-size="10.5">(쿼리 아님 · 기본)</text>
 <line x1="117" y1="72" x2="133" y2="72" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
@@ -166,7 +166,7 @@ nav         { display: none; }                    /* 햄버거 메뉴 */
 
 <section>
 <h2>Q2. 테마 토글이 새로고침 후에도 유지되는가</h2>
-<p class="claim">⭐ 화면이 그려지기 전에 저장된 테마를 먼저 입힌다.</p>
+<p class="claim">⭐ 화면이 그려지기 전에 저장된 테마를 먼저 입힌다</p>
 <svg class="diagram" viewBox="0 0 640 235" role="img" aria-label="FOUC 복원 시점 비교 도식">
 <text x="14" y="55" font-size="12" fill="#b42318">틀리면</text>
 <rect x="85" y="32" width="95" height="40" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="132" y="57" text-anchor="middle" font-size="12">HTML 해석</text>
@@ -381,7 +381,7 @@ userName.addEventListener('input', () =&gt; {
 
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — 뼈대</h2>
-<p class="claim">⭐ 선택 기준은 하나 — div만 쓰면 보조기기가 각 부분의 역할을 모릅니다. 태그 이름이 곧 설명이어야 합니다.</p>
+<p class="claim">⭐ 선택 기준은 하나 — div만 쓰면 보조기기가 각 부분의 역할을 모릅니다. 태그 이름이 곧 설명</p>
 <div class="q7-split">
 <div class="q7-mock hl-root" aria-hidden="true">
   <header data-t="header">
@@ -427,7 +427,7 @@ userName.addEventListener('input', () =&gt; {
 
 <section>
 <h2>Q7. 시맨틱 태그와 그 기준 — main 안</h2>
-<p class="claim">⭐ main 안의 다섯 구역(<code>section</code>)이 앵커의 지점 — 이름(id) 있는 구역만 링크가 됩니다.</p>
+<p class="claim">⭐ main 안의 다섯 구역(<code>section</code>)이 앵커의 지점</p>
 <div class="q7-split">
 <div class="q7-mock hl-sec" aria-hidden="true">
   <header data-t="header"><span class="sk" style="width:80%"></span></header>
@@ -474,7 +474,7 @@ userName.addEventListener('input', () =&gt; {
 
 <section>
 <h2>Q8. CSS 변수를 왜 모았나</h2>
-<p class="claim">⭐ 값이 아니라 이름을 참조합니다 — 다크는 새 스타일이 아니라 세트 교체 한 번입니다.</p>
+<p class="claim">⭐ 값이 아니라 이름을 참조 — 다크 테마는 스타일 세트 교체</p>
 <svg class="diagram" viewBox="0 0 640 220" role="img" aria-label="CSS 변수 정의와 참조 도식">
 <rect x="18" y="24" width="180" height="52" rx="10" fill="#1f6feb"/><text x="108" y="44" text-anchor="middle" fill="#fff" font-size="12" font-weight="bold">:root — 정의 한 곳</text><text x="108" y="62" text-anchor="middle" fill="#dbe7ff" font-size="10.5">--bg · --text · --accent (라이트 기본)</text>
 <rect x="18" y="140" width="180" height="52" rx="10" fill="#fff" stroke="#e67700" stroke-width="2"/><text x="108" y="160" text-anchor="middle" font-size="12" font-weight="bold">[data-theme="dark"]</text><text x="108" y="178" text-anchor="middle" font-size="10.5" fill="#5c6370">같은 이름, 다른 값</text>
@@ -513,7 +513,7 @@ body { background: var(--bg); color: var(--text); }   // 참조자는 그대로<
 
 <section>
 <h2>Q9. onclick 대신 addEventListener</h2>
-<p class="claim">⭐ 리스너는 버튼 수가 아니라 자리 수 — 부모 하나면 다시 그려도 붙일 게 없습니다.</p>
+<p class="claim">⭐ 각 버튼에 리스너가 아닌, 부모 리스너 - 자식 이벤트 위임</p>
 <svg class="diagram" viewBox="0 0 640 250" role="img" aria-label="이벤트 위임 버블링 도식">
 <rect x="16" y="40" width="340" height="140" rx="12" fill="#fff" stroke="#1f6feb" stroke-width="2"/>
 <text x="186" y="62" text-anchor="middle" font-size="12" font-weight="bold">#repos-filters · 리스너 1개</text>
@@ -568,7 +568,7 @@ btn.dataset.filter = 'CSS'            // 쓰면 어트리뷰트가 즉시 따라
 
 <section>
 <h2>Q10. 다크모드 한 흐름을 처음부터 끝까지</h2>
-<p class="claim">⭐ 여덟 칸이지만 통로는 하나 — 바꾸는 곳 한 곳(②), 그리는 줄(③④⑤), 저장 한 곳(⑦).</p>
+<p class="claim">⭐ 여덟 칸이지만 통로는 하나 — 바꾸는 곳 한 곳(②), 그리는 줄(③④⑤), 저장 한 곳(⑦)</p>
 <svg class="diagram" viewBox="0 0 640 200" role="img" aria-label="다크모드 8단계 흐름도">
 <rect x="8" y="14" width="140" height="48" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="78" y="34" text-anchor="middle" font-size="12" font-weight="bold">① 클릭</text><text x="78" y="52" text-anchor="middle" font-size="10.5" fill="#5c6370">theme-toggle</text>
 <line x1="148" y1="38" x2="166" y2="38" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
@@ -589,16 +589,16 @@ btn.dataset.filter = 'CSS'            // 쓰면 어트리뷰트가 즉시 따라
 </svg>
 <ul>
 <li>바꾸는 단계(②)와 그리는 단계(③④⑤)가 분리돼 있어서 첫 방문(OS)·토글(클릭)·복원(head) 세 상황이 같은 코드를 씁니다.</li>
-<li>디버그: 콘솔에 <code>window.__B11_DEBUG = true</code>를 치면 그 뒤부터 <code>[B1-1 STATE]</code> 로그가 찍힙니다. 평소엔 조용합니다.</li>
+<li>상태 로그: 상태가 바뀔 때마다 <code>[B1-1 STATE]</code>가 콘솔에 찍힙니다. 페이지가 시작할 때는 <code>[B1-1 THEME INIT]</code>으로 저장값·시스템 설정·최종 테마를 확인합니다.</li>
 </ul>
 <p class="src">이 흐름의 코드 원문은 Q2 — applyTheme과 head 스크립트</p>
-<div class="terms">🔤 <code>__B11_DEBUG</code> — 상태 변경 로그를 켜고 끄는 전역 스위치 · <code>조건부 로그</code> — 평소엔 조용, 개발자가 볼 때만 찍힘</div>
+<div class="terms">🔤 <code>[B1-1 STATE]</code> — 상태 변경 로그 · <code>[B1-1 THEME INIT]</code> — 페이지 시작 시 테마 판단 로그 · <code>console.log</code> — 브라우저 콘솔에 값을 출력하는 함수</div>
 </section>
 
 
 <section>
 <h2>Q11. async/await·try/catch의 분기 따라가기</h2>
-<p class="claim">⭐ 실패 다섯 갈래가 catch 하나에 모입니다 — 그래서 던지는 자리가 다르고, 문구가 다릅니다.</p>
+<p class="claim">⭐ 실패 다섯 갈래가 catch 하나에 모인다</p>
 <svg class="diagram" id="q11-diagram" viewBox="0 0 640 340" role="img" aria-label="실패 다섯 갈래가 catch로 모이는 도식">
 <text x="20" y="16" font-size="11" fill="#5c6370">try 안에서 실패가 만들어지는 다섯 지점</text>
 <rect x="12" y="26" width="112" height="48" rx="10" fill="#fff" stroke="#999" stroke-width="2"/><text x="68" y="46" text-anchor="middle" font-size="11">① 403 한도</text><text x="68" y="63" text-anchor="middle" font-size="10.5" fill="#5c6370">내가 throw</text>
@@ -628,7 +628,6 @@ btn.dataset.filter = 'CSS'            // 쓰면 어트리뷰트가 즉시 따라
 <ul>
 <li>try 안의 순서: 로딩 → <code>fetch(url, {signal})</code> → <code>res.ok</code> → <code>json()</code> → 렌더. 단계마다 실패 지점이 다릅니다.</li>
 <li>실패 넷에 문구 넷: 403 한도 / 404 없음 / 그 외 HTTP / 망 단절·타임아웃. "catch 하나로 다 처리"가 아닙니다.</li>
-<li>완성된 코드는 Q4의 <code>loadRepos</code> 하나입니다 — 이 장은 그 도식만 다시 읽는 장입니다.</li>
 </ul>
 <details><summary>타임아웃 3단계 — 표시를 왜 먼저 적고, 정리는 왜 무조건인가</summary>
 <p><code>setTimeout</code> 콜백에서 ① <code>timedOut = true</code>를 먼저 적고 ② <code>controller.abort()</code>로 fetch를 취소합니다. ③ 취소된 fetch는 <code>AbortError</code>로 <code>catch</code>에 떨어지는데, 망 단절과 타임아웃이 같은 경로로 오므로 ①의 표시로 문구를 나눕니다.</p>
@@ -694,7 +693,7 @@ function escapeHTML(value) {
 
 <section>
 <h2>Q13. Flex와 Grid는 어디에, 왜</h2>
-<p class="claim">⭐ 축이 하나면 Flex, 둘이면 Grid.</p>
+<p class="claim">⭐ 축이 하나면 Flex, 둘이면 Grid</p>
 <svg class="diagram" viewBox="0 0 640 230" role="img" aria-label="Flex와 Grid 비교 도식">
 <line x1="320" y1="15" x2="320" y2="215" stroke="#e5e7eb" stroke-width="2"/>
 <text x="160" y="30" text-anchor="middle" font-size="14" font-weight="bold">Flex · 한 축</text>
@@ -736,7 +735,7 @@ footer { display: flex; justify-content: space-between; }
 
 <section>
 <h2>Q14. STATE 객체가 왜 필요한가</h2>
-<p class="claim">⭐ "이 값은 어디서 바뀌나요?"에 답이 한 곳이면 됩니다 — 통로를 하나로 준 이유.</p>
+<p class="claim">⭐ 화면 결정 값의 저장소 · 바꿀 수 있는 유일한 통로</p>
 <svg class="diagram" viewBox="0 0 640 270" role="img" aria-label="STATE 경계 도식">
 <rect x="10" y="85" width="165" height="44" rx="10" fill="#fff" stroke="#1f6feb" stroke-width="2"/><text x="92" y="104" text-anchor="middle" font-size="12">이벤트 → setState()</text><text x="92" y="121" text-anchor="middle" font-size="11" fill="#5c6370">값을 바꾸는 유일한 통로</text>
 <line x1="175" y1="107" x2="218" y2="107" stroke="#1f6feb" stroke-width="2" marker-end="url(#m-blue)"/>
@@ -759,7 +758,7 @@ footer { display: flex; justify-content: space-between; }
 
 <section>
 <h2>Q15. 모바일 퍼스트로 쓴 이유</h2>
-<p class="claim">⭐ 제약이 제일 빡빡한 대상을 기본에 둡니다 — 나머지는 다 그 위의 덧셈.</p>
+<p class="claim">⭐ 제약이 제일 빡빡한 대상을 기본에 두기 — 나머지는 다 그 위의 덧붙이기</p>
 <ul>
 <li>기본이 곧 좁은 화면(내비 접힘·격자 1열), 넓어지는 분기 <code>min-width</code> 셋, 되돌리는 <code>max-width</code>는 0개입니다.</li>
 <li>이 순서를 고른 진짜 이유: <b>모바일이 이 페이지에서 가장 어려운 구현 대상</b>입니다. 공간이 좁아 레이아웃이 강제 선별되고, 터치 손가락을 위해 버튼 높이 44px(<code>min-height: 2.75rem</code>)를 확보해야 합니다.</li>
