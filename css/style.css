@@ -391,8 +391,9 @@ section {
   background: var(--ok);
   box-shadow: 0 0 0 3px var(--grid-line);
 }
-/* 두 덩이 사이 간격 */
-#project article + article {
+/* 두 덩이 사이 간격. 바로 아래 article만 대상으로 한다.
+   (그리드 안의 카드도 article이라 자손 선택자로 두면 카드가 밀린다) */
+#project > article + article {
   margin-top: var(--space-6);
 }
 
