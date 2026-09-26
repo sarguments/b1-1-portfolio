@@ -181,7 +181,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const reposList = document.querySelector('#repos-list');
   const reposRetry = document.querySelector('#repos-retry');
   const reposFilters = document.querySelector('#repos-filters');
-  const reposURL = 'https://api.github.com/users/sarguments/repos';
+    // 기본 30개만 오면 나중에 만든 저장소가 목록에서 빠진다.
+  // 전체 저장소를 최근 수정순으로 받아 최신 작업이 위에 오게 한다.
+  const reposURL = 'https://api.github.com/users/sarguments/repos?per_page=100&sort=updated&direction=desc';
 
   function escapeHTML(value) {
     return String(value)

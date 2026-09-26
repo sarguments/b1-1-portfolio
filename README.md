@@ -15,6 +15,7 @@
 
 ## 구조
 
+- 저장소 목록은 GitHub API(`/users/sarguments/repos`)에서 최근 수정순 최대 100개를 받아 카드로 그리고, 언어 필터로 거른다. 기본 호출은 30개까지만 오므로 `per_page=100`을 붙였다.
 - `index.html` — 페이지 뼈대
 - `css/style.css` — 변수와 기본 스타일
 - `js/main.js` — 동작 진입점
