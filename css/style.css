@@ -6,15 +6,18 @@
    ================================================================ */
 :root {
   /* 색 역할 토큰. 라이트 모드 기본값 */
-  --bg: #ffffff;            /* 페이지 배경 */
-  --text: #1a1b1e;          /* 본문 글자색. 순수 검정보다 눈이 덜 피로하다 */
-  --muted: #5c6370;         /* 보조 글자색(설명·상태 문구) */
-  --border: #e5e7eb;        /* 경계선 */
-  --card: #f8f9fb;          /* 카드·입력창·버튼 바탕 */
-  --accent: #1f6feb;        /* 링크·주요 동작 */
-  --accent-strong: #1a5cd6; /* accent의 hover 상태 */
+  --bg: #f2f5f9;            /* 페이지 배경: 설비 도면의 옅은 강판 톤 */
+  --text: #16202c;          /* 본문 글자색. 순수 검정보다 눈이 덜 피로하다 */
+  --muted: #5a6b7d;         /* 보조 글자색(설명·상태 문구) */
+  --border: #d5dee8;        /* 경계선 */
+  --card: #ffffff;          /* 카드·입력창·버튼 바탕 */
+  --accent: #0f62c9;        /* 링크·주요 동작: 산업용 청색 */
+  --accent-strong: #0b4ea2; /* accent의 hover 상태 */
   --on-accent: #ffffff;     /* accent 바탕 위에 올라가는 글자 */
   --error: #c92a2a;         /* 폼 오류 문구 */
+  --amber: #e8590c;         /* 설비 경고·가동 표시등 */
+  --ok: #2f9e44;            /* 정상 상태등 */
+  --grid-line: rgba(15, 98, 201, 0.07); /* 바닥 격자선 */
   --shadow: 0 6px 16px rgba(16, 24, 40, 0.08);
 
   /* 간격 규칙: 4 · 8 · 12 · 16 · 24 · 32 · 48px. 임의 px 대신 여기서 고른다 */
@@ -32,15 +35,18 @@
 
 /* 다크모드: data-theme="dark"일 때 같은 이름 변수를 덮어쓴다. */
 [data-theme="dark"] {
-  --bg: #121212;
-  --text: #f1f3f5;
-  --muted: #9aa4b2;
-  --border: #2c3138;
-  --card: #1b1e24;
-  --accent: #6ea8fe;
-  --accent-strong: #8fbaff;
-  --on-accent: #121212;
+  --bg: #0f1419;
+  --text: #e9eef3;
+  --muted: #93a2b3;
+  --border: #253040;
+  --card: #161d26;
+  --accent: #63a4ff;
+  --accent-strong: #8bbcff;
+  --on-accent: #0b1017;
   --error: #ff8787;
+  --amber: #ffb066;
+  --ok: #51cf66;
+  --grid-line: rgba(99, 164, 255, 0.09);
   --shadow: 0 6px 16px rgba(0, 0, 0, 0.45);
 }
 
@@ -62,7 +68,12 @@ html {
 body {
   /* 여백은 main·header·footer가 각자 책임지고 body는 0으로 */
   margin: 0;
-  background: var(--bg);
+  /* 바탕색 위에 옅은 격자를 겹쳐 설비 도면 느낌을 낸다 */
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 32px 32px;
   color: var(--text);
   /* 시스템 글꼴 우선: 별도 웹폰트 없이도 각 기기에서 가장 자연스러운 글꼴이 골라진다 */
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -295,6 +306,8 @@ section {
 /* hero는 첫인상이라 위아래 여백을 더 준다 */
 #hero {
   padding-block: calc(var(--space-7) + var(--space-5)) var(--space-7);
+  /* 우측 상단에서 비추는 옅은 작업등 */
+  background-image: radial-gradient(120% 80% at 82% 0%, var(--grid-line), transparent 62%);
 }
 #hero h1 + p {
   color: var(--muted);
@@ -335,10 +348,11 @@ section {
 }
 #about img {
   display: block;
-  width: 7.5rem;
+  width: 11rem;
   margin-top: var(--space-5);
   border: 1px solid var(--border);
-  border-radius: 50%;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 
 /* 기술 목록: 모바일 한 열에서 시작해 화면이 넓어지면 늘린다 */
@@ -395,6 +409,8 @@ section {
 #repos-list article {
   background: var(--card);
   border: 1px solid var(--border);
+  /* 카드 왼쪽에 설비 표시등 같은 색 띠를 둔다 */
+  border-left: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
@@ -633,4 +649,48 @@ footer a:hover {
   #repos-list {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* ================================================================
+   설비 톤 장식
+   표시등·구분선·계기 느낌만 더한다. 레이아웃(열 수·표시 여부)은 건드리지 않고
+   값은 위 토큰만 쓴다.
+   ================================================================ */
+
+/* 구역 제목 앞의 표시등: 제목이 설비 태그처럼 읽히게 한다 */
+h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+h2::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 2px;
+  background: var(--amber);
+  box-shadow: 0 0 0 4px var(--grid-line);
+}
+
+/* 기술 항목: 좌측에 정상 상태등 띠 */
+#tech li {
+  border-left: 3px solid var(--ok);
+}
+
+/* 저장소 상태 문구는 계기 판독값처럼 고정폭으로 */
+#repos-status {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+/* 내비가 스크롤로 고정될 때 아래에 기준선을 준다 */
+nav.scrolled {
+  border-bottom: 2px solid var(--grid-line);
+}
+
+footer {
+  border-top: 1px solid var(--border);
 }

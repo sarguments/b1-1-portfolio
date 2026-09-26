@@ -1,6 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="sarguments 프로필 사진">
-  <rect width="400" height="400" fill="#f1f3f5"/>
-  <circle cx="200" cy="150" r="70" fill="#adb5bd"/>
-  <path d="M80 340c0-66 54-110 120-110s120 44 120 110v60H80z" fill="#adb5bd"/>
-  <text x="200" y="370" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" fill="#495057">sarguments</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" role="img" aria-label="협동로봇 셀 도해: 로봇팔과 컨베이어, 상태 표시등">
+  <style>
+    /* 한 가지 팔레트만 쓴다. 페이지의 밝은/어두운 테마 어디에 놓여도 같은 색으로 보이도록
+       prefers-color-scheme에 기대지 않고 강판(짙은 청회색) 톤으로 고정했다. */
+    .bg { fill: #141c25; }
+    .grid { stroke: #22303f; stroke-width: 1; }
+    .floor { fill: #1c2632; }
+    .arm { stroke: #c3d1df; }
+    .joint { fill: #63a4ff; }
+    .base { fill: #c3d1df; }
+    .belt { fill: #2b3846; }
+    .box { fill: #46596e; }
+    .link { stroke: #3d5570; stroke-width: 2; stroke-dasharray: 5 5; fill: none; }
+    .node { fill: #63a4ff; }
+    .led-ok { fill: #51cf66; }
+    .led-run { fill: #ffb066; }
+    .cap { fill: #b6c4d3; }
+  </style>
+
+  <rect class="bg" width="400" height="400"/>
+  <g class="grid">
+    <path d="M40 0V400M80 0V400M120 0V400M160 0V400M200 0V400M240 0V400M280 0V400M320 0V400M360 0V400"/>
+    <path d="M0 40H400M0 80H400M0 120H400M0 160H400M0 200H400M0 240H400M0 280H400M0 320H400M0 360H400"/>
+  </g>
+  <rect class="floor" x="0" y="296" width="400" height="104"/>
+
+  <g class="link">
+    <path d="M300 96H352M300 96L272 60M352 96V150"/>
+  </g>
+  <circle class="node" cx="272" cy="60" r="6"/>
+  <circle class="node" cx="352" cy="150" r="6"/>
+
+  <g class="arm" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M118 200L206 138" stroke-width="26"/>
+    <path d="M206 138L248 222" stroke-width="22"/>
+  </g>
+  <circle class="joint" cx="118" cy="200" r="19"/>
+  <circle class="joint" cx="206" cy="138" r="16"/>
+  <circle class="joint" cx="248" cy="222" r="12"/>
+  <rect class="base" x="96" y="196" width="44" height="104" rx="12"/>
+  <rect class="base" x="64" y="292" width="108" height="34" rx="8"/>
+  <g class="base">
+    <rect x="240" y="232" width="8" height="26" rx="3"/>
+    <rect x="252" y="232" width="8" height="26" rx="3"/>
+  </g>
+
+  <rect class="belt" x="36" y="330" width="328" height="30" rx="8"/>
+  <g class="box">
+    <rect x="64" y="306" width="34" height="24" rx="4"/>
+    <rect x="112" y="306" width="34" height="24" rx="4"/>
+  </g>
+  <circle class="led-ok" cx="46" cy="216" r="7"/>
+  <circle class="led-run" cx="46" cy="242" r="7"/>
+
+  <text class="cap" x="200" y="384" text-anchor="middle" font-family="system-ui, sans-serif" font-size="22">sarguments</text>
 </svg>
