@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
     menuOpen: false,
     repos: [],
     reposFilter: '전체',
+    // 목록을 9개 제한으로 접어 둘지, 전부 펼칠지
+    reposExpanded: false,
   };
 
   // STATE는 화면 상태의 단일 진실 원천이다. 호출부는 새 patch 객체를 전달한다.
@@ -181,7 +183,21 @@ document.addEventListener('DOMContentLoaded', () => {
   const reposList = document.querySelector('#repos-list');
   const reposRetry = document.querySelector('#repos-retry');
   const reposFilters = document.querySelector('#repos-filters');
-    // 기본 30개만 오면 나중에 만든 저장소가 목록에서 빠진다.
+    const reposMore = document.querySelector('#repos-more');
+  const featuredStatus = document.querySelector('#featured-status');
+  const featuredList = document.querySelector('#featured-list');
+
+  // 주요 프로젝트로 고정할 저장소 이름. 여기 올린 저장소는 아래 목록에서 빠진다.
+  const PINNED = [
+    'smart-factory-sim', // 협동로봇 셀 시뮬레이터(웹 three.js)
+    'b1-1-portfolio', // 스마트팩토리·로봇 소재 자기소개 페이지(코딧세이 B1-1)
+    'codyssey-e1-3', // Mini NPU 시뮬레이터(MAC 연산 유사도)
+    'codyssey-e1-1', // 터미널·Docker 개발 워크스테이션 구축 기록
+  ];
+  // 아래 목록에 한 번에 보여 줄 저장소 수. 나머지는 '전체 보기'로 펼친다.
+  const REPO_LIMIT = 9;
+
+  // 기본 30개만 오면 나중에 만든 저장소가 목록에서 빠진다.
   // 전체 저장소를 최근 수정순으로 받아 최신 작업이 위에 오게 한다.
   const reposURL = 'https://api.github.com/users/sarguments/repos?per_page=100&sort=updated&direction=desc';
 
@@ -194,16 +210,44 @@ document.addEventListener('DOMContentLoaded', () => {
       .replace(/'/g, '&#39;');
   }
 
-  // 목록 그리기: 저장 후 필터로 고르고 카드로 바꾼다.
+  // 주요 프로젝트 그리기: 손으로 고른 저장소만 언어·주제와 함께 크게 보여 준다.
+  // 설명과 주제는 같은 API 응답에서 꺼내므로 GitHub 저장소 정보와 어긋나지 않는다.
+  function renderPinned(repos) {
+    featuredList.innerHTML = '';
+    const cards = PINNED.map((name) => repos.find((repo) => repo.name === name)).filter(Boolean);
+    if (cards.length === 0) {
+      featuredStatus.textContent = '';
+      return;
+    }
+    featuredStatus.textContent = '';
+    cards.forEach((repo) => {
+      const { name, html_url: url, description, language, topics } = repo;
+      const tags = [language, ...(topics || [])]
+        .filter(Boolean)
+        .slice(0, 5)
+        .map((tag) => `<li>${escapeHTML(tag)}</li>`)
+        .join('');
+      featuredList.insertAdjacentHTML(
+        'beforeend',
+        `<article><span class="badge">고정</span><h3><a href="${escapeHTML(url)}">${escapeHTML(name)}</a></h3>` +
+          `<p>${escapeHTML(description || '설명 없음')}</p><ul class="tags">${tags}</ul></article>`,
+      );
+    });
+  }
+
+  // 목록 그리기: 고정한 저장소를 빼고, 필터로 고른 뒤 REPO_LIMIT개까지만 보여 준다.
   function renderRepos(repos) {
     STATE.repos = repos;
-    const shown = repos.filter((repo) => STATE.reposFilter === '전체' || (repo.language || '기타') === STATE.reposFilter);
+    const rest = repos.filter((repo) => !PINNED.includes(repo.name));
+    const matched = rest.filter((repo) => STATE.reposFilter === '전체' || (repo.language || '기타') === STATE.reposFilter);
+    const shown = STATE.reposExpanded ? matched : matched.slice(0, REPO_LIMIT);
     reposList.innerHTML = '';
     if (shown.length === 0) {
       reposStatus.textContent = '표시할 프로젝트가 없습니다.';
+      reposMore.hidden = true;
       return;
     }
-    reposStatus.textContent = '';
+    reposStatus.textContent = `최근 작업 순으로 ${shown.length}개를 보여 줍니다. 전체 ${matched.length}개.`;
     shown
       .map((repo) => {
         // 구조분해: 객체에서 값을 꺼내 변수에 담는다.
@@ -214,6 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
       .forEach((html) => {
         reposList.insertAdjacentHTML('beforeend', html);
       });
+    reposMore.hidden = matched.length <= REPO_LIMIT;
+    reposMore.textContent = STATE.reposExpanded ? `${REPO_LIMIT}개만 보기` : `전체 보기 (${matched.length}개)`;
   }
 
   // 필터 그리기: 전체 + 저장소에 있는 언어만 버튼으로 만든다.
@@ -221,7 +267,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderFilters(repos) {
     const filters = document.querySelector('#repos-filters');
     filters.innerHTML = '';
-    const langs = ['전체', ...new Set(repos.map((repo) => repo.language || '기타'))];
+    // 아래 목록에 실제로 나오는 저장소만 언어 후보로 삼는다
+    const rest = repos.filter((repo) => !PINNED.includes(repo.name));
+    const langs = ['전체', ...new Set(rest.map((repo) => repo.language || '기타'))];
     langs.forEach((lang) => {
       const btn = document.createElement('button');
       btn.type = 'button';
@@ -259,7 +307,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (res.status === 404) throw new Error('사용자를 찾을 수 없습니다.');
         throw new Error(`로드 실패 (HTTP ${res.status})`);
       }
-      renderRepos(await res.json());
+      const repos = await res.json();
+      renderPinned(repos);
+      renderRepos(repos);
       renderFilters(STATE.repos);
     } catch (err) {
       // 망 단절이면 err로 바로 온다. 404·403은 위에서 만든 메시지다.
@@ -269,6 +319,13 @@ document.addEventListener('DOMContentLoaded', () => {
       window.clearTimeout(timeoutId);
     }
   }
+
+  // 전체 보기/접기: 목록을 9개 제한과 전체 사이에서 바꾼다.
+  // 이벤트 위임이 필요 없는 단일 버튼이라 직접 연결한다.
+  reposMore.addEventListener('click', () => {
+    setState({ reposExpanded: !STATE.reposExpanded });
+    renderRepos(STATE.repos);
+  });
 
   // 다시 시도 버튼과 첫 진입에 연결한다.
   reposRetry.addEventListener('click', loadRepos);

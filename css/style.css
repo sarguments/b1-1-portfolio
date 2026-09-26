@@ -372,7 +372,115 @@ section {
 }
 
 /* ================================================================
-   프로젝트: main.js가 그리는 상태 문구·필터·저장소 카드
+   프로젝트: 주요 프로젝트(고정)·전체 저장소 두 덩이
+   ================================================================ */
+/* 프로젝트 안쪽 소제목: 구역 제목보다 작게, 정상 상태등 점을 앞에 둔다 */
+#project h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-4);
+  font-size: 1.05rem;
+}
+#project h3::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 1px;
+  background: var(--ok);
+  box-shadow: 0 0 0 3px var(--grid-line);
+}
+/* 두 덩이 사이 간격 */
+#project article + article {
+  margin-top: var(--space-6);
+}
+
+/* 주요 프로젝트 카드: 고른 저장소라 위쪽에 가동등 색 띠를 두고 그림자를 준다 */
+#featured-status {
+  color: var(--muted);
+  margin-bottom: var(--space-4);
+}
+#featured-status:empty {
+  margin: 0;
+}
+#featured-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* 같은 줄 카드 높이를 tallest 카드에 맞춘다 */
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+  gap: var(--space-4);
+}
+#featured-list article {
+  position: relative;
+  /* 카드끼리 높이를 맞추고, 태그 줄은 바닥에 붙인다 */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--amber);
+  border-radius: var(--radius);
+  padding: var(--space-4) var(--space-5);
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+#featured-list article:hover {
+  border-color: var(--amber);
+  transform: translateY(-2px);
+}
+#featured-list .badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-4);
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--amber);
+  color: var(--on-accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+}
+#featured-list h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+#featured-list a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  overflow-wrap: break-word;
+}
+#featured-list a:hover {
+  text-decoration: underline;
+}
+#featured-list p {
+  margin: var(--space-2) 0 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  overflow-wrap: break-word;
+}
+/* 주제 태그: 언어와 GitHub 토픽을 칩으로 */
+#featured-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  list-style: none;
+  /* margin-top: auto — 카드 높이가 달라도 태그 줄이 바닥에 맞는다 */
+  margin: var(--space-3) 0 0;
+  margin-top: auto;
+  padding: 0;
+}
+#featured-list li {
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ================================================================
+   전체 저장소: main.js가 그리는 상태 문구·필터·저장소 카드
    ================================================================ */
 #repos-status {
   color: var(--muted);
@@ -404,9 +512,13 @@ section {
   display: grid;
   grid-template-columns: 1fr;
   grid-auto-rows: 1fr;
+  align-items: stretch;
   gap: var(--space-4);
 }
 #repos-list article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: var(--card);
   border: 1px solid var(--border);
   /* 카드 왼쪽에 설비 표시등 같은 색 띠를 둔다 */
@@ -438,6 +550,11 @@ section {
 
 #repos-retry {
   margin-top: var(--space-4);
+}
+/* 전체 보기/접기: 다시 시도 버튼 옆에 나란히 둔다 */
+#repos-more {
+  margin-top: var(--space-4);
+  margin-right: var(--space-2);
 }
 
 /* ================================================================
@@ -611,6 +728,10 @@ footer a:hover {
   #repos-list {
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
+
+  #featured-list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
 }
 
 /* ================================================================
@@ -630,6 +751,11 @@ footer a:hover {
 
   #tech ul {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* 주요 프로젝트는 두 열로 묶어 눈에 띄게 한다 */
+  #featured-list {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
