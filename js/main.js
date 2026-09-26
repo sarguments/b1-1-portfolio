@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         watcher.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold: [0, 0.2] });
 
   // reveal 표시 붙은 구역 전부 감시 시작한다.
   document.querySelectorAll('.reveal').forEach((el) => watcher.observe(el));
