@@ -81,7 +81,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 제목 계층: 크기·자간·행간으로 수준을 구분한다 */
+/* 제목 굵기는 600 상한: h3 이하 브라우저 기본 bold(700)도 600으로 내린다 */
+h1, h2, h3 {
+  font-weight: 600;
+}
 h1 {
   margin: 0 0 var(--space-4);
   font-size: clamp(1.8rem, 1.3rem + 2.4vw, 2.6rem);
@@ -95,6 +98,7 @@ h2 {
   font-size: 1.35rem;
   line-height: 1.25;
   letter-spacing: -0.01em;
+  font-weight: 600;
   text-wrap: balance;
 }
 
@@ -158,7 +162,7 @@ button {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 0.55rem 1rem;
+  padding: 0.5rem 1rem;
   min-height: 2.75rem;
   cursor: pointer;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, transform 0.1s;
@@ -205,7 +209,7 @@ header {
 #menu-button,
 #theme-toggle {
   min-height: 2.5rem;
-  padding: 0.45rem 0.85rem;
+  padding: 0.5rem 0.75rem;
   font-size: 0.875rem;
 }
 /* 메뉴 버튼: 아이콘 중앙 정렬 */
@@ -319,7 +323,7 @@ section {
   display: inline-block;
   min-height: 2.75rem;
   margin: var(--space-1) var(--space-2) var(--space-1) 0;
-  padding: 0.55rem 1.1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--card);
@@ -369,6 +373,7 @@ section {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: var(--space-3) var(--space-4);
+  min-height: 4.75rem;
 }
 
 /* ================================================================
@@ -387,7 +392,7 @@ section {
   flex: 0 0 auto;
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: 1px;
+  border-radius: 4px;
   background: var(--ok);
   box-shadow: 0 0 0 3px var(--grid-line);
 }
@@ -425,22 +430,21 @@ section {
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 #featured-list article:hover {
   border-color: var(--amber);
-  transform: translateY(-2px);
 }
 #featured-list .badge {
   position: absolute;
   top: var(--space-3);
   right: var(--space-4);
-  padding: 0.15rem 0.6rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 999px;
   background: var(--amber);
   color: var(--on-accent);
   font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.01em;
 }
 #featured-list h3 {
   margin: 0;
@@ -448,7 +452,7 @@ section {
 }
 #featured-list a {
   color: var(--accent);
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   overflow-wrap: break-word;
 }
@@ -473,7 +477,7 @@ section {
   padding: 0;
 }
 #featured-list li {
-  padding: 0.15rem 0.6rem;
+  padding: 0.25rem 0.75rem;
   border: 1px solid var(--border);
   border-radius: 999px;
   color: var(--muted);
@@ -502,7 +506,7 @@ section {
 }
 #repos-filters button {
   min-height: 2.5rem;
-  padding: 0.4rem 0.9rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
   font-size: 0.875rem;
 }
@@ -526,12 +530,11 @@ section {
   border-left: 3px solid var(--accent);
   border-radius: var(--radius);
   padding: var(--space-4) var(--space-5);
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 #repos-list article:hover {
   border-color: var(--accent);
   box-shadow: var(--shadow);
-  transform: translateY(-2px);
 }
 #repos-list a {
   color: var(--accent);
@@ -661,8 +664,8 @@ footer a:hover {
    ================================================================ */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s, transform 0.4s;
+  transform: translateY(8px);
+  transition: opacity 0.3s, transform 0.3s;
 }
 .reveal.visible {
   opacity: 1;
@@ -707,7 +710,7 @@ footer a:hover {
     display: flex;
     order: -1;
     /* 링크 4개를 남은 폭 전체에 균등 배치하는 것이 내비의 핵심 정렬 */
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 1;
     flex-basis: auto;
     gap: var(--space-5);
@@ -794,23 +797,19 @@ h2 {
 h2::before {
   content: "";
   flex: 0 0 auto;
-  width: 0.625rem;
-  height: 0.625rem;
-  border-radius: 2px;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 4px;
   background: var(--amber);
   box-shadow: 0 0 0 4px var(--grid-line);
 }
 
-/* 기술 항목: 좌측에 정상 상태등 띠 */
-#tech li {
-  border-left: 3px solid var(--ok);
-}
 
 /* 저장소 상태 문구는 계기 판독값처럼 고정폭으로 */
 #repos-status {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.8125rem;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 
 /* 내비가 스크롤로 고정될 때 아래에 기준선을 준다 */
